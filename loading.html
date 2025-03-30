@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loading - Tongfei Zhu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Helvetica', Arial, sans-serif;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .loader {
+            font-size: 4vw;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .number {
+            display: inline-block;
+            transition: all 0.2s ease;
+            opacity: 0;
+            transform: scale(0.5) translateY(20px);
+        }
+
+        .number.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .greeting {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4vw;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .greeting.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .name {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4vw;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.3s ease;
+        }
+
+        .name-word {
+            display: inline-block;
+            margin: 0 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .name-word.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .expand-name {
+            position: absolute;
+            top: calc(15% + 3vw);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+            font-size: clamp(17px, 14vw, 260px);
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: -0.0em;
+            line-height: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader" id="loader">
+        <span id="numberContainer"></span>
+    </div>
+
+    <script>
+        const numberContainer = document.getElementById('loader');
+        const maxNumber = 100;
+
+        function createNumberAnimation() {
+            let currentNumber = 0;
+
+            function updateNumber() {
+                if (currentNumber <= maxNumber) {
+                    // Clear previous numbers
+                    numberContainer.innerHTML = '';
+
+                    // Create new number display
+                    const numberSpan = document.createElement('span');
+                    numberSpan.textContent = currentNumber;
+                    numberSpan.className = 'number visible';
+                    numberContainer.appendChild(numberSpan);
+
+                    currentNumber++;
+
+                    // Faster update interval
+                    const nextDelay = Math.random() * 10 + 10;
+                    if (currentNumber <= maxNumber) {
+                        setTimeout(updateNumber, nextDelay);
+                    } else {
+                        // Transition to greeting faster
+                        setTimeout(showGreeting, 300);
+                    }
+                }
+            }
+
+            updateNumber();
+        }
+
+        function showGreeting() {
+            // Clear previous content
+            numberContainer.innerHTML = '';
+
+            // Create greeting
+            const greetingDiv = document.createElement('div');
+            greetingDiv.className = 'greeting';
+            greetingDiv.textContent = 'Hi,';
+            numberContainer.appendChild(greetingDiv);
+
+            // Animate greeting
+            setTimeout(() => {
+                greetingDiv.classList.add('visible');
+                
+                // Show name after greeting
+                setTimeout(showName, 500);
+            }, 100);
+        }
+
+        function showName() {
+            // Clear previous content
+            numberContainer.innerHTML = '';
+
+            // Create name container
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'name';
+            
+            // Split name into words
+            const nameParts = ["I'm", "TONGFEI ZHU"];
+            
+            nameParts.forEach((word, index) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.className = 'name-word';
+                wordSpan.textContent = word;
+                wordSpan.style.transitionDelay = `${index * 0.2}s`;
+                nameDiv.appendChild(wordSpan);
+            });
+
+            numberContainer.appendChild(nameDiv);
+
+            // Animate words
+            const wordElements = nameDiv.querySelectorAll('.name-word');
+            wordElements.forEach((word, index) => {
+                setTimeout(() => {
+                    word.classList.add('visible');
+                }, index * 200);
+            });
+
+            // Transition to final expansion
+            setTimeout(expandName, 1000);
+        }
+
+        function expandName() {
+            const nameContainer = numberContainer;
+            const expandedName = document.createElement('div');
+            expandedName.className = 'expand-name';
+            expandedName.textContent = 'TONGFEI ZHU';
+
+            // Clear previous content
+            nameContainer.innerHTML = '';
+            nameContainer.appendChild(expandedName);
+
+            // Trigger expansion and positioning
+            setTimeout(() => {
+                expandedName.style.fontSize = 'clamp(17px, 14vw, 260px)';
+                expandedName.style.transform = 'translate(-50%, -50%)';
+            }, 100);
+
+            // Transition to main page
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        // Start loading animation when page loads
+        window.addEventListener('load', createNumberAnimation);
+    </script>
+</body>
+</html>
