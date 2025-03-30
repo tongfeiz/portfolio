@@ -84,7 +84,15 @@ padding: 0;
     width: 80%;
 }
 
+@font-face {
+    font-family: 'Helvetica Compressed';
+    src: url('font/helveticacompressed.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .bigname {
+    font-family: 'Helvetica Compressed', sans-serif;
     font-weight: 500;
     line-height: 0.8;
     margin: 0;
