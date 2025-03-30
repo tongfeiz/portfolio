@@ -268,8 +268,15 @@
     font-family: sans-serif;
 }
 
+@font-face {
+    font-family: 'reval';
+    src: url('font/Reval.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .exploring-title {
-    font-family: reval;
+    font-family: 'reval', sans-serif;
     font-size: clamp(40px, 7.6vw, 500px);
     font-weight: 100;
     margin-bottom: 1%;
