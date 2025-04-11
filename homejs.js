@@ -5,11 +5,11 @@ const imageUrls = {
         'https://glamorous-stitch-f64.notion.site/Sync-1c577703d9b7805dbdfac2002809f2b2',
         'https://www.instagram.com/p/DEL-GcHPhb_/',
         'https://www.boldsnax.com/',
-        'https://glamorous-stitch-f64.notion.site/Multi-Purpose-Furniture-1c577703d9b7805f8cd2eb97b78315ea',
+        'https://www.youtube.com/watch?v=xcNSjE6imro&ab_channel=Tap',
         'http://wupen.org/competitions/116?type=work&entry=7437',
         'https://www.scalingsolutionsltd.com/',
         'https://www.instagram.com/p/DAkCGxTvK7-/',
-        'https://glamorous-stitch-f64.notion.site/Coming-Soon-1c577703d9b7808b9c9ce33638a83887' //coming soon
+        'https://glamorous-stitch-f64.notion.site/Multi-Purpose-Furniture-1c577703d9b7805f8cd2eb97b78315ea' //chair
     ],
     art: [
         'https://glamorous-stitch-f64.notion.site/Control-1c577703d9b7803b890ffaa1f3ba832e',
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
             profile: 'images/b1.png',
             portfolio: [
                 'images/s1.png', 'images/s2.png', 'images/s3.png', 'images/s4.png',
-                'images/s5.png', 'images/s6.png', 'images/s7.png', 'images/s8.png', 'images/s0.png'
+                'images/s5.gif', 'images/s6.png', 'images/s7.png', 'images/s8.png', 'images/s0.png'
             ]
         },
         art: {
