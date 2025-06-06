@@ -24,14 +24,14 @@ const imageUrls = {
     ],
     fashion: [
         'https://glamorous-stitch-f64.notion.site/Revink-1c677703d9b7809fb03dc036170adc6c',
-        'https://glamorous-stitch-f64.notion.site/PROJECT-SPIRE-1c677703d9b7806f87bff73e2b9138ea',
+        'https://www.instagram.com/p/DJl1Ki5sddD/',
         'https://www.instagram.com/p/C4B3TBvPhLx/?img_index=1',
-        'https://www.instagram.com/p/C53sYh9RR58/?img_index=1',
-        'https://www.instagram.com/p/C5we6dPyYNb/?img_index=1',
-        'https://www.instagram.com/p/DB9w6E0zPMP/',
-        'https://www.instagram.com/p/C6rpcW4yhNt/?img_index=2',
         'https://www.instagram.com/p/DCnfB2NP169/',
-        'https://www.instagram.com/p/DB2uJPkxH4g/'
+        'https://www.instagram.com/p/DJoX-5KsA7v/?img_index=1',
+        'https://glamorous-stitch-f64.notion.site/PROJECT-SPIRE-1c677703d9b7806f87bff73e2b9138ea',
+        'https://www.instagram.com/p/C53sYh9RR58/?img_index=1',
+        'https://www.instagram.com/p/C6rp-fYSwgF/?img_index=3/',
+        'https://www.instagram.com/p/DB9w6E0zPMP/'
     ],
     music: [
         'https://open.spotify.com/track/0ExIWTffDUVQkBThvZ6L7T?si=e825129e9372426a',
