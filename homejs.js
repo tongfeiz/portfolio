@@ -1,7 +1,7 @@
 // ============================ CUSTOM URLS ================================//
 const imageUrls = {
     design: [
-        'https://mylily.up.railway.app/',
+        'https://drive.google.com/file/d/10sj7NAVyV5-yKyOfZtIgSlWfTlKHYcV-/view?usp=sharing',
         'https://glamorous-stitch-f64.notion.site/Sync-1c577703d9b7805dbdfac2002809f2b2',
         'https://glamorous-stitch-f64.notion.site/Coming-Soon-1c577703d9b7808b9c9ce33638a83887?pvs=74',
         'https://www.scalingsolutionsltd.com/',
