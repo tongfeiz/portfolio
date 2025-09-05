@@ -4,7 +4,7 @@ const imageUrls = {
         'https://drive.google.com/file/d/10sj7NAVyV5-yKyOfZtIgSlWfTlKHYcV-/view?usp=sharing',
         'https://glamorous-stitch-f64.notion.site/Sync-1c577703d9b7805dbdfac2002809f2b2',
         'https://glamorous-stitch-f64.notion.site/Coming-Soon-1c577703d9b7808b9c9ce33638a83887?pvs=74',
-        'https://www.scalingsolutionsltd.com/',
+        'https://www.scalingreviews.com/',
         'https://www.lovemagia.com/',
         'http://wupen.org/competitions/116?type=work&entry=7437',
         'https://www.boldsnax.com/',
