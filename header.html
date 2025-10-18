@@ -1,0 +1,435 @@
+<!-- Header Styles -->
+<style>
+  :root {
+    --page-width: 1200px;
+    --text-light: #f7f7f7;
+    --text-dark: #1d1d1d;
+    --muted: #808080;
+    --gap: 28px;
+    --card-width: 364px;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden; /* prevent sideways scroll */
+    font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+      'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--text-light);
+    color: var(--text-dark);
+  }
+
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    background: transparent;
+    mix-blend-mode: exclusion;
+    pointer-events: none; /* lets content below be interactive visually */
+  }
+
+  header * {
+    pointer-events: auto; /* re-enable clicks inside header */
+  }
+
+  .header-inner {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 10vw;
+  }
+
+  .brand {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .brand .home {
+    font-size: 25px;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+    color: var(--text-light);
+    text-decoration: none;
+  }
+
+  .brand .plus {
+    font-size: 25px;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+    color: var(--text-light);
+    opacity: 0.9;
+  }
+
+  nav {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    font-size: 25px;
+    letter-spacing: -0.04em;
+  }
+
+  nav a {
+    position: relative;
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--text-light);
+    padding: 6px 0;
+    display: inline-block; /* keep underline width to text only */
+  }
+
+  /* Non-clickable comma separators between nav items */
+  /* Comma separators as standalone elements (not clickable, not underlined) */
+  .nav-sep {
+    color: var(--text-light);
+    opacity: 0.85;
+    margin: 0 6px 0 2px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Remove focus box specifically for header nav links */
+  header nav a:focus {
+    outline: none;
+  }
+  header nav a:focus-visible {
+    outline: none;
+  }
+
+  /* Current page shows left-to-right underline (Line 1) */
+  nav a.current::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    height: 2px;
+    background: var(--text-light);
+    width: 100%;
+    transition: width 0.3s ease;
+  }
+
+  /* No hover effects for brand/home button */
+
+  /* Hover effects for navigation links */
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    height: 2px;
+    background: var(--text-light);
+    width: 0;
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover::after {
+    width: 100%;
+  }
+
+  /* Special animation for currently active nav items */
+  nav a.current {
+    position: relative;
+  }
+
+  /* Line 1 (left-to-right) - starts fully expanded, shrinks on hover */
+  nav a.current::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    height: 2px;
+    background: var(--text-light);
+    width: 100%;
+    transition: width 0.3s ease;
+  }
+
+  /* On hover: Line 1 shrinks back to start */
+  nav a.current:hover::after {
+    width: 0;
+  }
+
+  /* Line 2 (right-to-left) - hidden by default, appears after delay on hover */
+  nav a.current::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+    height: 2px;
+    background: var(--text-light);
+    width: 0;
+    transition: width 0.3s ease 0.3s; /* 0.3s delay after Line 1 shrinks */
+  }
+
+  nav a.current:hover::before {
+    width: 100%;
+  }
+
+  /* Ensure clean state when not hovering */
+  nav a.current:not(:hover)::before {
+    width: 0;
+    transition: width 0.3s ease;
+  }
+
+  nav a.current:not(:hover)::after {
+    width: 100%;
+    transition: width 0.3s ease 0.3s; /* Delay to let Line 2 shrink first */
+  }
+
+  /* Page Title Styles */
+  .page-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 25px;
+    font-weight: 400;
+    color: var(--text-light);
+    opacity: 0.9;
+    letter-spacing: -0.04em;
+    text-align: center;
+  }
+
+  /* Hide page title on tablet and mobile */
+  @media (max-width: 1100px) {
+    .page-title {
+      display: none;
+    }
+  }
+
+  /* Hide page title on about page */
+  body.about-page .page-title {
+    display: none;
+  }
+
+  /* Responsive header styles */
+  @media (max-width: 680px) {
+    header { padding: 12px 0; }
+    .header-inner { padding: 0 10vw; }
+    .brand .home { font-size: 3.6vw; }
+    .brand .plus { font-size: 3.6vw; }
+    nav { font-size: 3.6vw; }
+  }
+
+  a:focus {
+    outline: none;
+  }
+  a:focus-visible {
+    outline: none;
+  }
+</style>
+
+<!-- Header HTML -->
+<header>
+  <div class="header-inner">
+    <div class="brand" id="homeBtn" role="button" tabindex="0" aria-label="Go to home">
+      <div class="home">Tongfei</div>
+    </div>
+
+    <div class="page-title" id="pageTitle">Work</div>
+
+    <nav id="mainNav" aria-label="Main navigation">
+      <a href="/index.html" data-section="Work">Work</a>
+      <span class="nav-sep">,</span>
+      <a href="/about.html" data-section="About">About</a>
+      <!-- <span class="nav-sep">,</span>
+      <a href="#contact" data-section="Contact">Contact</a> --> <!-- Commented out contact link for now -->
+    </nav>
+  </div>
+</header>
+
+<!-- Header JavaScript -->
+<script>
+  /* --- Page Title functionality --- */
+  function updatePageTitle() {
+    const pageTitleElement = document.getElementById('pageTitle');
+    if (!pageTitleElement) return;
+    
+    // Get the current page title from the document or set a default
+    const currentPath = window.location.pathname;
+    const currentFile = currentPath.split('/').pop();
+    
+    let title = 'Work'; // default
+    
+    // Set title based on current page
+    
+    if (currentFile === 'scaling-reviews.html') {
+      title = 'Scaling Reviews';
+    } else if (currentFile === 'projects/casa-magia.html' || currentFile === 'casa-magia.html') {
+      title = 'Casa Magia';
+    } else if (currentFile === 'projects/usc-international-student-assembly.html' || currentFile === 'usc-international-student-assembly.html') {
+      title = 'USC ISA';
+    } else if (currentFile === 'projects/aphelion-smart-fridge-assistant.html' || currentFile === 'aphelion-smart-fridge-assistant.html') {
+      title = 'Aphelion';
+    } else if (currentFile === 'projects/space-saving-furniture.html' || currentFile === 'space-saving-furniture.html') {
+      title = 'Space-Saving Furniture';
+    } else if (currentFile === 'projects/vtm-13.html' || currentFile === 'vtm-13.html') {
+      title = 'VTM-13';
+    } else if (currentFile === 'projects/stackt.html' || currentFile === 'stackt.html') {
+      title = 'STACKT';
+    } else if (currentFile === 'projects/sync.html' || currentFile === 'sync.html') {
+      title = 'Sync.';
+    } else if (currentFile === 'projects/mythical-creatures-forbidden-city.html' || currentFile === 'mythical-creatures-forbidden-city.html') {
+      title = 'Mythical Creatures';
+    } else if (currentFile === 'projects/lily.html' || currentFile === 'lily.html') {
+      title = 'Lily';
+    } else if (currentFile === 'projects/the-bottega-group.html' || currentFile === 'the-bottega-group.html') {
+      title = 'The Bottega Group';
+    } else if (currentFile === 'projects/my-matcha-hk.html' || currentFile === 'my-matcha-hk.html') {
+      title = 'My Matcha HK';
+    } else if (currentFile === 'projects/syllabus-to-planner.html' || currentFile === 'syllabus-to-planner.html') {
+      title = 'SyllabusToPlanner';
+    } else if (currentFile === 'projects/ignorance.html' || currentFile === 'ignorance.html') {
+      title = 'Ignorance';
+    } else if (currentFile === 'projects/the-great-tree.html' || currentFile === 'the-great-tree.html') {
+      title = 'The Great Tree';
+    } else if (currentFile === 'projects/red-cxbe.html' || currentFile === 'red-cxbe.html') {
+      title = 'RED.CXBE';
+    } else if (currentFile === 'projects/make-total-destroy.html' || currentFile === 'make-total-destroy.html') {
+      title = 'MAKE TOTAL DESTROY';
+    } else if (currentFile === 'projects/the-citys-reflection.html' || currentFile === 'the-citys-reflection.html') {
+      title = 'The City\'s Reflection';
+    } else if (currentFile === 'projects/control-art.html' || currentFile === 'control-art.html') {
+      title = 'Control (Art)';
+    } else if (currentFile === 'projects/untitled.html' || currentFile === 'untitled.html') {
+      title = 'Untitled';
+    } else if (currentFile === 'projects/the-ritual.html' || currentFile === 'the-ritual.html') {
+      title = 'The Ritual';
+    } else if (currentFile === 'projects/mid-summer-days-dream.html' || currentFile === 'mid-summer-days-dream.html') {
+      title = 'Mid Summer Day\'s Dream';
+    } else if (currentFile === 'projects/through-my-eyes.html' || currentFile === 'through-my-eyes.html') {
+      title = 'Through My Eyes';
+    } else if (currentFile === 'projects/control-mural.html' || currentFile === 'control-mural.html') {
+      title = 'Control (Mural)';
+    } else if (currentFile === 'projects/revink-fall-2023.html' || currentFile === 'revink-fall-2023.html') {
+      title = 'REVINK Fall 2023';
+    } else if (currentFile === 'projects/spire-promotional-graphics.html' || currentFile === 'spire-promotional-graphics.html') {
+      title = 'SPIRE Promotional Graphics';
+    } else if (currentFile === 'projects/the-lies-end-in-summer.html' || currentFile === 'the-lies-end-in-summer.html') {
+      title = 'The Lies End In Summer';
+    } else if (currentFile === 'projects/spire.html' || currentFile === 'spire.html') {
+      title = 'SPIRE';
+    } else if (currentFile === 'projects/revink-spring-2024.html' || currentFile === 'revink-spring-2024.html') {
+      title = 'REVINK Spring 2024';
+    } else if (currentFile === 'projects/motion-graphic-animation.html' || currentFile === 'motion-graphic-animation.html') {
+      title = 'Motion Graphic Animation';
+    } else if (currentFile === 'projects/video-editing.html' || currentFile === 'video-editing.html') {
+      title = 'Video Editing';
+    } else if (currentFile === 'projects/goodfornothing.html' || currentFile === 'goodfornothing.html') {
+      title = 'GOODFORNOTHING';
+    } else if (currentFile === 'projects/demigod.html' || currentFile === 'demigod.html') {
+      title = 'DEMIGOD';
+    } else if (currentFile === 'index.html' || currentFile === '') {
+      title = 'Work';
+    } else if (currentFile === 'about.html') {
+      title = 'About';
+    }
+    
+    pageTitleElement.textContent = title;
+  }
+
+  /* --- Navigation functionality --- */
+  function initializeHeader() {
+    const homeBtn = document.getElementById('homeBtn');
+    const nav = document.getElementById('mainNav');
+    const sectionLabel = document.getElementById('sectionLabel');
+    const workLink = document.getElementById('workLink');
+
+    if (!homeBtn || !nav) {
+      // Elements not ready yet, try again in a moment
+      setTimeout(initializeHeader, 10);
+      return;
+    }
+
+
+    function setActive(link){
+      document.querySelectorAll('#mainNav a').forEach(a=>a.classList.remove('current'));
+      link.classList.add('current');
+    }
+
+    // Set current page based on URL
+    function setCurrentPage() {
+      const currentPath = window.location.pathname;
+      const currentFile = currentPath.split('/').pop();
+      
+      console.log('Current path:', currentPath);
+      console.log('Current file:', currentFile);
+      
+      // Check if we're on the about page
+      if (currentFile === 'about.html' || currentPath.includes('about.html')) {
+        const aboutLink = document.querySelector('#mainNav a[data-section="About"]');
+        console.log('About link found:', aboutLink);
+        if (aboutLink) {
+          setActive(aboutLink);
+          console.log('Set About as current');
+        } else {
+          console.log('About link not found in DOM');
+        }
+      } else if (currentFile === 'index.html' || currentFile === '' || currentPath.includes('index.html')) {
+        const workLink = document.querySelector('#mainNav a[data-section="Work"]');
+        if (workLink) {
+          setActive(workLink);
+          console.log('Set Work as current');
+        }
+      }
+      // Add other pages as needed
+    }
+
+    nav.addEventListener('click', (e)=>{
+      const a = e.target.closest('a');
+      if(!a) return;
+      
+      const href = a.getAttribute('href');
+      
+      // Only prevent default for internal links (starting with #)
+      if(href && href.startsWith('#')) {
+        e.preventDefault();
+        setActive(a);
+        const id = href.slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      } else if (href && href.endsWith('.html')) {
+        // Check if we're clicking on About link while on about page
+        if (href === '/about.html') {
+          const currentPath = window.location.pathname;
+          const currentFile = currentPath.split('/').pop();
+          
+          if (currentFile === 'about.html' || currentPath.includes('about.html')) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
+        }
+        // For other external links, let the browser handle navigation normally
+        // Don't prevent default - let the link work naturally
+      }
+    });
+
+    homeBtn.addEventListener('click', ()=>{
+      window.location.href = '/index.html';
+    });
+
+    homeBtn.addEventListener('keypress', (e)=>{ if(e.key==='Enter') homeBtn.click(); });
+
+    // Initialize current page with a small delay to ensure DOM is ready
+    setTimeout(() => {
+      setCurrentPage();
+      // Update page title after current page is set
+      updatePageTitle();
+    }, 50);
+  }
+
+  // Make initializeHeader globally available
+  window.initializeHeader = initializeHeader;
+</script>

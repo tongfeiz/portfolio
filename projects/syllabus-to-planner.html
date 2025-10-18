@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>SyllabusToPlanner - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+    <!-- Hero Image -->
+    <div class="hero-image-container">
+      <video src="../projects/photos_syllabus/herovid.mov" autoplay loop muted playsinline></video>
+    </div>
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+      <!---------------------------- Project Header --------------------------------->
+      <div class="project-header">
+        <h1 class="project-title">SyllabusToPlanner</h1>
+        <p class="project-description">The ultimate notion template to stay on track this semester, transforming your course syllabi into actionable study plans.</p>
+      </div>
+
+      <!---------------------------- Project Details --------------------------------->
+      <div class="project-details">
+        <div class="detail-column">
+          <div class="detail-title">Role</div>
+          <div class="detail-content">
+            <p>Product Designer</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Team</div>
+          <div class="detail-content">
+            <p>Mohamed Ahmed (Dev)</p>
+            <p>Jerry Zhou (Dev)</p>
+            <p>Tongfei Zhu (Designer)</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Scope</div>
+          <div class="detail-content">
+            <p>Sep 2025</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Tools</div>
+          <div class="detail-content">
+            <p>Figma</p>
+            <p>Adobe Photoshop</p>
+            <p>Cursor</p>
+            <p>Notion</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">SyllabusToPlanner revolutionizes how students organize their academic life. The template automatically converts course syllabi into structured study plans, helping students stay organized and on track throughout the semester. Try it now at <a href="https://syllabustoplanner.com" target="_blank" rel="noopener">syllabustoplanner.com</a></p>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">SyllabusToPlanner</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>

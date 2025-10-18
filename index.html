@@ -1,141 +1,1045 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tongfei Zhu</title>
-    <link rel="stylesheet" href="homestyle.css">
-    <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="font/helveticacompressed.otf" rel="stylesheet">
-    <script src="homejs.js"></script>
-    <link rel="icon" type="image/png" href="lolol.png"> 
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="1_photos/logos/icontools/faviconnew.png"> 
+  <title>Tongfei Zhu - Work</title>
+    <style>
+    :root {
+      --page-width: 1200px;
+      --text-light: #f7f7f7;
+      --text-dark: #1d1d1d;
+      --muted: #808080;
+      --gap: 28px;
+      --card-width: 364px;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden; /* prevent sideways scroll */
+      font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: var(--text-light);
+      color: var(--text-dark);
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      background: transparent;
+      mix-blend-mode: exclusion;
+      pointer-events: none; /* lets content below be interactive visually */
+    }
+
+    header * {
+      pointer-events: auto; /* re-enable clicks inside header */
+    }
+
+    .header-inner {
+      width: 100%;
+      margin: 0 auto;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 10vw;
+    }
+
+    .brand {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand .home {
+      font-size: 25px;
+      letter-spacing: -0.04em;
+      font-weight: 400;
+      color: var(--text-light);
+      text-decoration: none;
+    }
+
+    .brand .plus {
+      font-size: 25px;
+      letter-spacing: -0.04em;
+      font-weight: 400;
+      color: var(--text-light);
+      opacity: 0.9;
+    }
+
+    nav {
+      display: flex;
+      gap: 0;
+      align-items: center;
+      font-size: 25px;
+      letter-spacing: -0.04em;
+    }
+
+    nav a {
+      position: relative;
+      font-weight: 400;
+      text-decoration: none;
+      color: var(--text-light);
+      padding: 6px 0;
+      display: inline-block; /* keep underline width to text only */
+    }
+
+    /* Non-clickable comma separators between nav items */
+    /* Comma separators as standalone elements (not clickable, not underlined) */
+    .nav-sep {
+      color: var(--text-light);
+      opacity: 0.85;
+      margin: 0 6px 0 2px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Remove focus box specifically for header nav links */
+    header nav a:focus {
+      outline: none;
+    }
+    header nav a:focus-visible {
+      outline: none;
+    }
+
+    /* Current page shows left-to-right underline (Line 1) */
+    nav a.current::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 5px;
+      height: 2px;
+      background: var(--text-light);
+      width: 100%;
+      transition: width 0.3s ease;
+    }
+
+    /* No hover effects for brand/home button */
+
+    /* Hover effects for navigation links */
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 5px;
+      height: 2px;
+      background: var(--text-light);
+      width: 0;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Special animation for currently active nav items */
+    nav a.current {
+      position: relative;
+    }
+
+    /* Line 1 (left-to-right) - starts fully expanded, shrinks on hover */
+    nav a.current::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 5px;
+      height: 2px;
+      background: var(--text-light);
+      width: 100%;
+      transition: width 0.3s ease;
+    }
+
+    /* On hover: Line 1 shrinks back to start */
+    nav a.current:hover::after {
+      width: 0;
+    }
+
+    /* Line 2 (right-to-left) - hidden by default, appears after delay on hover */
+    nav a.current::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: 5px;
+      height: 2px;
+      background: var(--text-light);
+      width: 0;
+      transition: width 0.3s ease 0.3s; /* 0.3s delay after Line 1 shrinks */
+    }
+
+    nav a.current:hover::before {
+      width: 100%;
+    }
+
+    /* Ensure clean state when not hovering */
+    nav a.current:not(:hover)::before {
+      width: 0;
+      transition: width 0.3s ease;
+    }
+
+    nav a.current:not(:hover)::after {
+      width: 100%;
+      transition: width 0.3s ease 0.3s; /* Delay to let Line 2 shrink first */
+    }
+
+    /* World Clock Styles */
+    .clock {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 25px;
+      font-weight: 400;
+      color: var(--text-light);
+      opacity: 0.9;
+      letter-spacing: -0.04em;
+      
+    }
+
+    .clock-time {
+      font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        
+    }
+
+    .clock-separator {
+      opacity: 0.7;
+      margin: 0 4px;
+    }
+
+    /* Hide clock on tablet and mobile */
+    @media (max-width: 1100px) {
+      .clock {
+        display: none;
+      }
+    }
+
+    .page {
+      width: 100%;
+      margin: 0 auto 120px;
+      padding: 100px 0 0; /* space for fixed header */
+    }
+
+    /* Masonry grid */
+    .work-grid {
+      column-count: 3;
+      column-gap: var(--gap);
+      padding: 0 10vw;
+    }
+
+    .work-card {
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 var(--gap);
+      break-inside: avoid;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .work-card.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .media-container {
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      border-radius: 6px;
+    }
+
+    .work-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      border-radius: 6px;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .work-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .work-card video {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      border-radius: 6px;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .work-card:hover video {
+      transform: scale(1.1);
+    }
+
+    /* Cursor tracking effect for zoomed media */
+    .work-card:hover img.cursor-track {
+      transform: scale(1.1);
+    }
+
+    .work-card:hover video.cursor-track {
+      transform: scale(1.1);
+    }
+
+    .caption-title {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+
+    .caption-desc {
+      margin-top: 4px;
+      font-size: 18px; 
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    /* Responsiveness */
+    @media (max-width: 1100px) {
+      .header-inner { padding: 0 10vw; }
+      .work-grid { 
+        column-count: 2; 
+        padding: 0 10vw;
+      }
+    }
+
+    @media (max-width: 680px) {
+      header { padding: 12px 0; }
+      .header-inner { padding: 0 10vw; }
+      .brand .home { font-size: 3.6vw; }
+      .brand .plus { font-size: 3.6vw; }
+      nav { font-size: 3.6vw; }
+      .work-grid { 
+        column-count: 1; 
+        padding: 0 10vw;
+      }
+    }
+    a:focus {
+      outline: 2px solid #ddd;
+    }
+
+  </style>
 
 </head>
-
-
 <body>
+  
+<!-- Include header -->
+<div id="header-container"></div>
 
-    <!--HEADER-->
-    <header class="navigation">
-        <div class="logo">Tongfei Zhu</div>
-        <div class="tagline">Enjoying all the detours from life</div>
-        <div class="about-link">About</div>
-    </header>
+  <header>
+    <div class="header-inner">
+      <div class="brand" id="homeBtn" role="button" tabindex="0" aria-label="Go to home">
+        <div class="home">Tongfei</div>
+        <div class="plus" id="sectionLabel">+ Design</div>
+      </div>
 
+      <div class="clock" id="worldClock">
+        <div class="clock-time" id="laTime">LA 17:00:00</div>
+        <div class="clock-separator">//</div>
+        <div class="clock-time" id="hkTime">HK 08:00:00</div>
+      </div>
 
-    <!--HERO-->
-    <section class="hero">
-        <div class="location">LA x HK x SH</div>
-        <h1 class="bigname">TONGFEI ZHU</h1>
-        <div class="title-wrapper">
-            <span class="title-prefix">is a </span>
-            <span class="title">DESIGNER</span>
+      <nav id="mainNav" aria-label="Main navigation">
+        <a href="#work" data-section="Work" class="current">Work</a>
+        <span class="nav-sep">,</span>
+        <a href="/about.html" data-section="About">About</a>
+        <!-- <span class="nav-sep">,</span>
+        <a href="#contact" data-section="Contact">Contact</a> --> <!-- Commented out contact link for now -->
+      </nav>
+    </div>
+  </header>
+
+  <main class="page" id="pageBody">
+    <section id="work" aria-labelledby="workHeading">
+      <div style="height:12px"></div>
+      <div class="work-grid" id="workGrid">
+
+<!------------------------Design Section--------------------------------->
+
+        <div class="work-card" id="card1">
+          <a href="projects/lily.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p9.png" alt="Project thumbnail 9">
+            </div>
+            <div class="caption-title">Lily</div>
+            <div class="caption-desc">AI-powered IEP tracker to assist special educators and empower students.</div>
+          </a>
         </div>
-        <div class="about-cta">
-            <span>More (About) Me →</span>
+
+        <div class="work-card">
+          <a href="scaling-reviews.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p2.png" alt="Project thumbnail 2">
+            </div>
+            <div class="caption-title">Scaling Reviews</div>
+            <div class="caption-desc">Restaurant reputation management</div>
+          </a>
         </div>
+
+        <div class="work-card">
+          <a href="projects/casa-magia.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p1.png" alt="Project thumbnail">
+            </div>
+            <div class="caption-title">Casa Magia</div>
+            <div class="caption-desc">New way of imagining scent</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/usc-international-student-assembly.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid9.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="caption-title">USC International Student Assembly</div>
+            <div class="caption-desc">Rebranding USC's professional org </div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/space-saving-furniture.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p4.png" alt="Project thumbnail 4">
+            </div>
+            <div class="caption-title">Space-Saving Furniture</div>
+            <div class="caption-desc">Chairs for small living quarters</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/tm-studios.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid2.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="caption-title">Aphelion Smart Fridge Assistant</div>
+            <div class="caption-desc">New interface for Samsung's smart fridge</div>
+          </a>
+        </div>
+        
+
+        
+        <div class="work-card">
+          <a href="projects/tm-studios.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid10.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="caption-title">VTM-13</div>
+            <div class="caption-desc">Teenage engineering inspired video demo for vitamins</div>
+          </a>
+        </div>
+
+        
+
+        <div class="work-card">
+          <a href="projects/sync.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p7.png" alt="Project thumbnail 7">
+            </div>
+            <div class="caption-title">Sync.</div>
+            <div class="caption-desc">AI-powered scheduling & smart timelines</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/mythical-creatures-forbidden-city.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p8.png" alt="Project thumbnail 8">
+            </div>
+            <div class="caption-title">Mythical Creatures in the Forbidden City</div>
+            <div class="caption-desc">AR mobile game to promote traditional culture in Beijing's Forbidden City</div>
+          </a>
+        </div>
+
+      
+        <div class="work-card">
+          <a href="projects/the-bottega-group.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid8.mp4" autoplay loop muted playsinline ></video>
+            </div>
+            <div class="caption-title">The Bottega Group</div>
+            <div class="caption-desc">Landing page for New Zealand restaurants</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/tm-studios.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid3.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="caption-title">My Matcha HK</div>
+            <div class="caption-desc">Interactive visualization for HK matcha cafe</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/syllabus-to-planner.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid1.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="caption-title">SyllabusToPlanner</div>
+            <div class="caption-desc">The ultimate notion template to stay on track this semester</div>
+          </a>
+        </div>
+
+
+<!------------------------Art Section--------------------------------->
+
+        <div class="work-card">
+          <a href="projects/ignorance.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p12.png" alt="Project thumbnail 12">
+            </div>
+            <div class="caption-title">"Ignorance"</div>
+            <div class="caption-desc">Mural at Shenzhen's G&G Creative Space</div>
+          </a>
+        </div>
+
+        <div class="work-card" id="card13">
+          <a href="projects/the-great-tree.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p13.png" alt="Project thumbnail 13">
+            </div>
+            <div class="caption-title">"The Great Tree"</div>
+            <div class="caption-desc">Digital drawing on Procreate</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/the-citys-reflection.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p14.png" alt="Project thumbnail 14">
+            </div>
+            <div class="caption-title">"The City's Reflection"</div>
+            <div class="caption-desc">Light projection in Hong Kong</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/control-art.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p15.png" alt="Project thumbnail 15">
+            </div>
+            <div class="caption-title">"Control - Part 1"</div>
+            <div class="caption-desc">Digital drawing on Procreate</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/untitled.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p16.png" alt="Project thumbnail 16">
+            </div>
+            <div class="caption-title">"Untitled"</div>
+            <div class="caption-desc">Mural at Ningbo's Mondiland Factory</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/the-ritual.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p17.png" alt="Project thumbnail 17">
+            </div>
+            <div class="caption-title">"The Ritual"</div>
+            <div class="caption-desc">Digital drawing on Procreate</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/mid-summer-days-dream.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p18.png" alt="Project thumbnail 18">
+            </div>
+            <div class="caption-title">"Mid Summer Day's Dream"</div>
+            <div class="caption-desc">Mural in Hong Kong client's back yard </div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/through-my-eyes.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p19.png" alt="Project thumbnail 19">
+            </div>
+            <div class="caption-title">"Through My Eyes"</div>
+            <div class="caption-desc">Ink pen drawing on canvas paper</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/control-mural.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p20.png" alt="Project thumbnail 20">
+            </div>
+            <div class="caption-title">"Control - Part 2"</div>
+            <div class="caption-desc">Mural in Hong Kong</div>
+          </a>
+        </div>
+
+<!------------------------Fashion Section--------------------------------->
+
+        <div class="work-card">
+          <a href="projects/tm-studios.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid4.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="caption-title">RED.CXBE</div>
+            <div class="caption-desc">Turning memories into a shared aesthetic </div>
+          </a>
+        </div>
+
+
+        <div class="work-card" id="card22">
+          <a href="projects/revink.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p22.png" alt="Project thumbnail 22">
+            </div>
+            <div class="caption-title">REVINK</div>
+            <div class="caption-desc">Helping artists go to market with fashion</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/spire.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p23.png" alt="Project thumbnail 23">
+            </div>
+            <div class="caption-title">SPIRE</div>
+            <div class="caption-desc">Personal streetwear brand</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/the-lies-end-in-summer.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p24.png" alt="Project thumbnail 24">
+            </div>
+            <div class="caption-title">謊言以夏為終 (The Lies End In Summer)</div>
+            <div class="caption-desc">Taoism inspired collection</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/spire.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p25.png" alt="Project thumbnail 25">
+            </div>
+            <div class="caption-title">SPIRE</div>
+            <div class="caption-desc">Personal streetwear brand</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/revink.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p26.png" alt="Project thumbnail 26">
+            </div>
+            <div class="caption-title">REVINK</div>
+            <div class="caption-desc">Helping artists go to market with fashion</div>
+          </a>
+        </div>
+
+<!------------------------Visual // Audio Section--------------------------------->
+
+        <div class="work-card">
+          <a href="projects/make-total-destroy.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid6.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="caption-title">MAKE TOTAL DESTROY </div>
+            <div class="caption-desc">Reimagining Periphery's music video through creative editing</div>
+          </a>
+        </div>
+
+        <div class="work-card" id="card28">
+          <a href="projects/motion-graphic-animation.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid7.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="caption-title">Motion Graphic Animation</div>
+            <div class="caption-desc">A collection of motion graphic experiments</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/video-editing.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <video src="1_photos/vid5.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="caption-title">Video Editing</div>
+            <div class="caption-desc">A log of personal videos</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/music-production.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p30.png" alt="Project thumbnail 30">
+            </div>
+            <div class="caption-title">GOODFORNOTHING</div>
+            <div class="caption-desc">Album of song experiments over the years</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/music-production.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <img src="1_photos/p31.png" alt="Project thumbnail 31">
+            </div>
+            <div class="caption-title">DEMIGOD</div>
+            <div class="caption-desc">Featured song on Spotify with over 190,000 streams</div>
+          </a>
+        </div>
+
+      </div>
     </section>
+  </main>
 
+  <script>
+    /* --- World Clock functionality --- */
+    function updateWorldClock() {
+      const now = new Date();
+      
+      // LA time (Pacific Time)
+      const laTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+      const laTimeString = laTime.toLocaleTimeString("en-US", {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      
+      // HK time (Hong Kong Time)
+      const hkTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Hong_Kong"}));
+      const hkTimeString = hkTime.toLocaleTimeString("en-US", {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      
+      // Update the clock elements
+      const laElement = document.getElementById('laTime');
+      const hkElement = document.getElementById('hkTime');
+      
+      if (laElement) laElement.textContent = `LA ${laTimeString}`;
+      if (hkElement) hkElement.textContent = `HK ${hkTimeString}`;
+    }
 
-    <!--SKILLS-->
-    <section class="skills-section">
-        <div class="skills-list">
-            <div class="designbtn">Design</div><br>
-            <div class="artbtn">Art</div><br>
-            <div class="fashionbtn">Fashion</div><br>
-            <div class="musicbtn">Music</div><br>
-            <div class="videobtn">Video</div>
-        </div>
-        <div class="profile-image">
-            <a href="https://glamorous-stitch-f64.notion.site/Multi-Purpose-Furniture-1c577703d9b7805f8cd2eb97b78315ea" target="_blank"><img src="images/b1.png" alt="Designer photo"></a>
-        </div>
-    </section>
+    // Update clock immediately and then every second
+    updateWorldClock();
+    setInterval(updateWorldClock, 1000);
+
+    /* --- existing nav + header behavior (unchanged) --- */
+    const nav = document.getElementById('mainNav');
+    const sectionLabel = document.getElementById('sectionLabel');
+    const homeBtn = document.getElementById('homeBtn');
+
+    function setActive(link){
+      document.querySelectorAll('#mainNav a').forEach(a=>a.classList.remove('current'));
+      link.classList.add('current');
+      // Do not overwrite the dynamic plus label; it's controlled by scroll
+    }
+
+    nav.addEventListener('click', (e)=>{
+      const a = e.target.closest('a');
+      if(!a) return;
+      
+      const href = a.getAttribute('href');
+      
+      // Only prevent default for internal links (starting with #)
+      if(href.startsWith('#')) {
+        e.preventDefault();
+        setActive(a);
+        const id = href.slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+      // For external links (like /about.html), let the browser handle navigation normally
+    });
+
+    homeBtn.addEventListener('click', ()=>{
+      window.location.href = '/index.html';
+    });
+
+    homeBtn.addEventListener('keypress', (e)=>{ if(e.key==='Enter') homeBtn.click(); });
+
+    (function init(){
+      sectionLabel.textContent = '+ Design'; // default label
+    })();
+
+    // IntersectionObserver to update "+" label based on visible cards
+    const labelByCard = new Map([
+      ['card1', '+ Design'],
+      ['card13', '+ Art'],
+      ['card22', '+ Fashion'],
+      ['card28', '+ Visual // Audio']
+    ]);
+
+    const observedIds = Array.from(labelByCard.keys());
+    const observedEls = observedIds
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+
+    let currentLabel = '+ Design';
+
+    // Simple IO: set label when a tracked card ENTERS view. Do nothing on exit.
+    const io = new IntersectionObserver((entries) => {
+      entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top)
+        .forEach(entry => {
+          const id = entry.target.id;
+          const next = labelByCard.get(id);
+          if(next && next !== currentLabel){
+            currentLabel = next;
+            sectionLabel.textContent = next;
+          }
+        });
+    }, {
+      root: null,
+      threshold: 0.15
+    });
+
+    observedEls.forEach(el => io.observe(el));
+    // Set initial label on load (default already set to + Design)
+
+    /* --- NEW: responsive reorder to match your requested patterns --- */
+    const grid = document.getElementById('workGrid');
+
+    // Ensure every card has a stable "originalIndex" so re-orders are deterministic
+    function ensureOriginalIndexes(){
+      const cards = Array.from(grid.querySelectorAll('.work-card'));
+      // find max assigned index so new ones increment
+      let max = -1;
+      cards.forEach(c=>{
+        if(c.dataset.originalIndex !== undefined){
+          const num = parseInt(c.dataset.originalIndex, 10);
+          if(!isNaN(num) && num > max) max = num;
+        }
+      });
+      cards.forEach((c, i)=>{
+        if(c.dataset.originalIndex === undefined){
+          max++;
+          c.dataset.originalIndex = max;
+        }
+      });
+    }
+
+    // Return cards in the original ordering (by originalIndex)
+    function getOriginalItems(){
+      ensureOriginalIndexes();
+      return Array.from(grid.querySelectorAll('.work-card'))
+                  .sort((a,b)=> parseInt(a.dataset.originalIndex,10) - parseInt(b.dataset.originalIndex,10));
+    }
+
+    // Desktop reorder: column-major for 3 columns -> 1,4,7,2,5,8,3,6,9...
+    function reorderForDesktop(items){
+      const C = 3;
+      const N = items.length;
+      const rows = Math.ceil(N / C);
+      const output = [];
+      for(let col=0; col<C; col++){
+        for(let row=0; row<rows; row++){
+          const idx = row * C + col;
+          if(idx < N) output.push(items[idx]);
+        }
+      }
+      return output;
+    }
+
+    // Tablet reorder: interleave first half and second half -> 1,5,2,6,3,7,4,8,9...
+    // Generalized: mid = floor(N/2); for i in 0..mid-1 push i, push i+mid (if exists); append leftover if any
+    function reorderForTablet(items){
+      const N = items.length;
+      const mid = Math.floor(N / 2);
+      const out = [];
+      for(let i=0;i<mid;i++){
+        out.push(items[i]);
+        const j = i + mid;
+        if(j < N) out.push(items[j]);
+      }
+      if(out.length < N) out.push(items[N-1]);
+      return out;
+    }
+
+    // Apply reorder depending on window width (matches your stated breakpoints)
+    function applyReorder(){
+      const items = getOriginalItems();
+      const w = window.innerWidth;
+      let newOrder;
+      if(w > 1100){
+        newOrder = reorderForDesktop(items);
+      } else if(w > 680){
+        newOrder = reorderForTablet(items);
+      } else {
+        newOrder = items; // mobile: normal order
+      }
+      // Append in new order (moves DOM nodes)
+      newOrder.forEach(el => grid.appendChild(el));
+    }
+
+    // Debounced resize + initial load
+    let resizeTimer;
+    window.addEventListener('load', applyReorder);
+    window.addEventListener('resize', ()=>{
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(applyReorder, 120);
+    });
+
+    // If you ever add cards dynamically, call applyReorder() again (the script
+    // will assign originalIndex to new cards automatically before ordering).
+
+    /* --- Cursor tracking effect for work cards --- */
+    function addCursorTracking() {
+      const workCards = document.querySelectorAll('.work-card');
+      
+      workCards.forEach(card => {
+        const media = card.querySelector('img, video');
+        if (!media) return;
+        
+        let animationFrame;
+        let isHovering = false;
+        let targetOffsetX = 0;
+        let targetOffsetY = 0;
+        let currentOffsetX = 0;
+        let currentOffsetY = 0;
+        
+        // Smooth interpolation function
+        function lerp(start, end, factor) {
+          return start + (end - start) * factor;
+        }
+        
+        // Animation loop for smooth cursor following
+        function animate() {
+          if (!isHovering) return;
+          
+          // Gradually move toward target position with smooth easing
+          currentOffsetX = lerp(currentOffsetX, targetOffsetX, 0.15);
+          currentOffsetY = lerp(currentOffsetY, targetOffsetY, 0.15);
+          
+          media.style.transform = `scale(1.1) translate(${currentOffsetX}px, ${currentOffsetY}px)`;
+          // media.style.transition = 'none'; // Disable transition during cursor tracking
+          
+          animationFrame = requestAnimationFrame(animate);
+        }
+        
+        card.addEventListener('mouseenter', () => {
+          isHovering = true;
+          animate();
+        });
+        
+        card.addEventListener('mousemove', (e) => {
+          if (!isHovering) return;
+          
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          // Calculate target offset from center
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          targetOffsetX = (x - centerX) / centerX * 15;
+          targetOffsetY = (y - centerY) / centerY * 15;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          isHovering = false;
+          if (animationFrame) {
+            cancelAnimationFrame(animationFrame);
+          }
+          media.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+          media.style.transform = 'scale(1) translate(0px, 0px)';
+          // Reset values for next hover
+          currentOffsetX = 0;
+          currentOffsetY = 0;
+          targetOffsetX = 0;
+          targetOffsetY = 0;
+        });
+      });
+    }
     
+    // Initialize cursor tracking after DOM is loaded
+    document.addEventListener('DOMContentLoaded', addCursorTracking);
 
-    <!-- Portfolio Grid -->
-    <section class="portfolio-grid">
-        <div class="portfolio-item">
-            <!--LILY-->
-            <a href="https://drive.google.com/file/d/10sj7NAVyV5-yKyOfZtIgSlWfTlKHYcV-/view?usp=sharing" target="_blank"><img src="images/s1.png" alt="Portfolio item 1"></a>
-        </div>
-        <div class="portfolio-item">
-            <!--sync-->
-            <a href="https://glamorous-stitch-f64.notion.site/Sync-1c577703d9b7805dbdfac2002809f2b2" target="_blank"><img src="images/s2.png" alt="Portfolio item 2"></a>
-        </div>
-        <div class="portfolio-item">
-            <!--STAKT-->
-            <a href="https://glamorous-stitch-f64.notion.site/Coming-Soon-1c577703d9b7808b9c9ce33638a83887?pvs=74" target="_blank"><img src="images/s3.png" alt="Portfolio item 3"></a>
-        </div>
-        <div class="portfolio-item">
-            <!--boldsnax-->
-            <a href="https://www.scalingreviews.com/" target="_blank"><img src="images/s4.png" alt="Portfolio item 4"></a>
-        </div>
-        <div class="portfolio-item">
-            <!--chair-->
-            <a href="https://www.lovemagia.com/" target="_blank"><img src="images/s5.gif" alt="Portfolio item 5"></a>
-        </div>
-        <div class="portfolio-item">
-            <!--AR game-->
-            <a href="http://wupen.org/competitions/116?type=work&entry=7437" target="_blank"><img src="images/s6.png" alt="Portfolio item 6"></a>
-        </div>
-        <div class="portfolio-item">
-            <!--SS-->
-            <a href="https://www.boldsnax.com/" target="_blank"><img src="images/s7.png" alt="Portfolio item 7"></a>
-        </div>
-        <div class="portfolio-item">
-            <!--graphic design-->
-            <a href="https://www.instagram.com/p/DAkCGxTvK7-/" target="_blank"><img src="images/s8.png" alt="Portfolio item 8"></a>
-        </div>
-        <div class="portfolio-item">
-            <!--stoopid pizza?-->
-            <a href="https://glamorous-stitch-f64.notion.site/Multi-Purpose-Furniture-1c577703d9b7805f8cd2eb97b78315ea" target="_blank"><img src="images/s0.png" alt="Portfolio item 0"></a>
-        </div>
-    </section>
+    // Scroll animations for work cards
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to calculate visual order of cards
+      function calculateVisualOrder() {
+        const cards = Array.from(document.querySelectorAll('.work-card'));
+        const cardPositions = cards.map(card => {
+          const rect = card.getBoundingClientRect();
+          return {
+            element: card,
+            top: rect.top,
+            left: rect.left,
+            id: card.id
+          };
+        });
+        
+        // Sort by top position first, then by left position
+        cardPositions.sort((a, b) => {
+          if (Math.abs(a.top - b.top) < 10) {
+            // Same row, sort by left position
+            return a.left - b.left;
+          }
+          return a.top - b.top;
+        });
+        
+        // Assign visual index to each card
+        cardPositions.forEach((item, index) => {
+          item.element.dataset.visualIndex = index;
+        });
+      }
+      
+      // Calculate visual order on load and resize
+      calculateVisualOrder();
+      window.addEventListener('resize', calculateVisualOrder);
+      
+      // Intersection Observer for scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
 
-    <!-- Footer Section -->
-    <!-- Footer Section -->
-<footer class="footer">
-    <div class="footer-column recent-schemes">
-        <h2>Recent Schemes</h2>
-        <div class="recent-image">
-            <img src="images/s9.png" alt="Recent project">
-        </div>
-        <p>Currently building Lily, Scaling Solutions, and Love Magia.</p>
-    </div>
-    
-    <div class="footer-column availability-column">
-        <p class="availability">
-            I'm always open to new opportunities, challenges, and collaborations.
-        </p>
-        <p>
-            If you're looking for graphic, product, UI/UX, branding design, or just to work together, feel free to reach out!
-        </p> 
-    </div>
-     
-    <div class="footer-column contact-column">
-        <h2>Contact</h2>
-        <p class="contact-info">
-            Phone:<br>
-            +1 (626) 788 0177<br>
-            +852 9255 8368
-            <br><br>
-            Email:<br>
-            tongfeiz@usc.edu<br><br>
-            LinkedIn:<br>
-            <p class="contact-info"><a href="https://www.linkedin.com/in/tongfeiz" target="_blank">linkedin.com/in/tongfeiz/</a></p>
-        </p>
-    </div>
-</footer>
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            
+            // Add staggered animation for work cards based on visual position
+            if (entry.target.classList.contains('work-card')) {
+              const visualIndex = parseInt(entry.target.dataset.visualIndex) || 0;
+              entry.target.style.transitionDelay = `${visualIndex * 0.01}s`;
+            }
+          }
+        });
+      }, observerOptions);
 
-    <br><br>
+      // Observe all work cards
+      const workCards = document.querySelectorAll('.work-card');
+      workCards.forEach(card => observer.observe(card));
+    });
+  </script>
+
+  <!-- Loading System -->
+  <script src="loading-system.js"></script>
 </body>
-
-
 </html>
-
-
-
-
-
-

@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About - Tongfei</title>
+  <style>
+    :root {
+      --page-width: 1200px;
+      --text-light: #f7f7f7;
+      --text-dark: #1d1d1d;
+      --muted: #808080;
+      --gap: 28px;
+      --card-width: 364px;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+      font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: var(--text-light);
+      color: var(--text-dark);
+    }
+
+    .page {
+      width: 100%;
+      margin: 0 auto 120px;
+      padding: 100px 0 0;
+    }
+
+    .about-container {
+      max-width: var(--page-width);
+      margin: 0 auto;
+      padding: 0 10vw;
+    }
+
+    /* Profile section */
+    .profile-section {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin: 0 auto 30px;
+      display: block;
+    }
+
+    .profile-greeting {
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: -0.04em;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    /* Work Experience Section */
+    .work-experience-section {
+      margin-bottom: 80px;
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: -0.04em;
+      color: var(--text-dark);
+      text-align: center;
+      margin-bottom: 50px;
+      letter-spacing: -0.04em;
+    }
+
+    .experience-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    .experience-item {
+      display: grid;
+      grid-template-columns: 64px 1fr 1fr; /* <-- FIXED */
+      gap: 20px;
+      align-items: start;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .company-logo {
+    display: flex;
+    justify-content: flex-start;  /* Align the logo to the left */
+    align-items: center;          /* Vertically center the logo */
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    overflow: hidden;
+    }
+
+    .company-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .company-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .company-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 0;
+      margin-bottom: 16px;
+    }
+
+    .company-domain {
+      font-size: 20px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .position-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .position-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .position-date {
+      font-size: 20px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* Resume Button */
+    .resume-button {
+      display: block;
+      width: 200px;
+      margin: 60px auto 0;
+      padding: 15px 30px;
+      background: white;
+      border: 1px solid var(--text-dark);
+      border-radius: 8px;
+      color: var(--text-dark);
+      text-decoration: none;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .resume-button:hover {
+      background: var(--text-dark);
+      color: white;
+    }
+
+    .resume-button::after {
+      content: ' →';
+      margin-left: 8px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 680px) {
+      .header-inner { padding: 0 10vw; }
+      .brand .home { font-size: 3.6vw; }
+      .brand .plus { font-size: 3.6vw; }
+      nav { font-size: 3.6vw; }
+      
+      .about-container { padding: 0 10vw; }
+      .profile-greeting { font-size: 28px; }
+      .section-title { font-size: 28px; }
+      .experience-item {
+        grid-template-columns: 50px 1fr 1fr;
+        gap: 15px;
+        max-width: 100%;
+      }
+      .company-logo {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+      .company-name, .position-title, .company-domain, .position-date {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body class="about-page">
+  <!-- Include shared header -->
+  <div id="header-container"></div>
+
+  <main class="page">
+    <div class="about-container">
+
+      <br><br><br><br><br><br><br><br>
+      <div class="profile-section">
+        <img src="./1_photos/logos/tongfeiphoto.png" alt="Tongfei profile picture" class="profile-image">
+        <h1 class="profile-greeting">Hi, I'm Tongfei!</h1>
+      </div>
+      <br><br><br><br><br><br><br><br><br><br>
+
+      <div class="work-experience-section">
+        <h2 class="section-title">Work Experience</h2>
+        <div class="experience-grid">
+          <div class="experience-item">
+            <div class="company-logo">
+              <img src="1_photos/logos/sslogo.png" alt="Scaling Reviews logo">
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">Scaling Reviews</h3>
+              <p class="company-domain">scalingreviews.com</p>
+            </div>
+            <div class="position-info">
+              <p class="position-title">Lead Designer</p>
+              <p class="position-date">Aug 2025 - Present</p>
+              <p class="position-title">Intern</p>
+              <p class="position-date">Jan 2025 - July 2025</p>
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="company-logo">
+              <img src="1_photos/logos/lovemagialogo.png" alt="CASA Magia logo">
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">CASA Magia</h3>
+              <p class="company-domain">lovemagia.com</p>
+            </div>
+            <div class="position-info">
+              <p class="position-title">Brand Designer</p>
+              <p class="position-date">Jan 2024 - Present</p>
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="company-logo">
+              <img src="1_photos/logos/bookstorelogo.png" alt="USC Bookstore logo">
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">USC Bookstore</h3>
+              <p class="company-domain">uscbookstore.com</p>
+            </div>
+            <div class="position-info">
+              <p class="position-title">Graphic Designer</p>
+              <p class="position-date">Sep 2023 - May 2024</p>
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="company-logo">
+              <img src="1_photos/logos/tmlogo.png" alt="Freelance logo">
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">Freelance</h3>
+              <p class="company-domain">tongfei.xyz</p>
+            </div>
+            <div class="position-info">
+              <p class="position-title">Graphic & Brand Designer</p>
+              <p class="position-date">2022 - Present</p>
+              <p class="position-title">Muralist</p>
+              <p class="position-date">2021 - Present</p>
+              <p class="position-title">Artist and Content Creator</p>
+              <p class="position-date">2020 - Present</p>
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="company-logo">
+              <img src="1_photos/logos/rhkyclogo.png" alt="RHKYC logo">
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">RHKYC</h3>
+              <p class="company-domain">rhkyc.org.hk</p>
+            </div>
+            <div class="position-info">
+              <p class="position-title">Marketing Intern</p>
+              <p class="position-date">Jun 2022 - Aug 2022</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-experience-section">
+        <h2 class="section-title">Professional Organizations</h2>
+        <div class="experience-grid">
+          <div class="experience-item">
+            <div class="company-logo">
+              <img src="1_photos/logos/lavalablogo.png" alt="Lavalab logo">
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">Lavalab</h3>
+              <p class="company-domain">usclavalab.org</p>
+            </div>
+            <div class="position-info">
+              <p class="position-title">Creative Director</p>
+              <p class="position-date">Aug 2024 - Present</p>
+              <p class="position-title">Design Lead</p>
+              <p class="position-date">Jan 2024 - Aug 2024</p>
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="company-logo">
+              <img src="1_photos/logos/innodlogo.png" alt="USC Innovative Design logo">
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">USC Innovative Design</h3>
+              <p class="company-domain">innodatusc.com</p>
+            </div>
+            <div class="position-info">
+              <p class="position-title">Designer</p>
+              <p class="position-date">Sep 2023 - Present</p>
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="company-logo">
+              <img src="1_photos/logos/isalogo.png" alt="International Student Assembly logo">
+            </div>
+            <div class="company-info">
+              <h3 class="company-name">USC ISA</h3>
+              <p class="company-domain">uscisa.org</p>
+            </div>
+            <div class="position-info">
+              <p class="position-title">Creative Director</p>
+              <p class="position-date">Aug 2023 - Present</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#" class="resume-button">Resume</a>
+    </div>
+  </main>
+
+  <script>
+    // Load shared header
+    fetch('header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header-container').innerHTML = html;
+        // Initialize header after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+        // Additional fallback to ensure About is set as current
+        setTimeout(() => {
+          const aboutLink = document.querySelector('#mainNav a[data-section="About"]');
+          if (aboutLink) {
+            document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('current'));
+            aboutLink.classList.add('current');
+            console.log('Fallback: Set About as current');
+          }
+        }, 100);
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+</body>
+</html>

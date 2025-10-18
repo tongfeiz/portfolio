@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>STACKT - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+    <!-- Hero Image -->
+    <div class="hero-image-container">
+      <img src="../projects/photos_stackt/stackthero.png" alt="STACKT project hero image" class="hero-image">
+    </div>
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+      <!---------------------------- Project Header --------------------------------->
+      <div class="project-header">
+        <h1 class="project-title">STACKT</h1>
+        <p class="project-description">Extendable space-saving drying rack built for college students with small kitchen spaces.</p>
+      </div>
+
+      <!---------------------------- Project Details --------------------------------->
+      <div class="project-details">
+        <div class="detail-column">
+          <div class="detail-title">Role</div>
+          <div class="detail-content">
+            <p>Product Designer</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Team</div>
+          <div class="detail-content">
+            <p>Tongfei Zhu (Design)</p>
+            <p>Eshaan Kothari (Design)</p>
+            <p>Waverly Bagley (Marketing)</p>
+            <p>Ava Bautch (Marketing)</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Scope</div>
+          <div class="detail-content">
+            <p>Feb - May 2025</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Tools</div>
+          <div class="detail-content">
+            <p>Adobe Photoshop</p>
+            <p>Adobe Premier Pro</p>
+            <p>Fusion 360</p>
+            <p>3D Printing</p>
+            <p>Sketching</p>
+            <p>AI Rendering</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">Traditional dish racks are often overcrowded with daily utensils, they take up valuable counter space and fail to dry items effectively. The result is a cluttered, frustrating experience in even the most organized kitchens. Our solution is a thoughtfully designed, compact drying rack with dual baskets that leverages vertical space, enhances airflow for better drying, and keeps utensils accessible. By fitting neatly within the sink, it eliminates countertop mess while offering durability and affordability for modern living.
+
+        </p>
+      </div>
+    </div>
+
+    <!--------------------------- Two Horizontal Images Section --------------------------------->
+    <div class="two-horizontal-images-section">
+      <div class="two-horizontal-images-content">
+        <img src="../projects/photos_stackt/sm1.png" alt="STACKT Design Process">
+        <img src="../projects/photos_stackt/sm2.png" alt="STACKT Design Process 2">
+        <img src="../projects/photos_stackt/sm3.png" alt="STACKT Design Process 3">
+        <img src="../projects/photos_stackt/sm4.png" alt="STACKT Design Process 4">
+        <img src="../projects/photos_stackt/sm5.png" alt="STACKT Design Process 5">
+        <img src="../projects/photos_stackt/sm6.png" alt="STACKT Design Process 6">
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">STACKT</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>

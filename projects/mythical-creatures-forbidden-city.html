@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>Mythical Creatures in the Forbidden City - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+    <!-- Hero Image -->
+    <div class="hero-image-container">
+      <img src="../projects/photos_myth/mythhero.png" alt="Mythical Creatures in the Forbidden City project hero image" class="hero-image">
+    </div>
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+      <!---------------------------- Project Header --------------------------------->
+      <div class="project-header">
+        <h1 class="project-title">Mythical Creatures in the Forbidden City</h1>
+        <p class="project-description">AR mobile game to promote traditional culture in Beijing's Forbidden City through interactive storytelling.</p>
+      </div>
+
+      <!---------------------------- Project Details --------------------------------->
+      <div class="project-details">
+        <div class="detail-column">
+          <div class="detail-title">Role</div>
+          <div class="detail-content">
+            <p>UI/UX Designer</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Team</div>
+          <div class="detail-content">
+            <p>Xinyi Yao (Design)</p>
+            <p>Tongfei Zhu (Design)</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Scope</div>
+          <div class="detail-content">
+            <p>Sep - Nov 2022</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Tools</div>
+          <div class="detail-content">
+            <p>Blender</p>
+            <p>Adobe Xd</p>
+            <p>Adobe Photoshop</p>
+            <p>Adobe After Effects</p>
+            <p>Procreate</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">With the metaverse becoming increasingly popular, my teammate and I created a mobile pet care game app that utilizes VR and XR technology within China’s Forbidden City. Within the game, mythical creatures will lead users to explore the Forbidden City, completing various tasks along the way to strengthen the user’s interest about Chinese culture and promote their lifestyle. The two of us submitted our project to Wupen's 2022 Metaverse Design Competition and won the first prize.</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <img src="../projects/photos_myth/ps1a.png" alt="Mythical Creatures in the Forbidden City project hero image" class="hero-image">
+        <br>
+        <br>
+        <img src="../projects/photos_myth/ps2.png" alt="Mythical Creatures in the Forbidden City project hero image" class="hero-image">
+      </div>
+      
+    </div>
+
+
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">Mythical Creatures</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>"Untitled" - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+    <!-- Hero Image -->
+    <div class="hero-image-container">
+      <img src="../projects/photos_ningbo/heroningbo.png" alt="Untitled mural project hero image" class="hero-image">
+    </div>
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+      <!---------------------------- Project Header --------------------------------->
+      <div class="project-header">
+        <h1 class="project-title">"Untitled"</h1>
+        <p class="project-description">Mural at Ningbo's Mondiland Factory, exploring industrial aesthetics and the relationship between art and manufacturing.</p>
+      </div>
+
+      <!---------------------------- Project Details --------------------------------->
+      <div class="project-details">
+        <div class="detail-column">
+          <div class="detail-title">Role</div>
+          <div class="detail-content">
+            <p>Mural Artist</p>
+            <p>Designer</p>
+            <p>Project Planner</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Team</div>
+          <div class="detail-content">
+            <p>Solo Project</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Scope</div>
+          <div class="detail-content">
+            <p>July 2025</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Tools</div>
+          <div class="detail-content">
+            <p>Latex Paint</p>
+            <p>Procreate</p>
+            <p>Adobe Photoshop</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">I painted a mural at Ningbo's Mondiland Suit Factory. This was the tallest mural I have ever painted. The factory provided me with a basic scaffolding, and I was able to paint the mural in a few days, but it was extremely challenging, especially when I had to move around on the unstable scaffolding. I almost fell off... several times...</p>
+      </div>
+    </div>
+
+    <!--------------------------- Grid Section --------------------------------->
+    <div class="instagram-grid-section">
+      <div class="instagram-grid-content">
+        <img src="../projects/photos_ningbo/gl1.png" alt="mural1">
+        <img src="../projects/photos_ningbo/gl2.png" alt="mural2">
+        <img src="../projects/photos_ningbo/gl3.png" alt="mural3"> 
+        <img src="../projects/photos_ningbo/gl4.png" alt="mural4">
+        <img src="../projects/photos_ningbo/gl5.png" alt="mural5">
+        <img src="../projects/photos_ningbo/gl6.png" alt="mural6">
+        <img src="../projects/photos_ningbo/gl7.png" alt="mural7">
+        <img src="../projects/photos_ningbo/gl8.png" alt="mural8">
+        <img src="../projects/photos_ningbo/gl9.png" alt="mural9">
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">Honestly I've been thinking long and hard for a title but I still haven't come up with one... For now, it'll remain "Untitled", like many other projects I've started but didn't have time to finish.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">Untitled</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>

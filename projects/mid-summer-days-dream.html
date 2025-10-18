@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>"Mid Summer Day's Dream" - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+    <!-- Hero Image -->
+    <div class="hero-image-container">
+      <img src="../projects/photos_midsummer/midsummerhero.png" alt="Mid Summer Day's Dream mural project hero image" class="hero-image">
+    </div>
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+      <!---------------------------- Project Header --------------------------------->
+      <div class="project-header">
+        <h1 class="project-title">Mid Summer Day's Dream</h1>
+        <p class="project-description">Mural in Hong Kong client's backyard, inspired by Shakespeare's play and the magic of summer nights.</p>
+      </div>
+
+      <!---------------------------- Project Details --------------------------------->
+      <div class="project-details">
+        <div class="detail-column">
+          <div class="detail-title">Role</div>
+          <div class="detail-content">
+            <p>Mural Artist</p>
+            <p>Project Planner</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Team</div>
+          <div class="detail-content">
+            <p>Solo Project</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Scope</div>
+          <div class="detail-content">
+            <p>Aug 2023</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Tools</div>
+          <div class="detail-content">
+            <p>Latex Paint</p>
+            <p>Procreate</p>
+            <p>Adobe Photoshop</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">Over the course of three weeks, I designed and painted this mural for a client in their backyard. A Midsummer Day’s Dream encapsulates nature’s vivid imagery in a playful and whimsical way.</p>
+      </div>
+    </div>
+
+    <!--------------------------- big Image Section --------------------------------->
+    <div class="hero-image-container">
+      <img src="../projects/photos_midsummer/midsummerhero2.png" alt="Mid Summer Day's Dream mural project hero image" class="hero-image">
+    </div>
+    <br><br>
+
+    <!--------------------------- Wide Image Section --------------------------------->
+    <div class="wide-image-container">
+      <img src="../projects/photos_midsummer/wide.png" alt="Mid Summer Day's Dream mural project hero image" class="hero-image">
+    </div>
+
+
+
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">Mid Summer Day\'s Dream</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>

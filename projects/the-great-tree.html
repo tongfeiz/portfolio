@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>"The Great Tree" - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+    <!-- Hero Image -->
+    <div class="hero-image-container">
+      <img src="../projects/photos_tree/treehero.png" alt="The Great Tree digital drawing project hero image" class="hero-image">
+    </div>
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+      <!---------------------------- Project Header --------------------------------->
+      <div class="project-header">
+        <h1 class="project-title">"The Great Tree"</h1>
+        <p class="project-description">Digital drawing on Procreate, exploring themes of growth, connection, and the natural world through digital art.</p>
+      </div>
+
+      <!---------------------------- Project Details --------------------------------->
+      <div class="project-details">
+        <div class="detail-column">
+          <div class="detail-title">Role</div>
+          <div class="detail-content">
+            <p>Digital Artist</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Team</div>
+          <div class="detail-content">
+            <p>Solo Project</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Scope</div>
+          <div class="detail-content">
+            <p>Dec 2023 - May 2024</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Tools</div>
+          <div class="detail-content">
+            <p>Procreate</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">I was in a pretty bad mental state during the winter of 2023… The first semester of college had been pretty tough for me. Though the high points were high, the stress of finding a sense of belonging in a new community, school work, and a breakup made me yearn for home.</p>
+      </div>
+    </div>
+
+
+    <!--------------------------- Grid Section --------------------------------->
+    <div class="grid-section">
+      <div class="grid-content">
+        <img src="../projects/photos_tree/sm1.png" alt="The Great Tree Process 1">
+        <img src="../projects/photos_tree/sm2.png" alt="The Great Tree Process 2">
+        <img src="../projects/photos_tree/sm3.png" alt="The Great Tree Process 3">
+        <img src="../projects/photos_tree/sm4.png" alt="The Great Tree Process 4">
+        <img src="../projects/photos_tree/sm5.png" alt="The Great Tree Process 5">
+        <img src="../projects/photos_tree/sm6.png" alt="The Great Tree Process 6">
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">I felt a temporary sense of relief when I flew home over winter break. Though I mainly grew up in Hong Kong, Shanghai felt like my true home. I came across a beautiful tree, and I started to draw. Bit by bit, detail by detail, the tree became its own world.</p>
+      </div>
+    </div>
+
+    <!--------------------------- Hero Image --------------------------------->
+    <div class="hero-image-container">
+      <img src="../projects/photos_tree/treeshanghai.png" alt="tree1" class="hero-image">
+    </div>
+
+        <!-------- demo video -------->
+        <div class="hero-image-container">
+          <video src="../projects/photos_tree/trimmedvid.mp4" alt="treevid" class="hero-image" autoplay loop muted playsinline>
+        </div>
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">The Great Tree</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>

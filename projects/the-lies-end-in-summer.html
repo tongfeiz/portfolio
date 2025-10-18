@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>謊言以夏為終 (The Lies End In Summer) - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+    <!-- Hero Image -->
+    <div class="hero-image-container">
+      <img src="../projects/photos_lies/lieshero.png" alt="The Lies End In Summer Taoism inspired collection project hero image" class="hero-image">
+    </div>
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+      <!---------------------------- Project Header --------------------------------->
+      <div class="project-header">
+        <h1 class="project-title">謊言以夏為終 (The Lies End In Summer)</h1>
+        <p class="project-description">Taoism inspired fashion piece symbolizing warding protection against evil and deception.</p>
+      </div>
+
+      <!---------------------------- Project Details --------------------------------->
+      <div class="project-details">
+        <div class="detail-column">
+          <div class="detail-title">Role</div>
+          <div class="detail-content">
+            <p>Graphic Designer</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Team</div>
+          <div class="detail-content">
+            <p>Theo Hsiah (Fashion Designer)</p>
+            <p>Tongfei Zhu (Graphic Designer)</p>
+            <p>Leo Seitz (Photographer)</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Scope</div>
+          <div class="detail-content">
+            <p>Oct 2024 - May 2025</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Tools</div>
+          <div class="detail-content">
+            <p>Adobe Photoshop</p>
+            <p>Procreate</p>
+            <p>Figma</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">My friend Theo and I wanted to collaborate on a project that combined our shared interest in Taoism and fulus (符箓), protective talismans believed to ward off evil and deception. We set out to design a piece of clothing that could serve as a wearable symbol of protection. The final collection included a skirt, jacket, hoodie, and balloon pants, each covered in red calligraphic symbols reminiscent of traditional talismans.</p>
+      </div>
+    </div>
+
+    <!--------------------------- Grid Section --------------------------------->
+    <div class="instagram-grid-section">
+      <div class="instagram-grid-content">
+        <img src="../projects/photos_lies/f1.png" alt="USC ISA Process 1">
+        <img src="../projects/photos_lies/f2.png" alt="USC ISA Process 2">
+        <img src="../projects/photos_lies/f3.png" alt="USC ISA Process 3">
+        <img src="../projects/photos_lies/f4.png" alt="USC ISA Process 4">
+        <img src="../projects/photos_lies/f5.png" alt="USC ISA Process 5">
+        <img src="../projects/photos_lies/f6.png" alt="USC ISA Process 6">
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">The Lies End In Summer</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>

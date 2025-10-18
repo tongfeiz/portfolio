@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>Video Editing - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+    <!--------------------------- Two Horizontal Images Section --------------------------------->
+    <div class="two-horizontal-images-section">
+      <div class="two-horizontal-images-content">
+        <a href="https://www.youtube.com/watch?v=XEkxxnjgrrI" target="_blank" rel="noopener">
+          <video src="../projects/photos_vlog/v1.mov" autoplay loop muted playsinline></video>
+        </a>
+        <a href="https://www.youtube.com/watch?v=ZyqYWGUtGsY" target="_blank" rel="noopener">
+          <video src="../projects/photos_vlog/v2.mov" autoplay loop muted playsinline></video>
+        </a>
+        <a href="https://www.youtube.com/watch?v=lxcDyqC-Ea8" target="_blank" rel="noopener">
+          <video src="../projects/photos_vlog/v3.mov" autoplay loop muted playsinline></video>
+        </a>
+        <a href="https://www.youtube.com/watch?v=VpGB9iOWRWU" target="_blank" rel="noopener">
+          <video src="../projects/photos_vlog/v4.mov" autoplay loop muted playsinline></video>
+        </a>
+
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+      <div class="text-section">
+        <div class="text-section-content">
+          <p class="text-section-text">I've always had an interest in vlogging and video editing. Here are some of my personal favorites!</p>
+      </div>
+    </div>
+
+        
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">Video Editing</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>

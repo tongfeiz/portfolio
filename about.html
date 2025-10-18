@@ -1,244 +1,1455 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<!--hello-->
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tongfei Zhu</title>
-    <link rel="stylesheet" href="homestyle.css">
-    <link rel="stylesheet" href="aboutstyle.css">
-    <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="font/Reval.otf" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tongfei Zhu - About</title>
+  <link rel="icon" type="image/png" href="1_photos/logos/icontools/faviconnew.png"> 
+  <style>
+    :root {
+      --page-width: 1200px;
+      --text-light: #f7f7f7;
+      --text-dark: #1d1d1d;
+      --muted: #808080;
+      --gap: 28px;
+      --card-width: 364px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+      font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: var(--text-light);
+      color: var(--text-dark);
+    }
+
+    .page {
+      width: 100%;
+      margin: 0 auto 120px;
+      padding: 100px 0 0;
+    }
+
+    .about-container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 10vw;
+    }
+
+    /* Profile section */
+    .profile-section {
+      text-align: center;
+      margin-bottom: 280px;
+      margin-top: 170px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .profile-section.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin: 0 auto 30px;
+      display: block;
+    }
+
+    .profile-greeting {
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: -0.04em;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    /* Work Experience Section */
+    .work-experience-section {
+      margin-bottom: 80px;
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: -0.04em;
+      color: var(--text-dark);
+      /* color: #00000000; */ /* for transparent text */
+      text-align: center;
+      letter-spacing: -0.04em;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .section-title.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 3-Column Layout Variables - ADJUST THESE FOR SPACING */
+    :root {
+      --company-column-width: 300px;  /* Adjust company column width */
+      --position-column-width: 400px; /* Adjust position column width */
+      --date-column-width: 250px;     /* Adjust date column width */
+      --column-gap: 60px;             /* Adjust gap between columns */
+      --row-gap: 0px;                /* Adjust gap between rows */
+    }
+
+    .experience-table {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--row-gap);
+      align-items: stretch;
+    }
+
+    .experience-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--column-gap);
+      cursor: pointer;
+      position: relative;
+      padding: 10px 0;
+      width: 100%;
+      text-decoration: none;
+      color: inherit;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .experience-row.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .experience-row:hover .hover-png {
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    /* Animated underline effect */
+    .word-underline {
+      position: relative;
+      display: inline-block;
+    }
+
+    .word-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--text-dark);
+      transition: width 0.3s ease;
+    }
+
+    .word-underline.animate::after {
+      width: 100%;
+    }
+
+    /* Fixed hover image container */
+    .hover-image-container {
+      position: fixed;
+      top: 50%;
+      left: 53%;
+      transform: translate(-0%, -50%);
+      z-index: 2147483647;
+      pointer-events: none;
+      display: none;
+    }
+
+    .hover-image {
+      width: 400px;
+      height: 400px;
+      object-fit: contain;
+    }
+
+    .hover-png {
+      position: fixed !important;
+      width: 400px !important;
+      height: 400px !important;
+      display: none;
+      z-index: 2147483647 !important;
+      pointer-events: none;
+      object-fit: contain;
+      left: 0%;
+      top: 0%;
+      transform: translate(-50%, -50%) !important;
+
+    }
+
+    /* 3-stage image effect */
+    .hover-png.stage-1 {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hover-png.stage-2 {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hover-png.stage-3 {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .company-name {
+      font-size: 25px;
+      font-weight: 400;
+      color: var(--text-dark);
+      margin: 0;
+      text-align: left;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .position-title {
+      font-size: 25px;
+      font-weight: 400;
+      color: var(--text-dark);
+      margin: 0;
+      margin-left: -20px;
+      text-align: left;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .position-date {
+      font-size: 25px;
+      font-weight: 400;
+      color: var(--text-dark);
+      margin: 0;
+      text-align: right;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .position-info {
+      display: contents;
+    }
+
+    /* For companies with multiple positions */
+    .company-group {
+      display: contents;
+    }
+
+    .company-name-multi {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin: 0;
+      text-align: left;
+      grid-row: span 2; /* Span multiple rows for companies with multiple positions */
+    }
+
+    /* Resume Button */
+    .resume-button {
+      display: block;
+      width: 200px;
+      margin: 60px auto 0;
+      padding: 10px 10px;
+      background: rgba(255, 255, 255, 0);
+      border: 1px solid var(--text-dark);
+      /* border-radius: 40px; */
+      color: var(--text-dark);
+      text-decoration: none;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 100;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+      transition: all 0.2s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .resume-button.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .resume-button:hover {
+      background: var(--text-dark);
+      color: white;
+    }
+
+    .resume-button::after {
+      margin-left: 0px;
+    }
+
+    /* About Text Section */
+    .about-text-section {
+      margin-top: 0px;
+      margin-bottom: 140px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .about-text-section.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Contact Section */
+    .contact-section {
+      margin-top: 140px;
+      margin-bottom: 140px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .contact-section.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .contact-item {
+      background: #f7f7f7;
+      border-radius: 10px;
+      padding: 30px;
+      cursor: pointer;
+      transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), border 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid transparent;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .contact-item:hover {
+      background: #ffffff;
+      border: 1px solid var(--text-dark);
+    }
+
+    .contact-label {
+      font-size: 23px;
+      font-weight: 400;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-value {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-copy {
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--muted);
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    }
+
+    .about-text-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--gap);
+      width: 100%;
+    }
+
+    .about-text-column {
+      font-size: 25px;
+      font-weight: 400;
+      color: var(--text-dark);
+      line-height: 1.4;
+      letter-spacing: -0.04em;
+    }
+
+    .about-text-column p {
+      margin: 0;
+    }
+
+    /* Word Network Section */
+    .word-network-section {
+      margin-top: 140px;
+      margin-bottom: 80px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .word-network-section.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .word-network-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      height: 700px;
+      background: #f7f7f7;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .globe-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0px;
+    }
+
+    .text-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+      background: #f7f7f7;
+      border-radius: 10px;
+      margin: 20px;
+    }
+
+    .tools-header {
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text-dark);
+      margin: 0 0 20px 0;
+      letter-spacing: -0.04em;
+      text-align: center;
+    }
+
+    .tools-body {
+      color: var(--text-dark);
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+      font-size: 20px;
+      font-weight: 100;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+      text-align: center;
+    }
+
+    .tools-body p {
+      margin: 0 0 8px 0;
+    }
+
+    #globe {
+      display: block;
+      cursor: pointer;
+    }
+
+    /* Responsive design */
+    @media (max-width: 1200px) {
+      .company-name, .position-title, .position-date {
+        font-size: 2.5vw;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .company-name, .position-title, .position-date {
+        font-size: 3vw;
+      }
+      
+      :root {
+        --column-gap: 4vw;
+        --row-gap: 1.5vw;
+      }
+
+      /* About text responsive for tablet */
+      .about-text-container {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .about-text-column {
+        font-size: 3vw;
+      }
+
+      /* Contact responsive for tablet */
+      .contact-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .header-inner { padding: 0 10vw; }
+      .brand .home { font-size: 3.6vw; }
+      .brand .plus { font-size: 3.6vw; }
+      nav { font-size: 3.6vw; }
+      
+      .about-container { padding: 0 10vw; }
+      .profile-greeting { font-size: 28px; }
+      .section-title { font-size: 28px; }
+      
+      .experience-row {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 15px 0;
+      }
+      
+      .company-name {
+        font-size: 4vw;
+        text-align: left;
+        margin-bottom: 4px;
+      }
+      
+      .position-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+      
+      .position-title {
+        font-size: 3.5vw;
+        text-align: left;
+        margin: 0;
+      }
+      
+      .position-date {
+        font-size: 3.5vw;
+        text-align: right;
+        margin: 0;
+      }
+      
+      .hover-png {
+        width: 30px;
+        height: 30px;
+      }
+
+      /* About text responsive */
+      .about-text-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .about-text-column {
+        font-size: 4vw;
+      }
+
+      /* Word network responsive */
+      .word-network-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        gap: 20px;
+      }
+      
+      .globe-section {
+        height: 400px;
+      }
+      
+      .text-section {
+        margin: 10px;
+        padding: 20px;
+      }
+      
+      .tools-header {
+        font-size: 24px;
+      }
+      
+      .tools-body {
+        font-size: 16px;
+      }
+
+      /* Contact responsive for mobile */
+      .contact-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .contact-item {
+        padding: 20px;
+      }
+      
+      .contact-label {
+        font-size: 16px;
+      }
+      
+      .contact-value {
+        font-size: 18px;
+      }
+      
+      .contact-copy {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .company-name, .position-title, .position-date {
+        font-size: 4.5vw;
+      }
+      
+      :root {
+        --column-gap: 2vw;
+        --row-gap: 0.8vvw;
+      }
+    }
+  </style>
 </head>
+<body class="about-page">
+  <!-- Include shared header -->
+  <div id="header-container"></div>
 
-<body>
-    <!--HEADER-->
-    <header class="navigation-about">
-        <div class="logo-about">Tongfei Zhu</div>
-        <div class="tagline-about">Enjoying all the detours from life</div>
-        <div class="about-link-about">About</div>
-    </header>
+  <main class="page">
+    <div class="about-container">
 
-    <!------ BIG NAME ------>
-    <h1 class="biggername">TONGFEI ZHU</h1>
+<!----------------------- Profile Section -------------------------------->
+      <div class="profile-section">
+        <img src="./1_photos/logos/tongfeiphoto.png" alt="Tongfei profile picture" class="profile-image">
+        <h1 class="profile-greeting">Hi, I'm Tongfei!</h1>
+      </div>
 
 
-    <!------ GALLERY ------>
-    <div class="gallery-container" id="galleryContainer">
-        <div class="gallery-track" id="galleryTrack">
-            <img src="images/ab1.png" alt="Gallery Image 1" class="gallery-item">
-            <img src="images/ab2.png" alt="Gallery Image 2" class="gallery-item">
-            <img src="images/ab3.png" alt="Gallery Image 3" class="gallery-item">
-            <img src="images/ab4.png" alt="Gallery Image 4" class="gallery-item">
-            <img src="images/ab5.png" alt="Gallery Image 5" class="gallery-item">
-            <img src="images/ab6.png" alt="Gallery Image 6" class="gallery-item">
-            <img src="images/ab7.png" alt="Gallery Image 7" class="gallery-item">
-            <img src="images/ab8.png" alt="Gallery Image 8" class="gallery-item">
-            <img src="images/ab9.png" alt="Gallery Image 9" class="gallery-item">
-            <img src="images/ab10.png" alt="Gallery Image 10" class="gallery-item">
-            <img src="images/ab11.png" alt="Gallery Image 11" class="gallery-item">
-            <img src="images/ab12.png" alt="Gallery Image 12" class="gallery-item">
-            <img src="images/ab13.png" alt="Gallery Image 13" class="gallery-item">
-            <img src="images/ab14.png" alt="Gallery Image 14" class="gallery-item">
-            <img src="images/ab15.png" alt="Gallery Image 15" class="gallery-item">
-            <img src="images/ab16.png" alt="Gallery Image 16" class="gallery-item">
-            <img src="images/ab17.png" alt="Gallery Image 17" class="gallery-item">
-            <img src="images/ab18.png" alt="Gallery Image 18" class="gallery-item">
-            <img src="images/ab19.png" alt="Gallery Image 19" class="gallery-item">
-            <img src="images/ab20.png" alt="Gallery Image 20" class="gallery-item">
-            <img src="images/ab21.png" alt="Gallery Image 21" class="gallery-item">
+
+<!----------------------- Work Experience Section -------------------------------->
+      <div class="work-experience-section">
+        <h2 class="section-title">Work Experience</h2>
+        <div class="experience-table">
+          <!-- Scaling Reviews -->
+          <a href="https://scalingreviews.com" target="_blank" class="experience-row">
+            <div class="company-name">Scaling Reviews</div>
+            <div class="position-info">
+              <div class="position-title">Lead Designer</div>
+              <div class="position-date">Aug 2025 - Present</div>
+            </div>
+            <img src="1_photos/logos/ss1.png" alt="Scaling Reviews" class="hover-png">
+          </a>
+          <a href="https://scalingreviews.com" target="_blank" class="experience-row">
+            <div class="company-name"></div>
+            <div class="position-info">
+              <div class="position-title">Intern</div>
+              <div class="position-date">Jan 2025 - July 2025</div>
+            </div>
+            <img src="1_photos/logos/ss2.png" alt="Scaling Reviews" class="hover-png">
+          </a>
+
+          <!-- CASA Magia -->
+          <a href="https://lovemagia.com" target="_blank" class="experience-row">
+            <div class="company-name">CASA Magia</div>
+            <div class="position-info">
+              <div class="position-title">Product Designer</div>
+              <div class="position-date">Feb 2025 - Present</div>
+            </div>
+            <img src="1_photos/logos/lm1.png" alt="CASA Magia" class="hover-png">
+          </a>
+
+          <!-- USC Bookstore -->
+          <a href="https://uscbookstore.com" target="_blank" class="experience-row">
+            <div class="company-name">USC Bookstore</div>
+            <div class="position-info">
+              <div class="position-title">Graphic Designer</div>
+              <div class="position-date">Dec 2024 - Present</div>
+            </div>
+            <img src="1_photos/logos/bookstore1.png" alt="USC Bookstore" class="hover-png">
+          </a>
+          <a href="https://uscbookstore.com" target="_blank" class="experience-row">
+            <div class="company-name"></div>
+            <div class="position-info">
+              <div class="position-title">Operations Member</div>
+              <div class="position-date">Oct 2024 - Present</div>
+            </div>
+            <img src="1_photos/logos/bookstore2.png" alt="USC Bookstore" class="hover-png">
+          </a>
+
+          <!-- Freelance -->
+          <a href="https://tongfei.xyz" target="_blank" class="experience-row">
+            <div class="company-name">Freelance</div>
+            <div class="position-info">
+              <div class="position-title">Product Designer</div>
+              <div class="position-date">Nov 2024 - Present</div>
+            </div>
+            <img src="1_photos/logos/freelance1.png" alt="Freelance" class="hover-png">
+          </a>
+          <a href="https://tongfei.xyz" target="_blank" class="experience-row">
+            <div class="company-name"></div>
+            <div class="position-info">
+              <div class="position-title">Muralist</div>
+              <div class="position-date">May 2023 - Present</div>
+            </div>
+            <img src="1_photos/logos/freelance2.png" alt="Freelance" class="hover-png">
+          </a>
+          <a href="https://www.instagram.com/5dollarkid" target="_blank" class="experience-row">
+            <div class="company-name"></div>
+            <div class="position-info">
+              <div class="position-title">Artist and Content Creator</div>
+              <div class="position-date">Jan 2021 - Present</div>
+            </div>
+            <img src="1_photos/logos/freelance3.png" alt="Freelance" class="hover-png">
+          </a>
+
+          <!-- RHKYC -->
+          <a href="https://www.rhkyc.org.hk" target="_blank" class="experience-row">
+            <div class="company-name">RHKYC</div>
+            <div class="position-info">
+              <div class="position-title">Assistant Sailing Instructor</div>
+              <div class="position-date">Jun 2019 - Jul 2020</div>
+            </div>
+            <img src="1_photos/logos/rhkyc1.png" alt="RHKYC" class="hover-png">
+          </a>
         </div>
+      </div>
+
+<!----------------------- Professional Organizations Section -------------------------------->
+      <div class="work-experience-section">
+        <h2 class="section-title">Professional Organizations</h2>
+        <div class="experience-table">
+          <!-- Lavalab -->
+          <a href="https://usclavalab.org" target="_blank" class="experience-row">
+            <div class="company-name">USC Lavalab</div>
+            <div class="position-info">
+              <div class="position-title">Design Mentor</div>
+              <div class="position-date">Oct 2025 - Present</div>
+            </div>
+            <img src="1_photos/logos/lavasticker.png" alt="Lavalab" class="hover-png">
+          </a>
+          <a href="https://mylily.up.railway.app/" target="_blank" class="experience-row">
+            <div class="company-name"></div>
+            <div class="position-info">
+              <div class="position-title">Designer</div>
+              <div class="position-date">Feb 2025 - May 2025</div>
+            </div>
+            <img src="1_photos/logos/lily.png" alt="Lavalab" class="hover-png">
+          </a>
+
+          <!-- USC Innovative Design -->
+          <a href="https://innodatusc.com" target="_blank" class="experience-row">
+            <div class="company-name">USC Innovative Design</div>
+            <div class="position-info">
+              <div class="position-title">Tech Lead</div>
+              <div class="position-date">Aug 2025 - Present</div>
+            </div>
+            <img src="1_photos/logos/innod1.png" alt="USC Innovative Design" class="hover-png">
+          </a>
+          <a href="https://innodatusc.com" target="_blank" class="experience-row">
+            <div class="company-name"></div>
+            <div class="position-info">
+              <div class="position-title">Marketing Intern</div>
+              <div class="position-date">Feb 2025 - May 2025</div>
+            </div>
+            <img src="1_photos/logos/innod2.png" alt="USC Innovative Design" class="hover-png">
+          </a>
+          <a href="https://innodatusc.com" target="_blank" class="experience-row">
+            <div class="company-name"></div>
+            <div class="position-info">
+              <div class="position-title">Product Designer</div>
+              <div class="position-date">Feb 2025 - May 2025</div>
+            </div>
+            <img src="1_photos/logos/innod3.png" alt="USC Innovative Design" class="hover-png">
+          </a>
+
+          <!-- International Student Assembly -->
+          <a href="https://www.instagram.com/usc.isa/" target="_blank" class="experience-row">
+            <div class="company-name">USC ISA</div>
+            <div class="position-info">
+              <div class="position-title">Graphic Designer</div>
+              <div class="position-date">May 2025 - Present</div>
+            </div>
+            <img src="1_photos/logos/isa1.png" alt="International Student Assembly" class="hover-png">
+          </a>
+        </div>
+      </div>
+
+<!----------------------- Resume Button -------------------------------->
+        <a href="https://drive.google.com/file/d/169Cyru1KxQzwkO743UzxyziFOEUFqgmx/view" class="resume-button" target="_blank">Resume</a>
+
+<!----------------------- Word Network Section -------------------------------->
+    <div class="word-network-section">
+      <div class="word-network-container">
+        <div class="globe-section">
+          <canvas id="globe"></canvas>
+        </div>
+        <div class="text-section">
+          <h3 class="tools-header">Tools and Skills</h3>
+          <div class="tools-body">
+            <p>My bag of tricks as a designer...</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-
-     <!------ RESUME SECTION ------>
-     <div class="resume-section">
-        <div class="resume-container">
-            <div class="resume-row">
-                <div class="resume-heading">
-                    <h2>Work<br>Experience</h2>
-                </div>
-                <div class="resume-content">
-                    <div class="job-entry">
-                        <div class="job-number">(1)</div>
-                        <div class="job-details">
-                            <div class="company-name">USC Bookstore</div>
-                            <div class="company-url"><a href="https://www.uscbookstore.com/" target="_blank">uscbookstore.com</a></div>
-                            <div class="vertical-line"></div>
-                        </div>
-                        <div class="job-positions">
-                            <div class="position">
-                                <div class="position-title">Graphic Designer</div>
-                                <div class="position-date">Dec 2024 - Present</div>
-                            </div>
-                            <div class="position">
-                                <div class="position-title">Operations Member</div>
-                                <div class="position-date">Oct 2024 - Present</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="job-entry">
-                        <div class="job-number">(2)</div>
-                        <div class="job-details">
-                            <div class="company-name">Freelance</div>
-                            <div class="company-url"><a href="index.html" target="_blank">tongfeiz.github.io</a></div>
-                            <div class="vertical-line"></div>
-                        </div>
-                        <div class="job-positions">
-                            <div class="position">
-                                <div class="position-title">Graphic and Branding Designer</div>
-                                <div class="position-date">Nov 2024 - Present</div>
-                            </div>
-                            <div class="position">
-                                <div class="position-title">Muralist</div>
-                                <div class="position-date">May 2023 - Present</div>
-                            </div>
-                            <div class="position">
-                                <div class="position-title">Artist and Content Creator</div>
-                                <div class="position-date">Jan 2021 - Present</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="job-entry">
-                        <div class="job-number">(3)</div>
-                        <div class="job-details">
-                            <div class="company-name">Bloom</div>
-                            <div class="company-url"><a href="https://www.shopbloomhk.com" target="_blank">shopbloomhk.com</a></div>
-                        </div>
-                        <div class="job-positions">
-                            <div class="position">
-                                <div class="position-title">Graphic Designer and Video Editor</div>
-                                <div class="position-date">Jan 2022 - Jun 2023</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="job-entry">
-                        <div class="job-number">(4)</div>
-                        <div class="job-details">
-                            <div class="company-name">RHKYC</div>
-                            <div class="company-url"><a href="https://www.rhkyc.org.hk/" target="_blank">rhkyc.org.hk</a></div>
-                        </div>
-                        <div class="job-positions">
-                            <div class="position">
-                                <div class="position-title">Assistant Sailing Instructor</div>
-                                <div class="position-date">Jun 2019 - Jul 2020</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="resume-row">
-                <div class="resume-heading">
-                    <h2>Professional<br>Organizations</h2>
-                </div>
-                <div class="resume-content">
-                    <div class="job-entry">
-                        <div class="job-number">(5)</div>
-                        <div class="job-details">
-                            <div class="company-name">Lavalab</div>
-                            <div class="company-url"><a href="https://usclavalab.org/" target="_blank">usclavalab.org</a></div>
-                        </div>
-                        <div class="job-positions">
-                            <div class="position">
-                                <div class="position-title">Designer</div>
-                                <div class="position-date">Feb 2025 - Present</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="job-entry">
-                        <div class="job-number">(6)</div>
-                        <div class="job-details">
-                            <div class="company-name">USC Innovative Design</div>
-                            <div class="company-url"><a href="https://www.innodatusc.com/" target="_blank">innodatusc.com</a></div>
-                            <div class="vertical-line"></div>
-                        </div>
-                        <div class="job-positions">
-                            <div class="position">
-                                <div class="position-title">Marketing Intern</div>
-                                <div class="position-date">Feb 2025 - Present</div>
-                            </div>
-                            <div class="position">
-                                <div class="position-title">Product Designer</div>
-                                <div class="position-date">Feb 2025 - Present</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="resume-button-container">
-                <a href="https://drive.google.com/file/d/18HOv6_YQex8WE1d-epHuZQvHQccZ5O5J/view?usp=sharing" class="resume-button" target="_blank">Resume →</a>
-            </div>
+<!----------------------- Word Network Section -------------------------------->
+<!----------------------- About Text Description -------------------------------->
+      <div class="about-text-section">
+        <div class="about-text-container">
+          <div class="about-text-column">
+            <p>I'm Tongfei Zhu (朱同非). Born and raised in Shanghai and Hong Kong, I grew up pursuing many hobbies. Art, music, sports.</p>
+          </div>
+          <div class="about-text-column">
+            <p>Now studying at USC, I continue to find cross disciplinary intersections between art, design, music, and other forms of multimedia.</p>
+          </div>
+          <div class="about-text-column">
+            <p>I’m currently building projects in fragrance, dev tools, edtech, and design services. Feel free to reach out to chat or collaborate with me!</p>
+          </div>
         </div>
-    </div>
+      </div>
+
+<!----------------------- Contact Section -------------------------------->
+      <div class="contact-section">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-container">
+          <div class="contact-item" onclick="copyToClipboard('+1 (626) 788 0177')">
+            <div class="contact-label">Phone:</div>
+            <div class="contact-value">+1 (626) 788 0177</div>
+            <div class="contact-copy">Copy to clipboard 📋</div>
+          </div>
+          
+          <div class="contact-item" onclick="window.location.href='mailto:tongfeiz@usc.edu'">
+            <div class="contact-label">Email:</div>
+            <div class="contact-value">tongfeiz@usc.edu</div>
+            <div class="contact-copy">Shoot me an email 📧</div>
+          </div>
+          
+          <div class="contact-item" onclick="window.open('https://linkedin.com/in/tongfeiz/', '_blank')">
+            <div class="contact-label">LinkedIn:</div>
+            <div class="contact-value">linkedin.com/in/tongfeiz/</div>
+            <div class="contact-copy">Connect with me... ☕</div>
+          </div>
+          
+          <div class="contact-item" onclick="window.open('https://instagram.com/5dollarkid', '_blank')">
+            <div class="contact-label">Instagram:</div>
+            <div class="contact-value">instagram.com/5dollarkid</div>
+            <div class="contact-copy">See more of my work! 🎨</div>
+          </div>
+          
+          <div class="contact-item" onclick="window.open('https://x.com/tongfeizhu', '_blank')">
+            <div class="contact-label">X:</div>
+            <div class="contact-value">x.com/tongfeizhu</div>
+            <div class="contact-copy">Because every designer is on twitter... 🐦</div>
+          </div>
+        </div>
+      </div>
 
 
-    <!------ EXPLORING WORLDS SECTION ------>
-<div class="exploring-worlds-container">
-    <h1 class="exploring-title">Exploring Worlds</h1>
-    
-    <div class="exploring-content">
-        <div class="exploring-column">
-            <p>My name is <a href="#" class="underline-link">Tongfei Zhu</a>. Born and raised in <a href="#" class="underline-link">Shanghai</a> and <a href="#" class="underline-link">Hong Kong</a>, I grew up pursuing many hobbies. Art, music, sports, I loved doing what I did.</p>
-        </div>
-        
-        <div class="exploring-column">
-            <p>I never stopped exploring, and I'm still deeply passionate about my hobbies. Now in LA at USC, <a href="#" class="underline-link">I continue to find cross disciplinary intersections</a></p>
-        </div>
-        
-        <div class="exploring-column">
-            <p><a href="#" class="underline-link">between art, design, music, and other forms of multimedia</a>. I am currently exploring more with creative coding and animation.</p>
-        </div>
-    </div>
-    
-    <div class="contact-section">
-        <h2 class="contact-title">Get in Touch</h2>
-        
-        <div class="contact-grid">
-            <div class="contact-item">
-                <p class="contact-label">Phone:</p>
-                <p class="contact-info">+1 (626) 788 0177</p>
-            </div>
+  <!-- Fixed hover image container -->
+  <div id="hover-image-container" class="hover-image-container">
+    <img id="hover-image" src="" alt="" class="hover-image">
+  </div>
+
+  </main>
+
+  <script>
+    // Load shared header
+    fetch('header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header-container').innerHTML = html;
+        // Initialize header after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+        // Additional fallback to ensure About is set as current
+        setTimeout(() => {
+          const aboutLink = document.querySelector('#mainNav a[data-section="About"]');
+          if (aboutLink) {
+            document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('current'));
+            aboutLink.classList.add('current');
+            console.log('Fallback: Set About as current');
+          }
+          
+          // Add custom navigation handling for about page
+          const homeBtn = document.getElementById('homeBtn');
+          const nav = document.getElementById('mainNav');
+          
+          if (homeBtn) {
+            homeBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              window.location.href = '/index.html';
+            });
+          }
+          
+          if (nav) {
+            nav.addEventListener('click', (e) => {
+              const a = e.target.closest('a');
+              if (!a) return;
+              
+              const href = a.getAttribute('href');
+              
+              // Handle About link click - scroll to top instead of navigating
+              if (href === '/about.html') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+              }
+              // Let other links (like Work) navigate normally
+            });
+          }
+        }, 100);
+      })
+      .catch(error => console.error('Error loading header:', error));
+
+    // Scroll animations and dynamic effects
+    document.addEventListener('DOMContentLoaded', function() {
+      // Intersection Observer for scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
             
-            <div class="contact-item">
-                <p class="contact-label">Email:</p>
-                <p class="contact-info"><a href= "mailto:tongfeiz@usc.edu" target="_blank">tongfeiz@usc.edu</a></p>
-            </div>
+            // For experience rows, add staggered animation
+            if (entry.target.classList.contains('experience-row')) {
+              const rows = document.querySelectorAll('.experience-row');
+              const index = Array.from(rows).indexOf(entry.target);
+              entry.target.style.transitionDelay = `${index * 0.03}s`;
+            }
+          }
+        });
+      }, observerOptions);
+
+      // Observe all animated elements
+      const animatedElements = document.querySelectorAll('.profile-section, .section-title, .experience-row, .resume-button, .about-text-section, .word-network-section, .contact-section');
+      animatedElements.forEach(el => observer.observe(el));
+
+      // Dynamic scroll effects
+      let ticking = false;
+      
+      function updateScrollEffects() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.2; // Reduced intensity
+        
+        // Subtle parallax effect for profile image
+        const profileImage = document.querySelector('.profile-image');
+        if (profileImage) {
+          profileImage.style.transform = `translateY(${rate * 0.3}px)`;
+        }
+        
+        // Remove the dynamic opacity effect that was causing jumpiness
+        // const sections = document.querySelectorAll('.work-experience-section');
+        // sections.forEach((section, index) => {
+        //   const rect = section.getBoundingClientRect();
+        //   const windowHeight = window.innerHeight;
+        //   const sectionCenter = rect.top + rect.height / 2;
+        //   const distanceFromCenter = Math.abs(sectionCenter - windowHeight / 2);
+        //   const maxDistance = windowHeight;
+        //   const opacity = Math.max(0.3, 1 - (distanceFromCenter / maxDistance));
+        //   section.style.opacity = opacity;
+        // });
+        
+        ticking = false;
+      }
+      
+      function requestScrollUpdate() {
+        if (!ticking) {
+          requestAnimationFrame(updateScrollEffects);
+          ticking = true;
+        }
+      }
+      
+      window.addEventListener('scroll', requestScrollUpdate);
+
+      const experienceRows = document.querySelectorAll('.experience-row');
+      
+      // Wrap each text element in a span for underline animation
+      function wrapTextInSpans() {
+        const textElements = document.querySelectorAll('.company-name, .position-title, .position-date, .company-name-multi');
+        
+        textElements.forEach(element => {
+          if (element.textContent.trim()) {
+            element.innerHTML = `<span class="word-underline">${element.textContent.trim()}</span>`;
+          }
+        });
+      }
+      
+      // Initialize text wrapping
+      wrapTextInSpans();
+      
+      // Get the fixed hover container and image
+      const hoverContainer = document.getElementById('hover-image-container');
+      const hoverImage = document.getElementById('hover-image');
+      
+      experienceRows.forEach(row => {
+        const hoverPng = row.querySelector('.hover-png');
+        const companyName = row.querySelector('.company-name .word-underline');
+        const positionTitle = row.querySelector('.position-title .word-underline');
+        const positionDate = row.querySelector('.position-date .word-underline');
+        
+        // Store timeout IDs to clear them if needed
+        let timeoutIds = [];
+        let isHovering = false;
+        
+        row.addEventListener('mouseenter', function() {
+          isHovering = true;
+          hoverContainer.style.display = 'block';
+          
+          // Clear any existing timeouts
+          timeoutIds.forEach(id => clearTimeout(id));
+          timeoutIds = [];
+          
+          // Remove any existing animations first
+          const allSpans = row.querySelectorAll('.word-underline');
+          allSpans.forEach(span => {
+            span.classList.remove('animate');
+          });
+          
+          // Get the base image source and create versions a, b, c
+          const baseSrc = hoverPng.src;
+          const baseName = baseSrc.replace(/\.[^/.]+$/, ""); // Remove file extension
+          const extension = baseSrc.split('.').pop();
+          
+          // Start with stage 1 (version a)
+          hoverImage.src = baseName + 'a.' + extension;
+          
+          // Faster 3-stage animation
+          const stage2Id = setTimeout(() => {
+            if (isHovering) {
+              hoverImage.src = baseName + 'b.' + extension;
+            }
+          }, 100); // Faster: was 200ms
+          timeoutIds.push(stage2Id);
+          
+          const stage3Id = setTimeout(() => {
+            if (isHovering) {
+              hoverImage.src = baseName + 'c.' + extension;
+            }
+          }, 200); // Faster: was 400ms
+          timeoutIds.push(stage3Id);
+          
+          // Animate columns sequentially, skipping empty ones
+          let delay = 0;
+          
+          if (companyName) {
+            const id = setTimeout(() => {
+              if (isHovering) {
+                companyName.classList.add('animate');
+              }
+            }, delay);
+            timeoutIds.push(id);
+            delay += 150;
+          }
+          
+          if (positionTitle) {
+            const id = setTimeout(() => {
+              if (isHovering) {
+                positionTitle.classList.add('animate');
+              }
+            }, delay);
+            timeoutIds.push(id);
+            delay += 150;
+          }
+          
+          if (positionDate) {
+            const id = setTimeout(() => {
+              if (isHovering) {
+                positionDate.classList.add('animate');
+              }
+            }, delay);
+            timeoutIds.push(id);
+          }
+        });
+        
+        row.addEventListener('mouseleave', function() {
+          isHovering = false;
+          hoverContainer.style.display = 'none';
+          
+          // Clear all pending timeouts
+          timeoutIds.forEach(id => clearTimeout(id));
+          timeoutIds = [];
+          
+          // Remove animation from all elements immediately
+          const allSpans = row.querySelectorAll('.word-underline');
+          allSpans.forEach(span => {
+            span.classList.remove('animate');
+          });
+        });
+      });
+
+      // Word Network functionality
+      const canvas = document.getElementById("globe");
+      if (canvas) {
+        const ctx = canvas.getContext("2d");
+        resizeCanvas();
+
+        const images = [
+          { 
+            name: "Photoshop", 
+            src: "1_photos/logos/icontools/ps1.png",
+            capabilities: ["Photo Editing", "Graphic Design", "Packaging Design", "Product Mockups", "AI Tools"]
+          },
+          { 
+            name: "After Effects", 
+            src: "1_photos/logos/icontools/ae1.png",
+            capabilities: ["Motion Graphics", "Visual Effects", "Animation"]
+          },
+          { 
+            name: "Illustrator", 
+            src: "1_photos/logos/icontools/ai1.png",
+            capabilities: ["Logo Design", "Typography", "Icons", "Branding"]
+          },
+          { 
+            name: "Cursor (or VS Code)", 
+            src: "1_photos/logos/icontools/cursor1.png",
+            capabilities: ["CSS/HTML", "Javascript", "'Vibecoding'", "Python", "SQL"]
+          },
+          { 
+            name: "Figma", 
+            src: "1_photos/logos/icontools/figma1.png",
+            capabilities: ["UI/UX", "Prototyping", "Website", "App", "Branding"]
+          },
+          { 
+            name: "InDesign", 
+            src: "1_photos/logos/icontools/id1.png",
+            capabilities: ["Layout Design", "Printmaking", "Typography", "Publishing"]
+          },
+          { 
+            name: "Logic Pro", 
+            src: "1_photos/logos/icontools/logic1.png",
+            capabilities: ["Music Production", "Songwriting", "Composition", "Mixing"]
+          },
+          { 
+            name: "Premiere Pro", 
+            src: "1_photos/logos/icontools/pr1.png",
+            capabilities: ["Video Editing", "Color Grading", "Music Videos", "Post-Production"]
+          }
+        ];
+        
+        const radius = 200;
+        let angleX = 0.0008;
+        let angleY = 0.0008;
+        let mouseX = 0, mouseY = 0;
+        let loadedImages = [];
+        let hoveredIndex = -1;
+        
+        // Get text elements
+        const toolsHeader = document.querySelector('.tools-header');
+        const toolsBody = document.querySelector('.tools-body');
+        
+        // Default text
+        const defaultHeader = "Tools and Skills";
+        const defaultBody = "My bag of tricks as a designer...";
+        
+        // Function to update text with staggered animation
+        function updateText(header, capabilities) {
+          if (toolsHeader && toolsBody) {
+            // Animate header
+            toolsHeader.style.opacity = '0';
+            toolsHeader.style.transform = 'translateY(10px)';
+            toolsHeader.style.transition = 'none';
+            toolsHeader.textContent = header;
             
-            <div class="contact-item">
-                <p class="contact-label">Linkedin:</p>
-                <p class="contact-info"><a href="https://www.linkedin.com/in/tongfeiz" target="_blank">linkedin.com/in/tongfeiz/</a></p>
-            </div>
+            // Animate header in first
+            setTimeout(() => {
+              toolsHeader.style.transition = 'opacity 0.1s ease, transform 0.1s ease';
+              toolsHeader.style.opacity = '1';
+              toolsHeader.style.transform = 'translateY(0)';
+            }, 50);
             
-            <div class="contact-item full-width">
-                <p class="contact-label">Instagram:</p>
-                <p class="contact-info"><a href="https://www.instagram.com/5dollarkid/" target="_blank">instagram.com/5dollarkid</a></p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="exploring-image-container">
-        <img src="images/aboutmural.png" alt="Exploring Worlds" class="exploring-image">
-    </div>
-</div>
+            // Clear body and add capabilities with staggered animation
+            toolsBody.innerHTML = '';
+            
+            capabilities.forEach((cap, index) => {
+              const p = document.createElement('p');
+              p.textContent = cap;
+              p.style.opacity = '0';
+              p.style.transform = 'translateY(10px)';
+              p.style.transition = 'none';
+              toolsBody.appendChild(p);
+              
+              // Stagger the appearance
+              setTimeout(() => {
+                p.style.transition = 'opacity 0.1s ease, transform 0.1s ease';
+                p.style.opacity = '1';
+                p.style.transform = 'translateY(0)';
+              }, 100 + (index * 80)); // Start after header, 80ms delay between each item
+            });
+          }
+        }
+        
+        // Function to reset to default text
+        function resetText() {
+          if (toolsHeader && toolsBody) {
+            // Animate header
+            toolsHeader.style.opacity = '0';
+            toolsHeader.style.transform = 'translateY(10px)';
+            toolsHeader.style.transition = 'none';
+            toolsHeader.textContent = defaultHeader;
+            
+            // Animate header in first
+            setTimeout(() => {
+              toolsHeader.style.transition = 'opacity 0.1s ease, transform 0.1s ease';
+              toolsHeader.style.opacity = '1';
+              toolsHeader.style.transform = 'translateY(0)';
+            }, 50);
+            
+            toolsBody.innerHTML = '';
+            
+            const p = document.createElement('p');
+            p.textContent = defaultBody;
+            p.style.opacity = '0';
+            p.style.transform = 'translateY(10px)';
+            p.style.transition = 'none';
+            toolsBody.appendChild(p);
+            
+            // Animate in the default text after header
+            setTimeout(() => {
+              p.style.transition = 'opacity 0.1s ease, transform 0.1s ease';
+              p.style.opacity = '1';
+              p.style.transform = 'translateY(0)';
+            }, 100);
+          }
+        }
 
+        // Load all images
+        let imagesLoaded = 0;
+        images.forEach((imgData, i) => {
+          const img = new Image();
+          img.onload = () => {
+            imagesLoaded++;
+            if (imagesLoaded === images.length) {
+              initializePoints();
+            }
+          };
+          img.src = imgData.src;
+          loadedImages[i] = img;
+        });
 
-    <br><br><br><br><br><br><br><br>    
-    <br><br><br><br><br><br><br><br>
+        let points = [];
 
+        function initializePoints() {
+          points = images.map((imgData, i) => {
+            let phi = Math.acos(-1 + (2 * i + 1) / images.length);
+            let theta = Math.sqrt(images.length * Math.PI) * phi;
+            return {
+              name: imgData.name,
+              image: loadedImages[i],
+              x: radius * Math.cos(theta) * Math.sin(phi),
+              y: radius * Math.sin(theta) * Math.sin(phi),
+              z: radius * Math.cos(phi)
+            };
+          });
+        }
 
-    <script src="about.js"></script>
+        function resizeCanvas() {
+          const container = canvas.parentElement;
+          canvas.width = container.clientWidth;
+          canvas.height = container.clientHeight;
+        }
+        window.addEventListener("resize", resizeCanvas);
+
+        canvas.addEventListener("mousemove", e => {
+          mouseX = e.clientX - canvas.width / 2;
+          mouseY = e.clientY - canvas.height / 2;
+          angleY = mouseX * 0.000004;
+          angleX = mouseY * 0.000004;
+
+          // Check for hover
+          const rect = canvas.getBoundingClientRect();
+          const cx = e.clientX - rect.left - canvas.width / 2;
+          const cy = e.clientY - rect.top - canvas.height / 2;
+          
+          let newHoveredIndex = -1;
+          // Sort points by z-coordinate for consistent hover detection
+          const sortedPoints = [...points].sort((a, b) => b.z - a.z);
+          
+          for (let i = 0; i < sortedPoints.length; i++) {
+            let p = sortedPoints[i];
+            let scale = 800 / (800 + p.z);
+            let x2d = p.x * scale;
+            let y2d = p.y * scale;
+            let size = 100 * scale; // Image size
+
+            if (cx > x2d - size/2 && cx < x2d + size/2 && cy > y2d - size/2 && cy < y2d + size/2) {
+              // Find the original index of this point
+              newHoveredIndex = points.findIndex(point => point === p);
+              break;
+            }
+          }
+          
+          // Update text if hover state changed
+          if (newHoveredIndex !== hoveredIndex) {
+            hoveredIndex = newHoveredIndex;
+            if (hoveredIndex >= 0) {
+              const app = images[hoveredIndex];
+              updateText(app.name, app.capabilities);
+            } else {
+              resetText();
+            }
+          }
+        });
+
+        canvas.addEventListener("click", e => {
+          if (hoveredIndex >= 0) {
+            // You can add click functionality here if needed
+            console.log("Clicked on:", points[hoveredIndex].name);
+          }
+        });
+
+        function rotate() {
+          let sinX = Math.sin(angleX);
+          let cosX = Math.cos(angleX);
+          let sinY = Math.sin(angleY);
+          let cosY = Math.cos(angleY);
+
+          for (let p of points) {
+            // rotate X
+            let y = p.y * cosX - p.z * sinX;
+            let z = p.y * sinX + p.z * cosX;
+            p.y = y;
+            p.z = z;
+
+            // rotate Y
+            let x = p.x * cosY - p.z * sinY;
+            z = p.x * sinY + p.z * cosY;
+            p.x = x;
+            p.z = z;
+          }
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.save();
+          ctx.translate(canvas.width / 2, canvas.height / 2);
+
+          // Sort points by z-coordinate (front to back) so closer objects are drawn on top
+          const sortedPoints = [...points].sort((a, b) => b.z - a.z);
+
+          for (let i = 0; i < sortedPoints.length; i++) {
+            let p = sortedPoints[i];
+            let scale = 800 / (800 + p.z);
+            let x2d = p.x * scale;
+            let y2d = p.y * scale;
+            let size = 90 * scale; // 200px base size, scaled
+
+            // Draw image
+            if (p.image) {
+              ctx.drawImage(p.image, x2d - size/2, y2d - size/2, size, size);
+            }
+          }
+
+          ctx.restore();
+        }
+
+        function animate() {
+          rotate();
+          draw();
+          requestAnimationFrame(animate);
+        }
+        
+        // Start animation after images are loaded
+        const checkImages = setInterval(() => {
+          if (imagesLoaded === images.length) {
+            clearInterval(checkImages);
+            animate();
+          }
+        }, 100);
+      }
+
+      // Copy to clipboard function
+      window.copyToClipboard = function(text) {
+        navigator.clipboard.writeText(text).then(function() {
+          // Show a brief success message
+          const originalText = event.target.closest('.contact-item').querySelector('.contact-copy').textContent;
+          const copyElement = event.target.closest('.contact-item').querySelector('.contact-copy');
+          copyElement.textContent = 'Copied!';
+          copyElement.style.color = '#4CAF50';
+          
+          setTimeout(() => {
+            copyElement.textContent = originalText;
+            copyElement.style.color = '';
+          }, 2000);
+        }).catch(function(err) {
+          console.error('Could not copy text: ', err);
+          // Fallback for older browsers
+          const textArea = document.createElement('textarea');
+          textArea.value = text;
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand('copy');
+            const copyElement = event.target.closest('.contact-item').querySelector('.contact-copy');
+            copyElement.textContent = 'Copied!';
+            copyElement.style.color = '#4CAF50';
+            setTimeout(() => {
+              copyElement.textContent = 'Click to copy';
+              copyElement.style.color = '';
+            }, 2000);
+          } catch (err) {
+            console.error('Fallback copy failed: ', err);
+          }
+          document.body.removeChild(textArea);
+        });
+      };
+
+      // 3D tilt effect for contact cards
+      const contactItems = document.querySelectorAll('.contact-item');
+      
+      contactItems.forEach(item => {
+        let isHovering = false;
+        let isPressed = false;
+        
+        item.addEventListener('mouseenter', function() {
+          isHovering = true;
+        });
+        
+        item.addEventListener('mousemove', function(e) {
+          if (!isHovering) return;
+          
+          const rect = this.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          // Inverted tilt - like pressing down on the card
+          const rotateX = -(y - centerY) / 18; // Inverted Y tilt
+          const rotateY = (x - centerX) / 18; // Inverted X tilt
+          
+          const scale = isPressed ? 0.95 : 1;
+          this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+        });
+        
+        item.addEventListener('mousedown', function() {
+          isPressed = true;
+          this.style.transform = this.style.transform.replace(/scale\([^)]*\)/, 'scale(0.95)');
+        });
+        
+        item.addEventListener('mouseup', function() {
+          isPressed = false;
+          if (isHovering) {
+            // Recalculate tilt if still hovering
+            const rect = this.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = -(y - centerY) / 18;
+            const rotateY = (x - centerX) / 18;
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1)`;
+          }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          isHovering = false;
+          isPressed = false;
+          this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+      });
+    });
+  </script>
+
+  <!-- Loading System -->
+  <script src="loading-system.js"></script>
 </body>
-
 </html>
-
-
-
-
-
-

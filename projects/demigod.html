@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>DEMIGOD - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+    <!-- Hero Image -->
+    <div class="hero-image-container">
+      <img src="../1_photos/p31.png" alt="DEMIGOD featured song project hero image" class="hero-image">
+    </div>
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+      <!---------------------------- Project Header --------------------------------->
+      <div class="project-header">
+        <h1 class="project-title">DEMIGOD</h1>
+        <p class="project-description">Featured song on Spotify with over 190,000 streams, showcasing musical talent and commercial success.</p>
+      </div>
+
+      <!---------------------------- Project Details --------------------------------->
+      <div class="project-details">
+        <div class="detail-column">
+          <div class="detail-title">Role</div>
+          <div class="detail-content">
+            <p>Musician</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Team</div>
+          <div class="detail-content">
+            <p>Solo Project</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Scope</div>
+          <div class="detail-content">
+            <p>Music Production</p>
+            <p>Songwriting</p>
+            <p>Sound Design</p>
+            <p>Marketing</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Tools</div>
+          <div class="detail-content">
+            <p>Logic Pro</p>
+            <p>Ableton Live</p>
+            <p>Various Instruments</p>
+            <p>Spotify for Artists</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">DEMIGOD represents the pinnacle of musical achievement, reaching over 190,000 streams on Spotify.</p>
+        <p class="text-section-text">This track showcases the power of authentic musical expression and its ability to connect with audiences worldwide.</p>
+      </div>
+    </div>
+
+    <!--------------------------- Two Horizontal Images Section --------------------------------->
+    <div class="two-horizontal-images-section">
+      <div class="two-horizontal-images-content">
+        <img src="../1_photos/p1.png" alt="DEMIGOD Album Art">
+        <img src="../1_photos/p2.png" alt="DEMIGOD Music Production">
+      </div>
+    </div>
+
+    <!--------------------------- Two Vertical Images Section --------------------------------->
+    <div class="two-vertical-images-section">
+      <div class="two-vertical-images-content">
+        <img src="../1_photos/p4.png" alt="DEMIGOD Songwriting Process">
+        <img src="../1_photos/p6.png" alt="DEMIGOD Sound Design">
+      </div>
+    </div>
+
+    <!--------------------------- Grid Section --------------------------------->
+    <div class="grid-section">
+      <div class="grid-content">
+        <img src="../1_photos/p7.png" alt="DEMIGOD Process 1">
+        <img src="../1_photos/p8.png" alt="DEMIGOD Process 2">
+        <img src="../1_photos/p9.png" alt="DEMIGOD Process 3">
+        <img src="../1_photos/p12.png" alt="DEMIGOD Process 4">
+        <img src="../1_photos/p13.png" alt="DEMIGOD Process 5">
+        <img src="../1_photos/p14.png" alt="DEMIGOD Process 6">
+        <img src="../1_photos/p15.png" alt="DEMIGOD Process 7">
+        <img src="../1_photos/p16.png" alt="DEMIGOD Process 8">
+        <img src="../1_photos/p17.png" alt="DEMIGOD Process 9">
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">DEMIGOD</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>

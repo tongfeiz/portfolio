@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>Aphelion Smart Fridge Assistant - Project Detail</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page" id="pageBody">
+    <!-- Hero Image -->
+    <div class="hero-image-container">
+      <video src="../1_photos/vid2.mp4" autoplay loop muted playsinline></video>
+    </div>
+
+    <!-------------------------------- Project Container ------------------------------------->
+    <div class="project-container">
+      
+      <!---------------------------- Project Header --------------------------------->
+      <div class="project-header">
+        <h1 class="project-title">Aphelion Smart Fridge Assistant</h1>
+        <p class="project-description">New interface for Samsung's smart fridge that revolutionizes how users interact with their kitchen appliances.</p>
+      </div>
+
+      <!---------------------------- Project Details --------------------------------->
+      <div class="project-details">
+        <div class="detail-column">
+          <div class="detail-title">Role</div>
+          <div class="detail-content">
+            <p>UI/UX Designer</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Team</div>
+          <div class="detail-content">
+            <p>Product Manager</p>
+            <p>Hardware Engineers</p>
+            <p>Software Developers</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Scope</div>
+          <div class="detail-content">
+            <p>User Research</p>
+            <p>Interface Design</p>
+            <p>Prototyping</p>
+            <p>User Testing</p>
+          </div>
+        </div>
+
+        <div class="detail-column">
+          <div class="detail-title">Tools</div>
+          <div class="detail-content">
+            <p>Figma</p>
+            <p>Principle</p>
+            <p>Adobe XD</p>
+            <p>Sketch</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------- Text Section --------------------------------->
+    <div class="text-section">
+      <div class="text-section-content">
+        <p class="text-section-text">Aphelion transforms the traditional refrigerator into an intelligent kitchen assistant.</p>
+        <p class="text-section-text">Through intuitive design and smart technology integration, users can manage their food inventory, plan meals, and optimize their kitchen experience.</p>
+      </div>
+    </div>
+
+    <!--------------------------- Two Horizontal Images Section --------------------------------->
+    <div class="two-horizontal-images-section">
+      <div class="two-horizontal-images-content">
+        <img src="../1_photos/p1.png" alt="Aphelion Interface Design">
+        <img src="../1_photos/p2.png" alt="Aphelion User Flow">
+      </div>
+    </div>
+
+    <!--------------------------- Two Vertical Images Section --------------------------------->
+    <div class="two-vertical-images-section">
+      <div class="two-vertical-images-content">
+        <img src="../1_photos/p4.png" alt="Aphelion Prototype">
+        <img src="../1_photos/p6.png" alt="Aphelion User Testing">
+      </div>
+    </div>
+
+    <!--------------------------- Grid Section --------------------------------->
+    <div class="grid-section">
+      <div class="grid-content">
+        <img src="../1_photos/p7.png" alt="Aphelion Process 1">
+        <img src="../1_photos/p8.png" alt="Aphelion Process 2">
+        <img src="../1_photos/p9.png" alt="Aphelion Process 3">
+        <img src="../1_photos/p12.png" alt="Aphelion Process 4">
+        <img src="../1_photos/p13.png" alt="Aphelion Process 5">
+        <img src="../1_photos/p14.png" alt="Aphelion Process 6">
+        <img src="../1_photos/p15.png" alt="Aphelion Process 7">
+        <img src="../1_photos/p16.png" alt="Aphelion Process 8">
+        <img src="../1_photos/p17.png" alt="Aphelion Process 9">
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Load header content
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Replace the default title before inserting into DOM
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">Aphelion</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        
+        // Hide the section label (+ Design) for individual pages
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) {
+          sectionLabel.style.display = 'none';
+        }
+        
+        // Initialize header functionality after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../cursor.js"></script>
+</body>
+</html>
