@@ -228,13 +228,21 @@
   a:focus-visible {
     outline: none;
   }
+
+  .homeunderline {
+    text-decoration: none;
+    color: var(--text-light);
+  }
+
 </style>
 
 <!-- Header HTML -->
 <header>
   <div class="header-inner">
     <div class="brand" id="homeBtn" role="button" tabindex="0" aria-label="Go to home">
-      <div class="home">Tongfei</div>
+      <div class="home">
+        <a href="/index.html" class="homeunderline">Tongfei</a></a>
+        </div>
     </div>
 
     <div class="page-title" id="pageTitle">Work</div>
