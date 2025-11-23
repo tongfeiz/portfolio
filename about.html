@@ -602,6 +602,40 @@
         --row-gap: 0.8vvw;
       }
     }
+
+    /* Cherry Blossom Section */
+    .cherry-blossom-section {
+      margin-top: 140px;
+      margin-bottom: 140px;
+      width: 100%;
+    }
+
+    .cherry-blossom-container {
+      width: 100%;
+      height: 80vh;
+      min-height: 600px;
+      position: relative;
+      background-color: #F7F7F7;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .cherry-blossom-container canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #cherry-loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: sans-serif;
+      color: #888;
+      pointer-events: none;
+      z-index: 1;
+    }
   </style>
 </head>
 <body class="about-page">
@@ -837,6 +871,12 @@
         </div>
       </div>
 
+<!----------------------- Cherry Blossom Section -------------------------------->
+      <div class="cherry-blossom-section">
+        <div class="cherry-blossom-container">
+          <div id="cherry-loading">Blossoming...</div>
+        </div>
+      </div>
 
   <!-- Fixed hover image container -->
   <div id="hover-image-container" class="hover-image-container">
@@ -844,6 +884,337 @@
   </div>
 
   </main>
+
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+
+    // --- SCENE SETUP ---
+    const scene = new THREE.Scene();
+    
+    // Background matches the requested F7F7F7 exactly
+    const bgColor = new THREE.Color(0xF7F7F7);
+    scene.background = bgColor;
+    // Use fog to blend distant objects into the infinity background
+    scene.fog = new THREE.FogExp2(0xF7F7F7, 0.015);
+
+    const container = document.querySelector('.cherry-blossom-container');
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+    // Zoom out more by moving camera further back
+    camera.position.set(0, 10, 30);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.useLegacyLights = false; 
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.maxPolarAngle = Math.PI / 1.9; 
+    // Disable zoom by setting min and max distance to the same value
+    controls.minDistance = 30;
+    controls.maxDistance = 30;
+    controls.enableZoom = false; // Disable zoom completely
+    controls.enableRotate = false; // Disable click-and-drag rotation
+    controls.target.set(0, 6, 0);
+
+    // --- CURSOR-BASED ROTATION ---
+    // ADJUST THESE VALUES TO CHANGE SENSITIVITY:
+    const rotationSensitivity = 0.15; // Higher = more rotation (default: 0.15, range: 0.05 - 0.5)
+    const maxRotationX = Math.PI / 6; // Max vertical rotation angle (default: Math.PI / 6, range: Math.PI / 12 - Math.PI / 4)
+    const maxRotationY = Math.PI / 3; // Max horizontal rotation angle (default: Math.PI / 3, range: Math.PI / 6 - Math.PI / 2)
+    
+    // Store initial camera position
+    const initialCameraPos = { x: 0, y: 10, z: 30 };
+    const target = controls.target;
+    const radius = 30;
+    
+    let targetRotationX = 0;
+    let targetRotationY = 0;
+    let currentRotationX = 0;
+    let currentRotationY = 0;
+
+    // Track mouse movement anywhere on the page
+    window.addEventListener('mousemove', (event) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      // Calculate normalized position (-1 to 1) relative to canvas center
+      // This works even when mouse is outside the canvas
+      const normalizedX = (event.clientX - centerX) / (rect.width / 2);
+      const normalizedY = (event.clientY - centerY) / (rect.height / 2);
+      
+      // Calculate target rotation based on cursor position
+      targetRotationY = normalizedX * maxRotationY * rotationSensitivity;
+      targetRotationX = -normalizedY * maxRotationX * rotationSensitivity; // Negative for intuitive up/down
+    });
+
+    // --- LIGHTING ---
+    const ambientLight = new THREE.AmbientLight(0xffddee, 0.8);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight(0xfff0dd, 2.5);
+    dirLight.position.set(8, 15, 8);
+    dirLight.castShadow = true;
+    dirLight.shadow.mapSize.width = 2048;
+    dirLight.shadow.mapSize.height = 2048;
+    dirLight.shadow.bias = -0.001;
+    dirLight.shadow.radius = 2;
+    scene.add(dirLight);
+
+    const backLight = new THREE.DirectionalLight(0xffcce0, 1.5);
+    backLight.position.set(-5, 8, -10);
+    scene.add(backLight);
+
+    // --- MATERIALS ---
+    const barkMaterial = new THREE.MeshStandardMaterial({ 
+      color: 0x4A3B32,
+      roughness: 1.0,
+      flatShading: true
+    });
+
+    const flowerMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0xffbdd0,
+      emissive: 0x330011,
+      roughness: 0.6,
+      metalness: 0.0,
+      transmission: 0.2, 
+      thickness: 0.1,
+      ior: 1.5,
+      sheen: 1.5,
+      sheenRoughness: 0.5,
+      sheenColor: new THREE.Color(0xffecf7),
+      side: THREE.DoubleSide,
+    });
+
+    const potMaterial = new THREE.MeshStandardMaterial({
+      color: 0xf0f0e8, 
+      roughness: 0.9,
+    });
+
+    const stoneMaterial = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      roughness: 0.8,
+      metalness: 0.1
+    });
+
+    // --- PROCEDURAL TREE GENERATION ---
+    const branchGeometries = [];
+    const flowerDummy = new THREE.Object3D();
+    const flowerMatrices = [];
+    
+    const CONFIG = {
+      maxDepth: 5,
+      branchAngle: 0.6,
+      lengthDecay: 0.8,
+      radiusDecay: 0.65,
+      initialLength: 3.2,
+      initialRadius: 0.3
+    };
+
+    function growBranch(startPos, direction, length, radius, depth) {
+      const geometry = new THREE.CylinderGeometry(radius * CONFIG.radiusDecay, radius, length, 7);
+      geometry.translate(0, length / 2, 0); 
+      const quaternion = new THREE.Quaternion();
+      quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.clone().normalize());
+      geometry.applyQuaternion(quaternion);
+      geometry.translate(startPos.x, startPos.y, startPos.z);
+      branchGeometries.push(geometry);
+
+      const endPos = startPos.clone().add(direction.clone().multiplyScalar(length));
+
+      if (depth >= CONFIG.maxDepth) {
+        const clusterCount = 15;
+        for(let i=0; i < clusterCount; i++) {
+          flowerDummy.position.copy(endPos);
+          const offset = new THREE.Vector3(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5).normalize().multiplyScalar(Math.random() * 1.8);
+          flowerDummy.position.add(offset);
+          flowerDummy.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+          const scale = 0.08 + Math.random() * 0.12;
+          flowerDummy.scale.set(scale, scale, scale);
+          flowerDummy.updateMatrix();
+          flowerMatrices.push(flowerDummy.matrix.clone());
+        }
+        return;
+      }
+
+      const numBranches = 2 + Math.floor(Math.random() * 2.5); 
+      for (let i = 0; i < numBranches; i++) {
+        const angleX = (Math.random() - 0.5) * CONFIG.branchAngle * (1 + depth*0.1);
+        const angleZ = (Math.random() - 0.5) * CONFIG.branchAngle * (1 + depth*0.1);
+        const childDir = direction.clone().applyEuler(new THREE.Euler(angleX, 0, angleZ)).normalize();
+        childDir.y += 0.3;
+        childDir.normalize();
+        growBranch(endPos, childDir, length * CONFIG.lengthDecay, radius * CONFIG.radiusDecay, depth + 1);
+      }
+    }
+
+    growBranch(new THREE.Vector3(0, 2, 0), new THREE.Vector3(0, 1, 0), CONFIG.initialLength, CONFIG.initialRadius, 0);
+
+    const treeGroup = new THREE.Group();
+    scene.add(treeGroup);
+
+    if (branchGeometries.length > 0) {
+      const mergedBranchGeo = mergeGeometries(branchGeometries);
+      const trunkMesh = new THREE.Mesh(mergedBranchGeo, barkMaterial);
+      trunkMesh.castShadow = true;
+      trunkMesh.receiveShadow = true;
+      treeGroup.add(trunkMesh);
+    }
+
+    const baseFlowerGeo = new THREE.DodecahedronGeometry(1, 0);
+    baseFlowerGeo.scale(1.2, 0.6, 1.2); 
+    const flowerMesh = new THREE.InstancedMesh(baseFlowerGeo, flowerMaterial, flowerMatrices.length);
+    for (let i = 0; i < flowerMatrices.length; i++) { flowerMesh.setMatrixAt(i, flowerMatrices[i]); }
+    flowerMesh.castShadow = true;
+    flowerMesh.receiveShadow = true; 
+    treeGroup.add(flowerMesh);
+
+    // --- POT & BASE ---
+    const potGroup = new THREE.Group();
+    const potGeo = new THREE.CylinderGeometry(2, 1.2, 4, 48);
+    const pot = new THREE.Mesh(potGeo, potMaterial);
+    pot.position.y = 2;
+    pot.castShadow = true;
+    pot.receiveShadow = true;
+    potGroup.add(pot);
+
+    const soilGeo = new THREE.CylinderGeometry(1.85, 1.85, 0.3, 32);
+    soilGeo.translate(0, 3.8, 0);
+    const posAttribute = soilGeo.attributes.position;
+    for(let i=0; i<posAttribute.count; i++){
+         const y = posAttribute.getY(i);
+         if(y > 3.8) posAttribute.setY(i, y + Math.random() * 0.25);
+    }
+    soilGeo.computeVertexNormals();
+    const soil = new THREE.Mesh(soilGeo, stoneMaterial);
+    soil.receiveShadow = true;
+    potGroup.add(soil);
+    scene.add(potGroup);
+
+    // --- INVISIBLE SHADOW CATCHER FLOOR ---
+    const floorGeo = new THREE.PlaneGeometry(100, 100);
+    // ShadowMaterial is transparent but shows shadows cast upon it.
+    // Opacity controls how dark the shadow is.
+    const floorMat = new THREE.ShadowMaterial({ 
+      opacity: 0.15 
+    });
+    const floor = new THREE.Mesh(floorGeo, floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    // It must receive shadows to work
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    // --- FALLING PETALS ---
+    const particleCount = 50;
+    const particlesGeo = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    const particleData = [];
+
+    for(let i=0; i<particleCount; i++) {
+      particlePositions[i*3] = (Math.random() - 0.5) * 25;
+      particlePositions[i*3+1] = Math.random() * 25;
+      particlePositions[i*3+2] = (Math.random() - 0.5) * 25;
+      particleData.push({
+        speedY: 0.01 + Math.random() * 0.01,
+        driftX: (Math.random() - 0.5) * 0.015,
+        driftZ: (Math.random() - 0.5) * 0.015,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    
+    const particleMat = new THREE.PointsMaterial({
+      color: 0xff6699, 
+      size: 0.25,
+      transparent: true,
+      opacity: 0.9,
+      sizeAttenuation: true,
+      blending: THREE.NormalBlending, 
+      depthWrite: false
+    });
+    const particleSystem = new THREE.Points(particlesGeo, particleMat);
+    scene.add(particleSystem);
+
+    document.getElementById('cherry-loading').style.display = 'none';
+
+    // --- ANIMATION LOOP ---
+    const clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const time = clock.getElapsedTime();
+      
+      // Smooth interpolation for cursor-based rotation
+      currentRotationX += (targetRotationX - currentRotationX) * 0.1;
+      currentRotationY += (targetRotationY - currentRotationY) * 0.1;
+      
+      // Calculate base angles from initial position
+      const baseAngleY = Math.atan2(initialCameraPos.x - target.x, initialCameraPos.z - target.z);
+      const baseAngleX = Math.asin((initialCameraPos.y - target.y) / radius);
+      
+      // Add cursor-based rotation to base angles
+      const angleY = baseAngleY + currentRotationY;
+      const angleX = baseAngleX + currentRotationX;
+      
+      // Clamp vertical angle to prevent flipping
+      const clampedAngleX = Math.max(-Math.PI / 2.5, Math.min(Math.PI / 2.5, angleX));
+      
+      // Update camera position using spherical coordinates
+      camera.position.x = target.x + Math.sin(angleY) * Math.cos(clampedAngleX) * radius;
+      camera.position.y = target.y + Math.sin(clampedAngleX) * radius;
+      camera.position.z = target.z + Math.cos(angleY) * Math.cos(clampedAngleX) * radius;
+      camera.lookAt(target);
+      
+      controls.update();
+
+      treeGroup.rotation.z = Math.sin(time * 0.7) * 0.015;
+      treeGroup.rotation.x = Math.cos(time * 0.6) * 0.01;
+
+      const positions = particleSystem.geometry.attributes.position.array;
+      for(let i=0; i<particleCount; i++) {
+        const data = particleData[i];
+        positions[i*3 + 1] -= data.speedY; 
+        positions[i*3] += Math.sin(time * 0.5 + data.phase) * 0.02 + data.driftX; 
+        positions[i*3 + 2] += Math.cos(time * 0.5 + data.phase) * 0.02 + data.driftZ; 
+
+        if(positions[i*3 + 1] < 0.1) {
+          positions[i*3 + 1] = 20 + Math.random() * 5;
+          positions[i*3] = (Math.random() - 0.5) * 20;
+          positions[i*3 + 2] = (Math.random() - 0.5) * 20;
+        }
+      }
+      particleSystem.geometry.attributes.position.needsUpdate = true;
+      scene.rotation.y = Math.sin(time * 0.05) * 0.08;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+  </script>
 
   <script>
     // Load shared header
