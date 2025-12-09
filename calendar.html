@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="1_photos/logos/icontools/faviconnew.png"> 
+  <title>Tongfei Zhu - Calendar</title>
+  <style>
+    :root {
+      --page-width: 1200px;
+      --text-light: #f7f7f7;
+      --text-dark: #1d1d1d;
+      --muted: #808080;
+      --gap: 28px;
+      --card-width: 364px;
+    }
+
+    html, body {
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: var(--text-light);
+      color: var(--text-dark);
+    }
+
+    .page {
+      width: 100%;
+      height: calc(100vh - 80px);
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calendar-container {
+      max-width: 50%;
+      margin: 0 auto;
+      padding: 0 10vw;
+      height: 100%;
+      position: relative;
+    }
+
+    /* Month Heading */
+    .month-heading {
+      text-align: center;
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: -0.08em;
+      color: var(--text-dark);
+      margin: 0 0 40px 0;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .month-heading.fade-out {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+
+    .month-heading.fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .month-heading.fade-in.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Photo Grid */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+      width: 75%;
+    }
+
+    .photo-item {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: pointer;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .photo-item.fade-out {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+
+    .photo-item.fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .photo-item.fade-in.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .photo-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Caption */
+    .caption {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 50%;
+      width: 100%;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-dark);
+      text-align: center;
+      padding: 30px 10vw;
+      background: var(--text-light);
+      line-height: 1.5;
+      z-index: 100;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Month Section */
+    .month-section {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .month-section.active {
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    .month-section .photo-item {
+      pointer-events: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .calendar-container {
+        max-width: 70%;
+      }
+      .photo-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .calendar-container {
+        max-width: 65%;
+        padding: 0 5vw;
+      }
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      .month-heading {
+        font-size: 20px;
+        margin-bottom: 25px;
+      }
+      .caption {
+        font-size: 12px;
+        padding: 15px 5vw;
+        max-width: 85%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Include shared header -->
+  <div id="header-container"></div>
+
+  <main class="page">
+    <div class="calendar-container">
+      
+      <!-- December Section -->
+      <section class="month-section" data-month="DEC" id="decSection">
+        <!-- Month Heading -->
+        <div class="month-heading" id="decHeading">DEC // 25</div>
+
+        <!-- Photo Grid -->
+        <div class="photo-grid" id="decGrid">
+          <div class="photo-item" data-caption="spotify wrapped 2025 came out! had 82.5k total listeners and 175k total streams..." data-index="0">
+            <img src="1_photos/calendarphotos/dec1.png" alt="December photo 1">
+          </div>
+          <div class="photo-item" data-caption="built pallette, an beginner ai generation tool for google labs alongside my team" data-index="1">
+            <img src="1_photos/calendarphotos/dec2.png" alt="December photo 2">
+          </div>
+          <div class="photo-item" data-caption="helios, my lavalab mentor team, won best product for their cohort ☀️" data-index="2">
+            <img src="1_photos/calendarphotos/dec3.png" alt="December photo 3">
+          </div>
+          <div class="photo-item" data-caption="visited hilton head south carolina for the first time with my girlfriend!" data-index="3">
+            <img src="1_photos/calendarphotos/dec4.png" alt="December photo 4">
+          </div>
+          <div class="photo-item" data-caption="finally finished the og hollow knight… silksong next" data-index="4">
+            <img src="1_photos/calendarphotos/dec5.png" alt="December photo 5">
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- November Section -->
+      <section class="month-section" data-month="NOV" id="novSection">
+        <!-- Month Heading -->
+        <div class="month-heading fade-in" id="novHeading">NOV // 25</div>
+
+        <!-- Photo Grid -->
+        <div class="photo-grid" id="novGrid">
+          <div class="photo-item fade-in" data-caption="built and launched womp.systems with co-founders" data-index="0">
+            <img src="1_photos/calendarphotos/nov1.png" alt="November photo 1">
+          </div>
+          <div class="photo-item fade-in" data-caption="hit a 5k pr run at the usc x nike event!" data-index="1">
+            <img src="1_photos/calendarphotos/nov2.png" alt="November photo 2">
+          </div>
+          <div class="photo-item fade-in" data-caption="new bench pr 255lbs!" data-index="2">
+            <img src="1_photos/calendarphotos/nov3.png" alt="November photo 3">
+          </div>
+          <div class="photo-item fade-in" data-caption="finally got my drivers license..." data-index="3">
+            <img src="1_photos/calendarphotos/nov4.png" alt="November photo 4">
+          </div>
+          <div class="photo-item fade-in" data-caption="turned 21 years old..." data-index="4">
+            <img src="1_photos/calendarphotos/nov5.png" alt="November photo 5">
+          </div>
+          <div class="photo-item fade-in" data-caption="worked with my mentee heather on branding for helios ☀️" data-index="5">
+            <img src="1_photos/calendarphotos/nov6.png" alt="November photo 6">
+          </div>
+          <div class="photo-item fade-in" data-caption="tm studios tabled at usc innovative design’s riptide event" data-index="5">
+            <img src="1_photos/calendarphotos/nov7.png" alt="November photo 7">
+          </div>
+        </div>
+      </section>
+
+      <!-- October Section -->
+      <section class="month-section" data-month="OCT" id="octSection">
+        <!-- Month Heading -->
+        <div class="month-heading fade-in" id="octHeading">OCT // 25</div>
+
+        <!-- Photo Grid -->
+        <div class="photo-grid" id="octGrid">
+          <div class="photo-item fade-in" data-caption="created my first ever typeface ‘monuments’" data-index="0">
+            <img src="1_photos/calendarphotos/oct1.png" alt="October photo 1">
+          </div>
+          <div class="photo-item fade-in" data-caption="tm studios tabled at usc shift tech4good conference" data-index="1">
+            <img src="1_photos/calendarphotos/oct2.png" alt="October photo 2">
+          </div>
+          <div class="photo-item fade-in" data-caption="built city.kit, one stop solution for sustainable urban planning alongside my team" data-index="2">
+            <img src="1_photos/calendarphotos/oct3.png" alt="October photo 3">
+          </div>
+        </div>
+      </section>
+
+      <!-- September Section -->
+      <section class="month-section" data-month="SEP" id="sepSection">
+        <!-- Month Heading -->
+        <div class="month-heading fade-in" id="sepHeading">SEP // 25</div>
+
+        <!-- Photo Grid -->
+        <div class="photo-grid" id="sepGrid">
+          <div class="photo-item fade-in" data-caption="officially launched tm studios with my co-founder mavis" data-index="0">
+            <img src="1_photos/calendarphotos/sep1.png" alt="September photo 1">
+          </div>
+          <div class="photo-item fade-in" data-caption="running lavalab back as a design mentor 😎" data-index="1">
+            <img src="1_photos/calendarphotos/sep2.png" alt="September photo 2">
+          </div>
+        </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Caption (sticky at bottom) -->
+  <div class="caption" id="caption"> </div>
+
+  <script>
+    // Load shared header
+    fetch('header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header-container').innerHTML = html;
+        // Initialize header after loading
+        if (window.initializeHeader) {
+          window.initializeHeader();
+        }
+        // Set page title based on whether JAN // 26 exists
+        setTimeout(() => {
+          const pageTitle = document.getElementById('pageTitle');
+          if (pageTitle) {
+            // Check if there's a month heading with "JAN // 26"
+            const janHeading = Array.from(document.querySelectorAll('.month-heading')).find(
+              heading => heading.textContent.includes('JAN // 26')
+            );
+            if (janHeading) {
+              pageTitle.textContent = 'My 2026';
+            } else {
+              pageTitle.textContent = 'My 2025';
+            }
+          }
+          // Set Calendar as current page
+          const calendarLink = document.querySelector('#mainNav a[data-section="Calendar"]');
+          if (calendarLink) {
+            document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('current'));
+            calendarLink.classList.add('current');
+          }
+        }, 100);
+      })
+      .catch(error => console.error('Error loading header:', error));
+
+    // Scroll wheel-based month transitions
+    const months = [
+      { id: 'dec', name: 'DEC', section: document.getElementById('decSection'), heading: document.getElementById('decHeading'), grid: document.getElementById('decGrid') },
+      { id: 'nov', name: 'NOV', section: document.getElementById('novSection'), heading: document.getElementById('novHeading'), grid: document.getElementById('novGrid') },
+      { id: 'oct', name: 'OCT', section: document.getElementById('octSection'), heading: document.getElementById('octHeading'), grid: document.getElementById('octGrid') },
+      { id: 'sep', name: 'SEP', section: document.getElementById('sepSection'), heading: document.getElementById('sepHeading'), grid: document.getElementById('sepGrid') }
+    ];
+
+    // Initialize all months except December as hidden
+    months.forEach((month, index) => {
+      if (index === 0) {
+        // December is active
+        month.section.classList.add('active');
+      } else {
+        month.heading.classList.add('fade-in');
+        const photos = month.grid.querySelectorAll('.photo-item');
+        photos.forEach(photo => photo.classList.add('fade-in'));
+      }
+    });
+
+    let isTransitioning = false;
+    let currentMonthIndex = 0; // Start with December (index 0)
+
+    // Caption hover functionality (works for all sections)
+    const caption = document.getElementById('caption');
+    
+    // Helper function to check if a photo is visible
+    function isPhotoVisible(photoItem) {
+      // Photo is visible if:
+      // 1. It doesn't have fade-out class
+      // 2. It doesn't have fade-in class (or has fade-in + active)
+      // 3. Its computed opacity is greater than 0
+      const hasFadeOut = photoItem.classList.contains('fade-out');
+      const hasFadeIn = photoItem.classList.contains('fade-in');
+      const hasActive = photoItem.classList.contains('active');
+      
+      if (hasFadeOut) return false;
+      if (hasFadeIn && !hasActive) return false;
+      
+      // Check computed opacity
+      const style = window.getComputedStyle(photoItem);
+      const opacity = parseFloat(style.opacity);
+      if (opacity === 0 || isNaN(opacity)) return false;
+      
+      return true;
+    }
+    
+    // Use event delegation to handle hover on photo items
+    document.addEventListener('mouseenter', function(e) {
+      const photoItem = e.target.closest('.photo-item');
+      if (photoItem && isPhotoVisible(photoItem)) {
+        const captionText = photoItem.getAttribute('data-caption');
+        if (captionText) {
+          caption.textContent = captionText;
+        }
+      }
+    }, true);
+
+    document.addEventListener('mouseleave', function(e) {
+      const photoItem = e.target.closest('.photo-item');
+      if (photoItem && isPhotoVisible(photoItem)) {
+        // Only clear if we're actually leaving the photo item
+        if (!photoItem.contains(e.relatedTarget)) {
+          caption.textContent = ' ';
+        }
+      }
+    }, true);
+
+    // Helper function to calculate animation delay based on row position
+    function getAnimationDelay(index, gridElement) {
+      // Get computed grid columns from CSS
+      const computedStyle = window.getComputedStyle(gridElement);
+      const gridTemplateColumns = computedStyle.gridTemplateColumns;
+      // Count the number of columns (split by space and count non-empty values)
+      const columnsPerRow = gridTemplateColumns.split(' ').filter(col => col.trim() !== '').length;
+      
+      const row = Math.floor(index / columnsPerRow);
+      const column = index % columnsPerRow;
+      
+      if (row === 0) {
+        // First row: normal sequential delay (0, 100, 200, 300, 400ms)
+        return column * 100;
+      } else {
+        // Second row and beyond: start when photo 1 animates (100ms) for staggered effect
+        // Photo 5 (row 1, col 0) starts at 100ms, photo 6 (row 1, col 1) at 200ms, etc.
+        return 100 + (column * 100);
+      }
+    }
+
+    function transitionToNext() {
+      if (isTransitioning || currentMonthIndex >= months.length - 1) return;
+      isTransitioning = true;
+      
+      const currentMonth = months[currentMonthIndex];
+      const nextMonth = months[currentMonthIndex + 1];
+      const currentPhotos = currentMonth.grid.querySelectorAll('.photo-item');
+      const nextPhotos = nextMonth.grid.querySelectorAll('.photo-item');
+
+      // Fade out current month heading
+      currentMonth.heading.classList.add('fade-out');
+
+      // Fade out current month photos in sequence with row-aware timing
+      currentPhotos.forEach((photo, index) => {
+        setTimeout(() => {
+          photo.classList.add('fade-out');
+        }, getAnimationDelay(index, currentMonth.grid));
+      });
+
+      // Calculate max delay for current photos to ensure they finish before next month starts
+      const maxCurrentDelay = Math.max(...Array.from(currentPhotos).map((_, i) => getAnimationDelay(i, currentMonth.grid)));
+      const fadeOutDuration = 200; // ADJUST THIS: Time after last photo starts fading out (currently 300ms, was 500ms)
+
+      // After current photos fade out, fade in next month
+      setTimeout(() => {
+        // Remove active class from current month section
+        currentMonth.section.classList.remove('active');
+        
+        // Fade in next month heading from below
+        nextMonth.heading.classList.remove('fade-in');
+        nextMonth.heading.classList.add('active');
+        
+        // Add active class to next month section
+        nextMonth.section.classList.add('active');
+
+        // Fade in next month photos in sequence with row-aware timing
+        nextPhotos.forEach((photo, index) => {
+          setTimeout(() => {
+            photo.classList.remove('fade-in');
+            photo.classList.add('active');
+          }, getAnimationDelay(index, nextMonth.grid));
+        });
+
+        currentMonthIndex++;
+        setTimeout(() => {
+          isTransitioning = false;
+        }, maxCurrentDelay + fadeOutDuration);
+      }, maxCurrentDelay + fadeOutDuration);
+    }
+
+    function transitionToPrevious() {
+      if (isTransitioning || currentMonthIndex <= 0) return;
+      isTransitioning = true;
+      
+      const currentMonth = months[currentMonthIndex];
+      const prevMonth = months[currentMonthIndex - 1];
+      const currentPhotos = currentMonth.grid.querySelectorAll('.photo-item');
+      const prevPhotos = prevMonth.grid.querySelectorAll('.photo-item');
+
+      // Fade out current month heading
+      currentMonth.heading.classList.remove('active');
+      currentMonth.heading.classList.add('fade-in');
+
+      // Fade out current month photos in sequence with row-aware timing
+      currentPhotos.forEach((photo, index) => {
+        setTimeout(() => {
+          photo.classList.remove('active');
+          photo.classList.add('fade-in');
+        }, getAnimationDelay(index, currentMonth.grid));
+      });
+
+      // Calculate max delay for current photos
+      const maxCurrentDelay = Math.max(...Array.from(currentPhotos).map((_, i) => getAnimationDelay(i, currentMonth.grid)));
+      const fadeOutDuration = 200; // ADJUST THIS: Time after last photo starts fading out (currently 300ms, was 500ms)
+
+      // After current photos fade out, fade in previous month
+      setTimeout(() => {
+        // Remove active class from current month section
+        currentMonth.section.classList.remove('active');
+        
+        // Fade in previous month heading
+        prevMonth.heading.classList.remove('fade-out');
+        
+        // Add active class to previous month section
+        prevMonth.section.classList.add('active');
+
+        // Fade in previous month photos in sequence with row-aware timing
+        prevPhotos.forEach((photo, index) => {
+          setTimeout(() => {
+            photo.classList.remove('fade-out');
+          }, getAnimationDelay(index, prevMonth.grid));
+        });
+
+        currentMonthIndex--;
+        setTimeout(() => {
+          isTransitioning = false;
+        }, maxCurrentDelay + fadeOutDuration);
+      }, maxCurrentDelay + fadeOutDuration);
+    }
+
+    // Handle wheel events with reduced threshold
+    let wheelDelta = 0;
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      
+      wheelDelta += e.deltaY;
+      
+      // Reduced threshold - trigger on smaller scroll amounts
+      if (Math.abs(wheelDelta) > 30) {
+        if (wheelDelta > 0) {
+          // Scrolling down
+          transitionToNext();
+        } else {
+          // Scrolling up
+          transitionToPrevious();
+        }
+        wheelDelta = 0;
+      }
+    }, { passive: false });
+
+  </script>
+
+  <!-- Loading System -->
+  <script src="loading-system.js"></script>
+</body>
+</html>
+

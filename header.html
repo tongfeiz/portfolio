@@ -59,7 +59,7 @@
   }
 
   .brand .home {
-    font-size: 25px;
+    font-size: 24px;
     letter-spacing: -0.04em;
     font-weight: 400;
     color: var(--text-light);
@@ -67,7 +67,7 @@
   }
 
   .brand .plus {
-    font-size: 25px;
+    font-size: 24px;
     letter-spacing: -0.04em;
     font-weight: 400;
     color: var(--text-light);
@@ -78,7 +78,7 @@
     display: flex;
     gap: 0;
     align-items: center;
-    font-size: 25px;
+    font-size: 24px;
     letter-spacing: -0.04em;
   }
 
@@ -193,12 +193,17 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 400;
     color: var(--text-light);
     opacity: 0.9;
     letter-spacing: -0.04em;
     text-align: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .page-title:hover {
+    opacity: 1;
   }
 
   /* Hide page title on tablet and mobile */
@@ -241,7 +246,7 @@
   <div class="header-inner">
     <div class="brand" id="homeBtn" role="button" tabindex="0" aria-label="Go to home">
       <div class="home">
-        <a href="/index.html" class="homeunderline">Tongfei</a></a>
+        <a href="/index.html" class="homeunderline">Tongfei</a>
         </div>
     </div>
 
@@ -251,6 +256,8 @@
       <a href="/index.html" data-section="Work">Work</a>
       <span class="nav-sep">,</span>
       <a href="/about.html" data-section="About">About</a>
+      <span class="nav-sep">,</span>
+      <a href="/calendar.html" data-section="Calendar">Calendar</a>
       <!-- <span class="nav-sep">,</span>
       <a href="#contact" data-section="Contact">Contact</a> --> <!-- Commented out contact link for now -->
     </nav>
@@ -342,6 +349,16 @@
       title = 'Work';
     } else if (currentFile === 'about.html') {
       title = 'About';
+    } else if (currentFile === 'calendar.html') {
+      // Check if there's a month heading with "JAN // 26"
+      const janHeading = Array.from(document.querySelectorAll('.month-heading')).find(
+        heading => heading.textContent.includes('JAN // 26')
+      );
+      if (janHeading) {
+        title = 'My 2026';
+      } else {
+        title = 'My 2025';
+      }
     }
     
     pageTitleElement.textContent = title;
@@ -389,6 +406,12 @@
         if (workLink) {
           setActive(workLink);
           console.log('Set Work as current');
+        }
+      } else if (currentFile === 'calendar.html' || currentPath.includes('calendar.html')) {
+        const calendarLink = document.querySelector('#mainNav a[data-section="Calendar"]');
+        if (calendarLink) {
+          setActive(calendarLink);
+          console.log('Set Calendar as current');
         }
       }
       // Add other pages as needed

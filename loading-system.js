@@ -103,11 +103,11 @@ class LoadingSystem {
 
 // Auto-initialize when script loads
 document.addEventListener('DOMContentLoaded', () => {
-  // Only initialize if we're on index.html or about.html
+  // Only initialize if we're on index.html, about.html, or calendar.html
   const currentPath = window.location.pathname;
   const currentFile = currentPath.split('/').pop();
   
-  if (currentFile === 'index.html' || currentFile === 'about.html' || currentFile === '') {
+  if (currentFile === 'index.html' || currentFile === 'about.html' || currentFile === 'calendar.html' || currentFile === '') {
     window.loadingSystem = new LoadingSystem();
   }
 });
