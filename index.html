@@ -234,11 +234,19 @@
       padding: 100px 0 0; /* space for fixed header */
     }
 
-    /* Masonry grid */
+    /* Masonry-style grid using flex columns */
     .work-grid {
-      column-count: 3;
-      column-gap: var(--gap);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--gap);
       padding: 0 10vw;
+    }
+
+    .work-column {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
     }
 
     .work-card {
@@ -262,6 +270,11 @@
       height: auto;
       overflow: hidden;
       border-radius: 6px;
+    }
+
+    .media-container picture {
+      display: block;
+      width: 100%;
     }
 
     .work-card img {
@@ -315,13 +328,47 @@
       letter-spacing: -0.02em;
     }
 
+    /* Coming soon bubble (Sift card only) – appears at cursor, floats up and fades */
+    .work-card--coming-soon {
+      position: relative;
+    }
+    .coming-soon-bubble {
+      position: fixed;
+      transform: translate(-50%, -50%);
+      background: #A4A0FD;
+      color: var(--text-light);
+      padding: 12px 20px;
+      border-radius: 24px;
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: -0.04em;
+      font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      white-space: nowrap;
+      z-index: 10000;
+      pointer-events: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      opacity: 0;
+    }
+    .coming-soon-bubble.is-visible {
+      opacity: 1;
+      animation: coming-soon-float 2.2s ease-out forwards;
+    }
+    @keyframes coming-soon-float {
+      0% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, calc(-50% - 56px));
+        opacity: 0;
+      }
+    }
+
     /* Responsiveness */
     @media (max-width: 1100px) {
       .header-inner { padding: 0 10vw; }
-      .work-grid { 
-        column-count: 2; 
-        padding: 0 10vw;
-      }
+      .work-grid { padding: 0 10vw; }
     }
 
     @media (max-width: 680px) {
@@ -330,10 +377,7 @@
       .brand .home { font-size: 3.6vw; }
       .brand .plus { font-size: 3.6vw; }
       nav { font-size: 3.6vw; }
-      .work-grid { 
-        column-count: 1; 
-        padding: 0 10vw;
-      }
+      .work-grid { padding: 0 10vw; }
     }
     a:focus {
       outline: 2px solid #ddd;
@@ -382,7 +426,7 @@
         <div class="work-card" id="card1">
           <a href="projects/lily.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p9.png" alt="Project thumbnail 9">
+              <picture><source srcset="1_photos/p9.webp" type="image/webp"><img src="1_photos/p9.png" alt="Project thumbnail 9"></picture>
             </div>
             <div class="caption-title">Lily</div>
             <div class="caption-desc">AI-powered IEP tracker to assist special educators and empower students.</div>
@@ -392,7 +436,7 @@
         <div class="work-card">
           <a href="scaling-reviews.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p2.png" alt="Project thumbnail 2">
+              <picture><source srcset="1_photos/p2.webp" type="image/webp"><img src="1_photos/p2.png" alt="Project thumbnail 2"></picture>
             </div>
             <div class="caption-title">Scaling Reviews</div>
             <div class="caption-desc">Restaurant reputation management</div>
@@ -402,17 +446,27 @@
         <div class="work-card">
           <a href="https://womp.systems" target="_blank" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vidwomp.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vidwomp.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">womp</div>
             <div class="caption-desc">Waking you up like a real human would.</div>
           </a>
         </div>
 
+        <div class="work-card work-card--coming-soon" data-coming-soon>
+          <div class="work-card-inner" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <picture><source srcset="1_photos/p3.webp" type="image/webp"><img src="1_photos/p3.png" alt="Sift project thumbnail" loading="lazy"></picture>
+            </div>
+            <div class="caption-title">Sift</div>
+            <div class="caption-desc">A conversational environment that turns mental clutter into clarity for ADHD.</div>
+          </div>
+        </div>
+
         <div class="work-card">
           <a href="projects/casa-magia.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p1.png" alt="Project thumbnail">
+              <picture><source srcset="1_photos/p1.webp" type="image/webp"><img src="1_photos/p1.png" alt="Project thumbnail"></picture>
             </div>
             <div class="caption-title">Casa Magia</div>
             <div class="caption-desc">New way of imagining scent</div>
@@ -423,7 +477,7 @@
         <div class="work-card">
           <a href="projects/usc-international-student-assembly.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid9.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vid9.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">USC International Student Assembly</div>
             <div class="caption-desc">Rebranding USC's professional org </div>
@@ -435,7 +489,7 @@
         <div class="work-card">
           <a href="projects/space-saving-furniture.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p4.png" alt="Project thumbnail 4">
+              <picture><source srcset="1_photos/p4.webp" type="image/webp"><img src="1_photos/p4.png" alt="Project thumbnail 4"></picture>
             </div>
             <div class="caption-title">Space-Saving Furniture</div>
             <div class="caption-desc">Chairs for small living quarters</div>
@@ -447,7 +501,7 @@
         <div class="work-card">
           <a href="projects/tm-studios.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid2.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vid2.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">Aphelion Smart Fridge Assistant</div>
             <div class="caption-desc">New interface for Samsung's smart fridge</div>
@@ -459,7 +513,7 @@
         <div class="work-card">
           <a href="projects/tm-studios.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid10.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vid10.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">VTM-13</div>
             <div class="caption-desc">Teenage engineering inspired video demo for vitamins</div>
@@ -471,7 +525,7 @@
         <div class="work-card">
           <a href="projects/sync.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p7.png" alt="Project thumbnail 7">
+              <picture><source srcset="1_photos/p7.webp" type="image/webp"><img src="1_photos/p7.png" alt="Project thumbnail 7" loading="lazy"></picture>
             </div>
             <div class="caption-title">Sync.</div>
             <div class="caption-desc">AI-powered scheduling & smart timelines</div>
@@ -479,20 +533,9 @@
         </div>
 
         <div class="work-card">
-          <a href="projects/mythical-creatures-forbidden-city.html" style="text-decoration: none; color: inherit; display: block;">
-            <div class="media-container">
-              <img src="1_photos/p8.png" alt="Project thumbnail 8">
-            </div>
-            <div class="caption-title">Mythical Creatures in the Forbidden City</div>
-            <div class="caption-desc">AR mobile game to promote traditional culture in Beijing's Forbidden City</div>
-          </a>
-        </div>
-
-      
-        <div class="work-card">
           <a href="projects/the-bottega-group.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid8.mp4" autoplay loop muted playsinline ></video>
+              <video data-src="1_photos/vid8.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">The Bottega Group</div>
             <div class="caption-desc">Landing page for New Zealand restaurants</div>
@@ -500,9 +543,19 @@
         </div>
 
         <div class="work-card">
+          <a href="projects/mythical-creatures-forbidden-city.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <picture><source srcset="1_photos/p8.webp" type="image/webp"><img src="1_photos/p8.png" alt="Project thumbnail 8" loading="lazy"></picture>
+            </div>
+            <div class="caption-title">Mythical Creatures in the Forbidden City</div>
+            <div class="caption-desc">AR mobile game to promote traditional culture in Beijing's Forbidden City</div>
+          </a>
+        </div>
+
+        <div class="work-card">
           <a href="projects/tm-studios.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid3.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vid3.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">My Matcha HK</div>
             <div class="caption-desc">Interactive visualization for HK matcha cafe</div>
@@ -512,7 +565,7 @@
         <div class="work-card">
           <a href="projects/syllabus-to-planner.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid1.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vid1.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">SyllabusToPlanner</div>
             <div class="caption-desc">The ultimate notion template to stay on track this semester</div>
@@ -525,7 +578,7 @@
         <div class="work-card">
           <a href="projects/ignorance.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p12.png" alt="Project thumbnail 12">
+              <picture><source srcset="1_photos/p12.webp" type="image/webp"><img src="1_photos/p12.png" alt="Project thumbnail 12" loading="lazy"></picture>
             </div>
             <div class="caption-title">"Ignorance"</div>
             <div class="caption-desc">Mural at Shenzhen's G&G Creative Space</div>
@@ -535,7 +588,7 @@
         <div class="work-card" id="card13">
           <a href="projects/the-great-tree.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p13.png" alt="Project thumbnail 13">
+              <picture><source srcset="1_photos/p13.webp" type="image/webp"><img src="1_photos/p13.png" alt="Project thumbnail 13" loading="lazy"></picture>
             </div>
             <div class="caption-title">"The Great Tree"</div>
             <div class="caption-desc">Digital drawing on Procreate</div>
@@ -545,7 +598,7 @@
         <div class="work-card">
           <a href="projects/the-citys-reflection.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p14.png" alt="Project thumbnail 14">
+              <picture><source srcset="1_photos/p14.webp" type="image/webp"><img src="1_photos/p14.png" alt="Project thumbnail 14" loading="lazy"></picture>
             </div>
             <div class="caption-title">"The City's Reflection"</div>
             <div class="caption-desc">Light projection in Hong Kong</div>
@@ -555,7 +608,7 @@
         <div class="work-card">
           <a href="projects/control-art.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p15.png" alt="Project thumbnail 15">
+              <picture><source srcset="1_photos/p15.webp" type="image/webp"><img src="1_photos/p15.png" alt="Project thumbnail 15" loading="lazy"></picture>
             </div>
             <div class="caption-title">"Control - Part 1"</div>
             <div class="caption-desc">Digital drawing on Procreate</div>
@@ -565,7 +618,7 @@
         <div class="work-card">
           <a href="projects/untitled.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p16.png" alt="Project thumbnail 16">
+              <picture><source srcset="1_photos/p16.webp" type="image/webp"><img src="1_photos/p16.png" alt="Project thumbnail 16" loading="lazy"></picture>
             </div>
             <div class="caption-title">"Untitled"</div>
             <div class="caption-desc">Mural at Ningbo's Mondiland Factory</div>
@@ -575,7 +628,7 @@
         <div class="work-card">
           <a href="projects/the-ritual.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p17.png" alt="Project thumbnail 17">
+              <picture><source srcset="1_photos/p17.webp" type="image/webp"><img src="1_photos/p17.png" alt="Project thumbnail 17" loading="lazy"></picture>
             </div>
             <div class="caption-title">"The Ritual"</div>
             <div class="caption-desc">Digital drawing on Procreate</div>
@@ -585,7 +638,7 @@
         <div class="work-card">
           <a href="projects/mid-summer-days-dream.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p18.png" alt="Project thumbnail 18">
+              <picture><source srcset="1_photos/p18.webp" type="image/webp"><img src="1_photos/p18.png" alt="Project thumbnail 18" loading="lazy"></picture>
             </div>
             <div class="caption-title">"Mid Summer Day's Dream"</div>
             <div class="caption-desc">Mural in Hong Kong client's back yard </div>
@@ -595,7 +648,7 @@
         <div class="work-card">
           <a href="projects/through-my-eyes.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p19.png" alt="Project thumbnail 19">
+              <picture><source srcset="1_photos/p19.webp" type="image/webp"><img src="1_photos/p19.png" alt="Project thumbnail 19" loading="lazy"></picture>
             </div>
             <div class="caption-title">"Through My Eyes"</div>
             <div class="caption-desc">Ink pen drawing on canvas paper</div>
@@ -605,7 +658,7 @@
         <div class="work-card">
           <a href="projects/control-mural.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p20.png" alt="Project thumbnail 20">
+              <picture><source srcset="1_photos/p20.webp" type="image/webp"><img src="1_photos/p20.png" alt="Project thumbnail 20" loading="lazy"></picture>
             </div>
             <div class="caption-title">"Control - Part 2"</div>
             <div class="caption-desc">Mural in Hong Kong</div>
@@ -617,7 +670,7 @@
         <div class="work-card">
           <a href="projects/tm-studios.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid4.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vid4.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">RED.CXBE</div>
             <div class="caption-desc">Turning memories into a shared aesthetic </div>
@@ -628,7 +681,7 @@
         <div class="work-card" id="card22">
           <a href="projects/revink.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p22.png" alt="Project thumbnail 22">
+              <picture><source srcset="1_photos/p22.webp" type="image/webp"><img src="1_photos/p22.png" alt="Project thumbnail 22" loading="lazy"></picture>
             </div>
             <div class="caption-title">REVINK</div>
             <div class="caption-desc">Helping artists go to market with fashion</div>
@@ -638,27 +691,7 @@
         <div class="work-card">
           <a href="projects/spire.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p23.png" alt="Project thumbnail 23">
-            </div>
-            <div class="caption-title">SPIRE</div>
-            <div class="caption-desc">Personal streetwear brand</div>
-          </a>
-        </div>
-
-        <div class="work-card">
-          <a href="projects/the-lies-end-in-summer.html" style="text-decoration: none; color: inherit; display: block;">
-            <div class="media-container">
-              <img src="1_photos/p24.png" alt="Project thumbnail 24">
-            </div>
-            <div class="caption-title">謊言以夏為終 (The Lies End In Summer)</div>
-            <div class="caption-desc">Taoism inspired collection</div>
-          </a>
-        </div>
-
-        <div class="work-card">
-          <a href="projects/spire.html" style="text-decoration: none; color: inherit; display: block;">
-            <div class="media-container">
-              <img src="1_photos/p25.png" alt="Project thumbnail 25">
+              <picture><source srcset="1_photos/p23.webp" type="image/webp"><img src="1_photos/p23.png" alt="Project thumbnail 23" loading="lazy"></picture>
             </div>
             <div class="caption-title">SPIRE</div>
             <div class="caption-desc">Personal streetwear brand</div>
@@ -668,19 +701,43 @@
         <div class="work-card">
           <a href="projects/revink.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p26.png" alt="Project thumbnail 26">
+              <picture><source srcset="1_photos/p26.webp" type="image/webp"><img src="1_photos/p26.png" alt="Project thumbnail 26" loading="lazy"></picture>
             </div>
             <div class="caption-title">REVINK</div>
             <div class="caption-desc">Helping artists go to market with fashion</div>
           </a>
         </div>
 
+      
+
+        <div class="work-card">
+          <a href="projects/spire.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <picture><source srcset="1_photos/p25.webp" type="image/webp"><img src="1_photos/p25.png" alt="Project thumbnail 25" loading="lazy"></picture>
+            </div>
+            <div class="caption-title">SPIRE</div>
+            <div class="caption-desc">Personal streetwear brand</div>
+          </a>
+        </div>
+
+        <div class="work-card">
+          <a href="projects/the-lies-end-in-summer.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <picture><source srcset="1_photos/p24.webp" type="image/webp"><img src="1_photos/p24.png" alt="Project thumbnail 24" loading="lazy"></picture>
+            </div>
+            <div class="caption-title">謊言以夏為終 (The Lies End In Summer)</div>
+            <div class="caption-desc">Taoism inspired collection</div>
+          </a>
+        </div>
+
+        
+
 <!------------------------Visual // Audio Section--------------------------------->
 
         <div class="work-card">
           <a href="projects/make-total-destroy.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid6.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vid6.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">MAKE TOTAL DESTROY </div>
             <div class="caption-desc">Reimagining Periphery's music video through creative editing</div>
@@ -690,7 +747,7 @@
         <div class="work-card" id="card28">
           <a href="projects/motion-graphic-animation.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid7.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vid7.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">Motion Graphic Animation</div>
             <div class="caption-desc">A collection of motion graphic experiments</div>
@@ -700,7 +757,7 @@
         <div class="work-card">
           <a href="projects/video-editing.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <video src="1_photos/vid5.mp4" autoplay loop muted playsinline></video>
+              <video data-src="1_photos/vid5.mp4" preload="metadata" autoplay loop muted playsinline></video>
             </div>
             <div class="caption-title">Video Editing</div>
             <div class="caption-desc">A log of personal videos</div>
@@ -710,20 +767,32 @@
         <div class="work-card">
           <a href="projects/music-production.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p30.png" alt="Project thumbnail 30">
+              <picture><source srcset="1_photos/p32.webp" type="image/webp"><img src="1_photos/p32.png" alt="Project thumbnail 30" loading="lazy"></picture>
             </div>
-            <div class="caption-title">GOODFORNOTHING</div>
-            <div class="caption-desc">Album of song experiments over the years</div>
+            <div class="caption-title">5dollarkid</div>
+            <div class="caption-desc">New Album on Spotify, might be my best work yet heheeheha</div>
           </a>
         </div>
 
         <div class="work-card">
           <a href="projects/music-production.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="media-container">
-              <img src="1_photos/p31.png" alt="Project thumbnail 31">
+              <picture><source srcset="1_photos/p30.webp" type="image/webp"><img src="1_photos/p30.png" alt="Project thumbnail 30" loading="lazy"></picture>
+            </div>
+            <div class="caption-title">GOODFORNOTHING</div>
+            <div class="caption-desc">Album of song experiments over the years</div>
+          </a>
+        </div>
+
+        
+
+        <div class="work-card">
+          <a href="projects/music-production.html" style="text-decoration: none; color: inherit; display: block;">
+            <div class="media-container">
+              <picture><source srcset="1_photos/p31.webp" type="image/webp"><img src="1_photos/p31.png" alt="Project thumbnail 31" loading="lazy"></picture>
             </div>
             <div class="caption-title">DEMIGOD</div>
-            <div class="caption-desc">Featured song on Spotify with over 190,000 streams</div>
+            <div class="caption-desc">Featured song on Spotify with over 260,000 streams</div>
           </a>
         </div>
 
@@ -840,91 +909,76 @@
     observedEls.forEach(el => io.observe(el));
     // Set initial label on load (default already set to + Design)
 
-    /* --- NEW: responsive reorder to match your requested patterns --- */
+    /* --- Masonry-style columns that preserve source order and are stable when adding cards --- */
     const grid = document.getElementById('workGrid');
+    const sourceOrderCards = Array.from(grid.querySelectorAll('.work-card'));
 
-    // Ensure every card has a stable "originalIndex" so re-orders are deterministic
-    function ensureOriginalIndexes(){
-      const cards = Array.from(grid.querySelectorAll('.work-card'));
-      // find max assigned index so new ones increment
-      let max = -1;
-      cards.forEach(c=>{
-        if(c.dataset.originalIndex !== undefined){
-          const num = parseInt(c.dataset.originalIndex, 10);
-          if(!isNaN(num) && num > max) max = num;
-        }
-      });
-      cards.forEach((c, i)=>{
-        if(c.dataset.originalIndex === undefined){
-          max++;
-          c.dataset.originalIndex = max;
-        }
-      });
-    }
+    function buildColumns(columnCount){
+      // Clear current content
+      grid.innerHTML = '';
 
-    // Return cards in the original ordering (by originalIndex)
-    function getOriginalItems(){
-      ensureOriginalIndexes();
-      return Array.from(grid.querySelectorAll('.work-card'))
-                  .sort((a,b)=> parseInt(a.dataset.originalIndex,10) - parseInt(b.dataset.originalIndex,10));
-    }
-
-    // Desktop reorder: column-major for 3 columns -> 1,4,7,2,5,8,3,6,9...
-    function reorderForDesktop(items){
-      const C = 3;
-      const N = items.length;
-      const rows = Math.ceil(N / C);
-      const output = [];
-      for(let col=0; col<C; col++){
-        for(let row=0; row<rows; row++){
-          const idx = row * C + col;
-          if(idx < N) output.push(items[idx]);
-        }
+      // Create column containers
+      const columns = [];
+      for(let i = 0; i < columnCount; i++){
+        const col = document.createElement('div');
+        col.className = 'work-column';
+        grid.appendChild(col);
+        columns.push(col);
       }
-      return output;
+
+      // Distribute cards in row-major order so visual reading order is:
+      // 1  2  3
+      // 4  5  6
+      // 7  8  9 ...
+      sourceOrderCards.forEach((card, index) => {
+        const colIndex = index % columnCount;
+        columns[colIndex].appendChild(card);
+      });
     }
 
-    // Tablet reorder: interleave first half and second half -> 1,5,2,6,3,7,4,8,9...
-    // Generalized: mid = floor(N/2); for i in 0..mid-1 push i, push i+mid (if exists); append leftover if any
-    function reorderForTablet(items){
-      const N = items.length;
-      const mid = Math.floor(N / 2);
-      const out = [];
-      for(let i=0;i<mid;i++){
-        out.push(items[i]);
-        const j = i + mid;
-        if(j < N) out.push(items[j]);
-      }
-      if(out.length < N) out.push(items[N-1]);
-      return out;
-    }
-
-    // Apply reorder depending on window width (matches your stated breakpoints)
     function applyReorder(){
-      const items = getOriginalItems();
       const w = window.innerWidth;
-      let newOrder;
       if(w > 1100){
-        newOrder = reorderForDesktop(items);
+        buildColumns(3);
       } else if(w > 680){
-        newOrder = reorderForTablet(items);
+        buildColumns(2);
       } else {
-        newOrder = items; // mobile: normal order
+        buildColumns(1);
       }
-      // Append in new order (moves DOM nodes)
-      newOrder.forEach(el => grid.appendChild(el));
     }
 
-    // Debounced resize + initial load
+    function setupVideoLazyLoad() {
+      const videos = grid.querySelectorAll('video[data-src]');
+      if (!videos.length) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const video = entry.target;
+          const src = video.getAttribute('data-src');
+          if (!src) return;
+          video.src = src;
+          video.load();
+          video.removeAttribute('data-src');
+          io.unobserve(video);
+        });
+      }, { rootMargin: '100px', threshold: 0 });
+      videos.forEach(v => io.observe(v));
+    }
+
     let resizeTimer;
-    window.addEventListener('load', applyReorder);
-    window.addEventListener('resize', ()=>{
+    function onReady() {
+      applyReorder();
+      setupVideoLazyLoad();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', onReady);
+    } else {
+      onReady();
+    }
+    window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(applyReorder, 120);
     });
-
-    // If you ever add cards dynamically, call applyReorder() again (the script
-    // will assign originalIndex to new cards automatically before ordering).
 
     /* --- Cursor tracking effect for work cards --- */
     function addCursorTracking() {
@@ -997,6 +1051,26 @@
     
     // Initialize cursor tracking after DOM is loaded
     document.addEventListener('DOMContentLoaded', addCursorTracking);
+
+    // Sift card only: show "coming soon!" bubble at cursor, float up and fade
+    document.addEventListener('DOMContentLoaded', function() {
+      const siftCard = document.querySelector('.work-card[data-coming-soon]');
+      if (!siftCard) return;
+      siftCard.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const bubble = document.createElement('div');
+        bubble.className = 'coming-soon-bubble';
+        bubble.textContent = 'Coming soon!';
+        bubble.style.left = e.clientX + 'px';
+        bubble.style.top = e.clientY + 'px';
+        document.body.appendChild(bubble);
+        requestAnimationFrame(function() { bubble.classList.add('is-visible'); });
+        setTimeout(function() {
+          if (bubble.parentNode) bubble.parentNode.removeChild(bubble);
+        }, 2300);
+      });
+    });
 
     // Scroll animations for work cards
     document.addEventListener('DOMContentLoaded', function() {

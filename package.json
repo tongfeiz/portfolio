@@ -1,0 +1,10 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "scripts": {
+    "build:webp": "node scripts/generate-webp.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  }
+}

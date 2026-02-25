@@ -6,7 +6,7 @@
 class LoadingSystem {
   constructor(options = {}) {
     this.options = {
-      minDisplayTime: 1000, // Minimum 1 second display time
+      minDisplayTime: 400, // Brief display so overlay doesn't block; we hide when DOM/first paint is ready, not full page load
       transitionDuration: 600, // Fade transition duration
       backgroundColor: '#ffffff', // White background
       loadingGif: '1_photos/loading.gif', // Single loading GIF
@@ -24,11 +24,16 @@ class LoadingSystem {
     this.createLoadingScreen();
     this.startTime = Date.now();
     
-    // Wait for page to be fully loaded
-    if (document.readyState === 'complete') {
-      this.handlePageLoad();
+    // Hide when DOM is ready and first screen can render (don't wait for all images/videos)
+    const tryHide = () => {
+      const elapsed = Date.now() - this.startTime;
+      const remaining = Math.max(0, this.options.minDisplayTime - elapsed);
+      setTimeout(() => this.hideLoadingScreen(), remaining);
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryHide);
     } else {
-      window.addEventListener('load', () => this.handlePageLoad());
+      tryHide();
     }
   }
 
@@ -69,16 +74,6 @@ class LoadingSystem {
     document.body.appendChild(this.loadingScreen);
   }
 
-
-  handlePageLoad() {
-    // Ensure minimum display time has passed
-    const elapsedTime = Date.now() - this.startTime;
-    const remainingTime = Math.max(0, this.options.minDisplayTime - elapsedTime);
-
-    setTimeout(() => {
-      this.hideLoadingScreen();
-    }, remainingTime);
-  }
 
   hideLoadingScreen() {
     if (!this.loadingScreen) return;
