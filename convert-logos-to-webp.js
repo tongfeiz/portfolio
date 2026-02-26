@@ -35,6 +35,7 @@ const aboutPageLogos = [
   '1_photos/logos/icontools/id1.png',
   '1_photos/logos/icontools/logic1.png',
   '1_photos/logos/icontools/pr1.png',
+  '1_photos/logos/icontools/rhino1.png',
   // Hover/load state variants (a, b, c)
   '1_photos/logos/ss1a.png', '1_photos/logos/ss1b.png', '1_photos/logos/ss1c.png',
   '1_photos/logos/ss2a.png', '1_photos/logos/ss2b.png', '1_photos/logos/ss2c.png',
@@ -50,7 +51,9 @@ const aboutPageLogos = [
   '1_photos/logos/innod1a.png', '1_photos/logos/innod1b.png', '1_photos/logos/innod1c.png',
   '1_photos/logos/innod2a.png', '1_photos/logos/innod2b.png', '1_photos/logos/innod2c.png',
   '1_photos/logos/innod3a.png', '1_photos/logos/innod3b.png', '1_photos/logos/innod3c.png',
+  '1_photos/logos/innod0a.png', '1_photos/logos/innod0b.png', '1_photos/logos/innod0c.png',
   '1_photos/logos/isa1a.png', '1_photos/logos/isa1b.png', '1_photos/logos/isa1c.png',
+  '1_photos/logos/cho1a.png', '1_photos/logos/cho1b.png', '1_photos/logos/cho1c.png',
 ];
 
 async function convertAll() {
