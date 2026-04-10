@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="1_photos/logos/icontools/faviconnew.png">
+  <title>Tongfei Zhu</title>
+  <style>
+    :root {
+      --text-light: #f7f7f7;
+      --text-dark: #1d1d1d;
+
+      /* Bubble bounding box — edit these to change the physics area */
+      --bubble-box-bg: #5d53a7;
+      --bubble-box-border: rgba(255, 255, 255, 0);
+
+      /* Box reveal — vertical line → full box */
+      --bubble-reveal-duration: 1.01s;
+      --bubble-reveal-ease: cubic-bezier(0.45, 0, 0.1, 1);
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: var(--text-light);
+      color: var(--text-dark);
+    }
+
+    .scroll-spacer {
+      height: 300vh;
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      background: transparent;
+      mix-blend-mode: exclusion;
+      pointer-events: none;
+    }
+
+    header * { pointer-events: auto; }
+
+    .header-inner {
+      width: 100%;
+      margin: 0 auto;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 10vw;
+    }
+
+    .brand {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand .home {
+      font-size: 21.6px;
+      letter-spacing: -0.04em;
+      font-weight: 400;
+      color: var(--text-light);
+      text-decoration: none;
+    }
+
+    .brand .plus {
+      font-size: 21.6px;
+      letter-spacing: -0.04em;
+      font-weight: 400;
+      color: var(--text-light);
+      opacity: 0.9;
+    }
+
+    nav {
+      display: flex;
+      gap: 0;
+      align-items: center;
+      font-size: 21.6px;
+      letter-spacing: -0.04em;
+    }
+
+    nav a {
+      position: relative;
+      font-weight: 400;
+      text-decoration: none;
+      color: var(--text-light);
+      padding: 6px 0;
+      display: inline-block;
+    }
+
+    .nav-sep {
+      color: var(--text-light);
+      opacity: 0.85;
+      margin: 0 6px 0 2px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    header nav a:focus,
+    header nav a:focus-visible { outline: none; }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 5px;
+      height: 2px;
+      background: var(--text-light);
+      width: 0;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after { width: 100%; }
+
+    nav a.current::after { width: 100%; }
+    nav a.current:hover::after { width: 0; }
+
+    nav a.current::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: 5px;
+      height: 2px;
+      background: var(--text-light);
+      width: 0;
+      transition: width 0.3s ease 0.3s;
+    }
+
+    nav a.current:hover::before { width: 100%; }
+
+    nav a.current:not(:hover)::before {
+      width: 0;
+      transition: width 0.3s ease;
+    }
+
+    nav a.current:not(:hover)::after {
+      width: 100%;
+      transition: width 0.3s ease 0.3s;
+    }
+
+    .clock {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 21.6px;
+      font-weight: 400;
+      color: var(--text-light);
+      opacity: 0.9;
+      letter-spacing: -0.04em;
+    }
+
+    .clock-time {
+      font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    .clock-separator { opacity: 0.7; margin: 0 4px; }
+
+    @media (max-width: 1100px) {
+      .clock { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      header { padding: 12px 0; }
+      .header-inner { padding: 0 10vw; }
+      .brand .home { font-size: 3.6vw; }
+      .brand .plus { font-size: 3.6vw; }
+      nav { font-size: 3.6vw; }
+    }
+
+    a:focus { outline: 2px solid #ddd; }
+
+    /* ── Bubble physics box ── */
+
+    .bubble-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 80px 10vw 0;
+      box-sizing: border-box;
+    }
+
+    .bubble-box-clip {
+      width: 100%;
+      height: calc(100vh - 180px);
+      min-height: 360px;
+    }
+
+    .bubble-box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .bubble-box::before,
+    .bubble-box::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      bottom: -2px;
+      width: calc(50% + 4px);
+      background: var(--text-light);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .bubble-box::before {
+      left: -2px;
+      transform-origin: left center;
+      border-radius: 20px 0 0 20px;
+      transform: scaleX(1);
+      animation: bubble-curtain-left var(--bubble-reveal-duration) var(--bubble-reveal-ease) forwards;
+    }
+
+    .bubble-box::after {
+      right: -2px;
+      transform-origin: right center;
+      border-radius: 0 20px 20px 0;
+      transform: scaleX(1);
+      animation: bubble-curtain-right var(--bubble-reveal-duration) var(--bubble-reveal-ease) forwards;
+    }
+
+    @keyframes bubble-curtain-left {
+      from { transform: scaleX(1); }
+      to { transform: scaleX(0); }
+    }
+
+    @keyframes bubble-curtain-right {
+      from { transform: scaleX(1); }
+      to { transform: scaleX(0); }
+    }
+
+    .bubble-box-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      box-sizing: border-box;
+      background: var(--bubble-box-bg);
+      border: 1px solid var(--bubble-box-border);
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    /* Physics + images: full bounds from frame 1, above backdrop */
+    .bubble-box-stage {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      overflow: hidden;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .bubble-box-stage.is-dragging {
+      cursor: grabbing;
+    }
+
+    .bubble-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: center center;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      will-change: transform;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="brand" id="homeBtn" role="button" tabindex="0" aria-label="Go to home">
+        <div class="home">Tongfei</div>
+        <div class="plus" id="sectionLabel">+ Design</div>
+      </div>
+
+      <div class="clock" id="worldClock">
+        <div class="clock-time" id="laTime">LA 17:00:00</div>
+        <div class="clock-separator">//</div>
+        <div class="clock-time" id="hkTime">HK 08:00:00</div>
+      </div>
+
+      <nav id="mainNav" aria-label="Main navigation">
+        <a href="/index.html" data-section="Work" class="current">Work</a>
+        <span class="nav-sep">,</span>
+        <a href="/about.html" data-section="About">About</a>
+        <span class="nav-sep">,</span>
+        <a href="/calendar.html" data-section="Calendar">Calendar</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="bubble-container">
+    <div class="bubble-box-clip">
+      <div class="bubble-box">
+        <div class="bubble-box-backdrop" aria-hidden="true"></div>
+        <div class="bubble-box-stage" id="bubbleBox"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-spacer"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script>
+  (function () {
+    var Engine          = Matter.Engine,
+        Bodies          = Matter.Bodies,
+        Body            = Matter.Body,
+        Composite       = Matter.Composite,
+        Events          = Matter.Events,
+        Mouse           = Matter.Mouse,
+        MouseConstraint = Matter.MouseConstraint;
+
+    var box = document.getElementById('bubbleBox');
+    var srcs = [
+      '1_photos/bubblebox/albumbubble.png',
+      '1_photos/bubblebox/lilybubble.png',
+      '1_photos/bubblebox/privbubble1.png',
+      '1_photos/bubblebox/privbubble2.png',
+      '1_photos/bubblebox/siftbubble.png',
+      '1_photos/bubblebox/swoobubble.png',
+      '1_photos/bubblebox/tmbubble1.png',
+      '1_photos/bubblebox/tmbubble2.png'
+    ];
+
+    function preload(src) {
+      return new Promise(function (resolve) {
+        var img = new Image();
+        img.onload  = function () { resolve({ src: src, natW: img.naturalWidth, natH: img.naturalHeight }); };
+        img.onerror = function () { resolve({ src: src, natW: 100, natH: 100 }); };
+        img.src = src;
+      });
+    }
+
+    function createEllipse(x, y, halfW, halfH, opts, segments) {
+      segments = segments || 32;
+      var verts = [];
+      for (var i = 0; i < segments; i++) {
+        var a = (i / segments) * Math.PI * 2;
+        verts.push({ x: Math.cos(a) * halfW, y: Math.sin(a) * halfH });
+      }
+      return Bodies.fromVertices(x, y, [verts], opts);
+    }
+
+    var WALL_T = 60;
+
+    function wallOpts(surface) {
+      surface = surface || {};
+      return {
+        isStatic: true,
+        restitution: surface.restitution != null ? surface.restitution : 0.22,
+        friction: surface.friction != null ? surface.friction : 0.04,
+        frictionStatic: surface.frictionStatic != null ? surface.frictionStatic : 0.06
+      };
+    }
+
+    function createWalls(w, h, sideSurface, floorSurface) {
+      var side = wallOpts(sideSurface);
+      var floor = wallOpts(floorSurface || sideSurface);
+      return [
+        Bodies.rectangle(w / 2,      h + WALL_T / 2,  w + WALL_T * 2, WALL_T, floor),
+        Bodies.rectangle(-WALL_T / 2, h / 2,           WALL_T, h + WALL_T * 2, side),
+        Bodies.rectangle(w + WALL_T / 2, h / 2,        WALL_T, h + WALL_T * 2, side),
+        Bodies.rectangle(w / 2,      -WALL_T / 2,      w + WALL_T * 2, WALL_T, side)
+      ];
+    }
+
+    Promise.all(srcs.map(preload)).then(function (imageData) {
+      /*
+       * ═══ ALL PHYSICS TUNING — edit values below ═══
+       *
+       * Scroll / float (scroll-up lift + deceleration bump)
+       *   floatUpMul        — upward force when scrolling up (higher = more exaggerated float)
+       *   turbulenceMul     — strength on direction change / decel (higher = punchier bump)
+       *   turbulenceBoost   — extra multiplier on turbulence impulse
+       *   scrollVelGate     — min |smoothed scroll vel| before any float forces apply (lower = easier to trigger)
+       *   floatVelThreshold — scrollVel below this (negative = up) triggers lift (closer to 0 = triggers sooner)
+       *   decelGate         — min |scroll acceleration| for decel bump (lower = more sensitive)
+       *   scrollVelLerp     — how fast raw scroll follows input (higher = snappier)
+       *   scrollVelRetain   — scroll momentum decay per frame (higher = longer tail)
+       *
+       * Overall speed
+       *   timeScale         — physics dt scale vs real time (higher = faster sim)
+       *   gravityY / gravityScale — fall speed (both increase = heavier feel)
+       *   maxSpeed / maxAngSpeed — velocity caps (raise to allow faster motion)
+       *   frictionAir       — drag through air (lower = faster / floatier)
+       *
+       * Collision feel (“sensitivity”)
+       *   restitutionBody   — bubble-on-bubble bounce (higher = bouncier / livelier hits)
+       *   restitutionWall   — bounce off left / right / top walls
+       *   restitutionFloor  — bounce off bottom only (usually higher than walls)
+       *   frictionWall / frictionStaticWall — slide on vertical + top edges
+       *   frictionFloor / frictionStaticFloor — slide on bottom (lower = more skid after landing)
+       *   lilyCollisionMargin — ellipse radius scale for lilybubble only (>1 = slightly larger hit area)
+       *   frictionBody / frictionStaticBody — sliding vs sticking (lower = more slip, hits read cleaner)
+       *   positionIterations / velocityIterations — solver steps (higher = tighter, more responsive contacts)
+       *
+       * Click-drag / toss
+       *   dragStiffness     — how rigidly the bubble follows the pointer (lower = looser, more sling)
+       *   dragDamping       — dampens constraint oscillation while dragging
+       *   tossVelocityMul   — scales pointer speed into release velocity (higher = harder throws)
+       *   tossMaxSpeed      — cap on throw speed (px-equivalent / tick; raise for stronger tosses)
+       *   tossSpinMul       — extra spin from horizontal flick
+       */
+      var TUNING = {
+        floatUpMul: 0.00052,
+        turbulenceMul: 0.000062,
+        turbulenceBoost: 10,
+        driftMul: 0.00028,
+        scrollVelGate: 0.075,
+        floatVelThreshold: -0.22,
+        decelGate: 0.07,
+        scrollVelLerp: 0.34,
+        scrollVelRetain: 0.964,
+
+        timeScale: 0.74,
+        gravityY: 3.55,
+        gravityScale: 0.00108,
+        maxSpeed: 12,
+        maxAngSpeed: 0.24,
+        frictionAir: 0.032,
+
+        restitutionBody: 0.44,
+        frictionBody: 0.048,
+        frictionStaticBody: 0.068,
+
+        restitutionWall: 0.38,
+        frictionWall: 0.028,
+        frictionStaticWall: 0.045,
+
+        restitutionFloor: 0.052,
+        frictionFloor: 0.016,
+        frictionStaticFloor: 0.028,
+
+        lilyCollisionMargin: 1.025,
+
+        positionIterations: 10,
+        velocityIterations: 8,
+
+        dragStiffness: 0.003,
+        dragDamping: 0.065,
+        tossVelocityMul: 0.042,
+        tossMaxSpeed: 12,
+        tossSpinMul: 0.0002
+      };
+
+      var wallSurface = {
+        restitution: TUNING.restitutionWall,
+        friction: TUNING.frictionWall,
+        frictionStatic: TUNING.frictionStaticWall
+      };
+      var floorSurface = {
+        restitution: TUNING.restitutionFloor,
+        friction: TUNING.frictionFloor,
+        frictionStatic: TUNING.frictionStaticFloor
+      };
+
+      var boxW = box.clientWidth;
+      var boxH = box.clientHeight;
+
+      var TARGET = boxW < 500 ? 80 : (boxW < 800 ? 120 : 150);
+      var refArea = TARGET * TARGET;
+
+      var engine = Engine.create({
+        enableSleeping: false,
+        gravity: { x: 0, y: TUNING.gravityY, scale: TUNING.gravityScale }
+      });
+      engine.positionIterations = TUNING.positionIterations;
+      engine.velocityIterations = TUNING.velocityIterations;
+
+      var walls = createWalls(boxW, boxH, wallSurface, floorSurface);
+      Composite.add(engine.world, walls);
+
+      var mouse = Mouse.create(box);
+      var mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+          stiffness: TUNING.dragStiffness,
+          damping: TUNING.dragDamping,
+          length: 0,
+          angularStiffness: 0.001,
+          render: { visible: false }
+        }
+      });
+      Composite.add(engine.world, mouseConstraint);
+
+      var dragPointerVel = { x: 0, y: 0 };
+      var dragPrevMouse = null;
+      var dragPrevTime = 0;
+
+      Events.on(mouseConstraint, 'startdrag', function () {
+        dragPrevMouse = { x: mouse.position.x, y: mouse.position.y };
+        dragPrevTime = performance.now();
+        dragPointerVel.x = 0;
+        dragPointerVel.y = 0;
+        box.classList.add('is-dragging');
+      });
+
+      Events.on(mouseConstraint, 'enddrag', function (e) {
+        box.classList.remove('is-dragging');
+        var b = e.body;
+        if (!b) return;
+        var mul = TUNING.tossVelocityMul;
+        var tx = b.velocity.x + dragPointerVel.x * mul;
+        var ty = b.velocity.y + dragPointerVel.y * mul;
+        var cap = TUNING.tossMaxSpeed;
+        var sp = Math.sqrt(tx * tx + ty * ty);
+        if (sp > cap) {
+          var f = cap / sp;
+          tx *= f;
+          ty *= f;
+        }
+        Body.setVelocity(b, { x: tx, y: ty });
+        Body.setAngularVelocity(b, b.angularVelocity + dragPointerVel.x * TUNING.tossSpinMul);
+        dragPrevMouse = null;
+      });
+
+      var bubbles = [];
+      var cx = boxW / 2;
+      var cy = boxH * 0.32;
+
+      imageData.forEach(function (data, i) {
+        var ratio = data.natW / data.natH;
+        var w, h;
+        if (ratio >= 1) { w = TARGET; h = TARGET / ratio; }
+        else            { h = TARGET; w = TARGET * ratio; }
+
+        if (data.src.indexOf('albumbubble') !== -1) {
+          w *= 2;
+          h *= 2;
+        }
+
+        var angle = (i / imageData.length) * Math.PI * 2 + (Math.random() - 0.5) * 0.85;
+        var dist  = 12 + Math.random() * 58;
+        var x = cx + Math.cos(angle) * dist + (Math.random() - 0.5) * 22;
+        var y = cy + Math.sin(angle) * dist + (Math.random() - 0.5) * 18;
+        var rot = (Math.random() - 0.5) * 0.55;
+
+        var isLily   = data.src.indexOf('lilybubble') !== -1;
+        var isCircle = data.src.indexOf('tmbubble1') !== -1;
+        var bodyOpts = {
+          angle: rot,
+          slop: 0.005,
+          restitution: TUNING.restitutionBody,
+          friction: TUNING.frictionBody,
+          frictionStatic: TUNING.frictionStaticBody,
+          frictionAir: TUNING.frictionAir,
+          density: 0.001
+        };
+        var body;
+        if (isLily) {
+          var lilyR = TUNING.lilyCollisionMargin;
+          body = createEllipse(x, y, (w / 2) * lilyR, (h / 2) * lilyR, bodyOpts);
+        } else if (isCircle) {
+          body = Bodies.circle(x, y, Math.min(w, h) / 2, bodyOpts);
+        } else {
+          bodyOpts.chamfer = { radius: Math.min(w, h) * 0.16 };
+          body = Bodies.rectangle(x, y, w, h, bodyOpts);
+        }
+        Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.018);
+        Composite.add(engine.world, body);
+
+        var el = document.createElement('img');
+        el.src = data.src;
+        el.className = 'bubble-img';
+        el.style.width  = w + 'px';
+        el.style.height = h + 'px';
+        el.draggable = false;
+        box.appendChild(el);
+
+        var area = w * h;
+        var floatScale = Math.pow(refArea / area, 0.35) * (0.85 + Math.random() * 0.3);
+        var driftX = (Math.random() - 0.5) * 2 * (0.6 + Math.random() * 0.8);
+
+        bubbles.push({ body: body, el: el, hw: w / 2, hh: h / 2, floatScale: floatScale, driftX: driftX });
+      });
+
+      var lastScrollY   = 0;
+      var scrollVel     = 0;
+      var prevScrollVel = 0;
+
+      Events.on(engine, 'beforeUpdate', function () {
+        var dragged = mouseConstraint.body;
+        if (dragged && dragPrevMouse) {
+          var now = performance.now();
+          var dt = (now - dragPrevTime) / 1000;
+          var mx = mouse.position.x;
+          var my = mouse.position.y;
+          if (dt > 0.0005 && dt < 0.08) {
+            dragPointerVel.x = (mx - dragPrevMouse.x) / dt;
+            dragPointerVel.y = (my - dragPrevMouse.y) / dt;
+          }
+          dragPrevMouse.x = mx;
+          dragPrevMouse.y = my;
+          dragPrevTime = now;
+        }
+
+        bubbles.forEach(function (b) {
+          if (dragged === b.body) return;
+          var vx = b.body.velocity.x;
+          var vy = b.body.velocity.y;
+          var speed = Math.sqrt(vx * vx + vy * vy);
+          if (speed > TUNING.maxSpeed) {
+            var f = TUNING.maxSpeed / speed;
+            Body.setVelocity(b.body, { x: vx * f, y: vy * f });
+          }
+          var ang = Math.abs(b.body.angularVelocity);
+          if (ang > TUNING.maxAngSpeed) {
+            Body.setAngularVelocity(b.body, b.body.angularVelocity * (TUNING.maxAngSpeed / ang));
+          }
+        });
+      });
+
+      var lastTime = performance.now();
+
+      function loop(now) {
+        requestAnimationFrame(loop);
+        var raw = Math.min(40, now - lastTime);
+        lastTime = now;
+
+        var sy = window.scrollY || 0;
+        var scrollDelta = sy - lastScrollY;
+        lastScrollY = sy;
+
+        scrollVel += (scrollDelta - scrollVel) * TUNING.scrollVelLerp;
+        scrollVel *= TUNING.scrollVelRetain;
+
+        var scrollAccel = scrollVel - prevScrollVel;
+        prevScrollVel = scrollVel;
+
+        if (Math.abs(scrollVel) > TUNING.scrollVelGate) {
+          bubbles.forEach(function (b) {
+            if (mouseConstraint.body === b.body) return;
+            var m = b.body.mass || 1;
+            var fx = 0;
+            var fy = 0;
+
+            if (scrollVel < TUNING.floatVelThreshold) {
+              fy = scrollVel * TUNING.floatUpMul * m * b.floatScale;
+              fx = Math.abs(scrollVel) * TUNING.driftMul * m * b.driftX;
+            }
+
+            var decel = scrollAccel * scrollVel;
+            if (decel < 0 && Math.abs(scrollAccel) > TUNING.decelGate) {
+              var turbForce = Math.abs(scrollAccel) * TUNING.turbulenceMul * m * TUNING.turbulenceBoost;
+              fy -= turbForce * b.floatScale;
+              fx += turbForce * b.driftX * 0.5;
+            }
+
+            if (Math.abs(fy) > 0.000001 || Math.abs(fx) > 0.000001) {
+              Body.applyForce(b.body, b.body.position, { x: fx, y: fy });
+            }
+          });
+        }
+
+        Engine.update(engine, raw * TUNING.timeScale);
+
+        for (var i = 0; i < bubbles.length; i++) {
+          var b = bubbles[i];
+          var x = b.body.position.x - b.hw;
+          var y = b.body.position.y - b.hh;
+          var a = b.body.angle;
+          b.el.style.transform =
+            'translate3d(' + x + 'px,' + y + 'px,0) rotate(' + a + 'rad)';
+        }
+      }
+
+      requestAnimationFrame(loop);
+
+      /* ── Resize handling ── */
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          var w = box.clientWidth;
+          var h = box.clientHeight;
+          Composite.remove(engine.world, walls);
+          walls = createWalls(w, h, wallSurface, floorSurface);
+          Composite.add(engine.world, walls);
+
+          bubbles.forEach(function (b) {
+            var bx = Math.max(b.hw + 2, Math.min(w - b.hw - 2, b.body.position.x));
+            var by = Math.max(b.hh + 2, Math.min(h - b.hh - 2, b.body.position.y));
+            Body.setPosition(b.body, { x: bx, y: by });
+          });
+        }, 180);
+      });
+    });
+
+    /* ── World Clock ── */
+    function updateClock() {
+      var now = new Date();
+      var la = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+      var hk = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Hong_Kong' }));
+      var fmt = { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      var laEl = document.getElementById('laTime');
+      var hkEl = document.getElementById('hkTime');
+      if (laEl) laEl.textContent = 'LA ' + la.toLocaleTimeString('en-US', fmt);
+      if (hkEl) hkEl.textContent = 'HK ' + hk.toLocaleTimeString('en-US', fmt);
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    /* ── Header nav ── */
+    document.getElementById('homeBtn').addEventListener('click', function () {
+      window.location.href = '/index.html';
+    });
+    document.getElementById('homeBtn').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') window.location.href = '/index.html';
+    });
+  })();
+  </script>
+
+  <script src="smooth-scroll.js"></script>
+</body>
+</html>
