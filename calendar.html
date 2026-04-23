@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/png" href="1_photos/logos/icontools/faviconnew.png"> 
   <title>Tongfei Zhu - Calendar</title>
+  <script src="page-transition.js"></script>
   <style>
     :root {
       --page-width: 1200px;
@@ -305,31 +306,19 @@
       .then(response => response.text())
       .then(html => {
         document.getElementById('header-container').innerHTML = html;
-        // Initialize header after loading
+        const pageTitle = document.getElementById('pageTitle');
+        if (pageTitle) {
+          pageTitle.textContent = 'My 2025';
+        }
+        const calendarLink = document.querySelector('#mainNav a[data-section="Calendar"]');
+        if (calendarLink) {
+          document.querySelectorAll('#mainNav a').forEach((a) => {
+            a.classList.toggle('current', a === calendarLink);
+          });
+        }
         if (window.initializeHeader) {
           window.initializeHeader();
         }
-        // Set page title based on whether JAN // 26 exists
-        setTimeout(() => {
-          const pageTitle = document.getElementById('pageTitle');
-          if (pageTitle) {
-            // Check if there's a month heading with "JAN // 26"
-            const janHeading = Array.from(document.querySelectorAll('.month-heading')).find(
-              heading => heading.textContent.includes('JAN // 26')
-            );
-            if (janHeading) {
-              pageTitle.textContent = 'My 2026';
-            } else {
-              pageTitle.textContent = 'My 2025';
-            }
-          }
-          // Set Calendar as current page
-          const calendarLink = document.querySelector('#mainNav a[data-section="Calendar"]');
-          if (calendarLink) {
-            document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('current'));
-            calendarLink.classList.add('current');
-          }
-        }, 100);
       })
       .catch(error => console.error('Error loading header:', error));
 

@@ -79,14 +79,6 @@
       text-decoration: none;
     }
 
-    .brand .plus {
-      font-size: 21.6px;
-      letter-spacing: -0.04em;
-      font-weight: 400;
-      color: var(--text-light);
-      opacity: 0.9;
-    }
-
     nav {
       display: flex;
       gap: 0;
@@ -115,43 +107,33 @@
     header nav a:focus,
     header nav a:focus-visible { outline: none; }
 
-    nav a::after {
+    nav a:not(.current)::after {
       content: '';
       position: absolute;
       left: 0;
       bottom: 5px;
       height: 2px;
       background: var(--text-light);
-      width: 0;
-      transition: width 0.3s ease;
+      width: 100%;
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform 0.3s ease;
     }
 
-    nav a:hover::after { width: 100%; }
+    nav a:not(.current):hover::after {
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
 
-    nav a.current::after { width: 100%; }
-    nav a.current:hover::after { width: 0; }
-
-    nav a.current::before {
+    /* Current page: full underline, static on hover (no underline animation) */
+    nav a.current::after {
       content: '';
       position: absolute;
-      right: 0;
+      left: 0;
       bottom: 5px;
       height: 2px;
       background: var(--text-light);
-      width: 0;
-      transition: width 0.3s ease 0.3s;
-    }
-
-    nav a.current:hover::before { width: 100%; }
-
-    nav a.current:not(:hover)::before {
-      width: 0;
-      transition: width 0.3s ease;
-    }
-
-    nav a.current:not(:hover)::after {
       width: 100%;
-      transition: width 0.3s ease 0.3s;
     }
 
     .clock {
@@ -183,7 +165,6 @@
       header { padding: 12px 0; }
       .header-inner { padding: 0 10vw; }
       .brand .home { font-size: 3.6vw; }
-      .brand .plus { font-size: 3.6vw; }
       nav { font-size: 3.6vw; }
     }
 
@@ -300,7 +281,6 @@
     <div class="header-inner">
       <div class="brand" id="homeBtn" role="button" tabindex="0" aria-label="Go to home">
         <div class="home">Tongfei</div>
-        <div class="plus" id="sectionLabel">+ Design</div>
       </div>
 
       <div class="clock" id="worldClock">

@@ -109,42 +109,11 @@
     outline: none;
   }
 
-  /* Current page shows left-to-right underline (Line 1) */
-  nav a.current::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 5px;
-    height: 2px;
-    background: var(--text-light);
-    width: 100%;
-    transition: width 0.3s ease;
-  }
-
-  /* No hover effects for brand/home button */
-
-  /* Hover effects for navigation links */
-  nav a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 5px;
-    height: 2px;
-    background: var(--text-light);
-    width: 0;
-    transition: width 0.3s ease;
-  }
-
-  nav a:hover::after {
-    width: 100%;
-  }
-
-  /* Special animation for currently active nav items */
+  /* Current page: full underline, static on hover (no underline animation) */
   nav a.current {
     position: relative;
   }
 
-  /* Line 1 (left-to-right) - starts fully expanded, shrinks on hover */
   nav a.current::after {
     content: '';
     position: absolute;
@@ -153,39 +122,60 @@
     height: 2px;
     background: var(--text-light);
     width: 100%;
-    transition: width 0.3s ease;
+    transform: none;
+    transition: none;
   }
 
-  /* On hover: Line 1 shrinks back to start */
-  nav a.current:hover::after {
-    width: 0;
-  }
+  /* No hover effects for brand/home button */
 
-  /* Line 2 (right-to-left) - hidden by default, appears after delay on hover */
-  nav a.current::before {
+  /* Hover effects for navigation links (slides in from left, slides out to the right) */
+  nav a:not(.current)::after {
     content: '';
     position: absolute;
-    right: 0;
+    left: 0;
     bottom: 5px;
     height: 2px;
     background: var(--text-light);
-    width: 0;
-    transition: width 0.3s ease 0.3s; /* 0.3s delay after Line 1 shrinks */
-  }
-
-  nav a.current:hover::before {
     width: 100%;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.3s ease;
   }
 
-  /* Ensure clean state when not hovering */
-  nav a.current:not(:hover)::before {
-    width: 0;
-    transition: width 0.3s ease;
+  nav a:not(.current):hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
   }
 
-  nav a.current:not(:hover)::after {
-    width: 100%;
-    transition: width 0.3s ease 0.3s; /* Delay to let Line 2 shrink first */
+  /* World clock (shared with index; used by page-transition overlay on all pages) */
+  .clock {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 21.6px;
+    font-weight: 400;
+    color: var(--text-light);
+    opacity: 0.9;
+    letter-spacing: -0.04em;
+  }
+
+  .clock-time {
+    font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui,
+      'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  }
+
+  .clock-separator {
+    opacity: 0.7;
+    margin: 0 4px;
+  }
+
+  @media (max-width: 1100px) {
+    .clock {
+      display: none;
+    }
   }
 
   /* Page Title Styles */
@@ -350,15 +340,8 @@
     } else if (currentFile === 'about.html') {
       title = 'About';
     } else if (currentFile === 'calendar.html') {
-      // Check if there's a month heading with "JAN // 26"
-      const janHeading = Array.from(document.querySelectorAll('.month-heading')).find(
-        heading => heading.textContent.includes('JAN // 26')
-      );
-      if (janHeading) {
-        title = 'My 2026';
-      } else {
-        title = 'My 2025';
-      }
+      // When 2026 month content exists, change to "My 2026" here and in page-transition.js.
+      title = 'My 2025';
     }
     
     pageTitleElement.textContent = title;
@@ -378,9 +361,10 @@
     }
 
 
-    function setActive(link){
-      document.querySelectorAll('#mainNav a').forEach(a=>a.classList.remove('current'));
-      link.classList.add('current');
+    function setActive(link) {
+      document.querySelectorAll('#mainNav a').forEach((a) => {
+        a.classList.toggle('current', a === link);
+      });
     }
 
     // Set current page based on URL
@@ -453,12 +437,10 @@
 
     homeBtn.addEventListener('keypress', (e)=>{ if(e.key==='Enter') homeBtn.click(); });
 
-    // Initialize current page with a small delay to ensure DOM is ready
-    setTimeout(() => {
-      setCurrentPage();
-      // Update page title after current page is set
-      updatePageTitle();
-    }, 50);
+    // Synchronous: matches Work (index) where the active link already has .current in
+    // HTML — no delayed pass, so fetch-injected headers don’t flash the wrong underline.
+    setCurrentPage();
+    updatePageTitle();
   }
 
   // Make initializeHeader globally available

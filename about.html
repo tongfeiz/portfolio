@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tongfei Zhu - About</title>
   <link rel="icon" type="image/png" href="1_photos/logos/icontools/faviconnew.png"> 
+  <script src="page-transition.js"></script>
   <style>
     :root {
       --page-width: 1200px;
@@ -112,7 +113,11 @@
       align-items: stretch;
     }
 
+    /* Mask reveal up (header slot timing); text slides up inside overflow clip */
     .experience-row {
+      --exp-slide-ms: 600ms;
+      --exp-slide-ease: cubic-bezier(0.83, 0, 0.17, 1);
+      --exp-col-stagger: 55ms;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: var(--column-gap);
@@ -122,14 +127,41 @@
       width: 100%;
       text-decoration: none;
       color: inherit;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .experience-row.animate-in {
-      opacity: 1;
-      transform: translateY(0);
+    .experience-row > .company-name,
+    .experience-row .position-title,
+    .experience-row .position-date {
+      overflow: hidden;
+    }
+
+    .experience-row > .company-name .word-underline,
+    .experience-row .position-title .word-underline,
+    .experience-row .position-date .word-underline {
+      display: inline-block;
+      transform: translate3d(0, 110%, 0);
+      transition: transform var(--exp-slide-ms) var(--exp-slide-ease);
+      transition-delay: var(--exp-cell-delay, 0ms);
+    }
+
+    .experience-row > .company-name .word-underline {
+      --exp-cell-delay: var(--exp-row-delay, 0ms);
+    }
+
+    .experience-row .position-title .word-underline {
+      --exp-cell-delay: calc(var(--exp-row-delay, 0ms) + var(--exp-col-stagger));
+    }
+
+    .experience-row .position-date .word-underline {
+      --exp-cell-delay: calc(
+        var(--exp-row-delay, 0ms) + var(--exp-col-stagger) + var(--exp-col-stagger)
+      );
+    }
+
+    .experience-row.animate-in > .company-name .word-underline,
+    .experience-row.animate-in .position-title .word-underline,
+    .experience-row.animate-in .position-date .word-underline {
+      transform: translate3d(0, 0, 0);
     }
 
     .experience-row:hover .hover-png {
@@ -687,7 +719,7 @@
             <div class="company-name">CASA Magia</div>
             <div class="position-info">
               <div class="position-title">Product Designer</div>
-              <div class="position-date">Feb 2025 - Present</div>
+              <div class="position-date">Feb 2025 - Jan 2026</div>
             </div>
             <img src="1_photos/logos/lm1.webp" alt="CASA Magia" class="hover-png">
           </a>
@@ -809,7 +841,7 @@
             <div class="company-name">USC ISA</div>
             <div class="position-info">
               <div class="position-title">Graphic Designer</div>
-              <div class="position-date">May 2025 - Present</div>
+              <div class="position-date">May 2025 - Apr 2026</div>
             </div>
             <img src="1_photos/logos/isa1.webp" alt="International Student Assembly" class="hover-png">
           </a>
@@ -845,7 +877,7 @@
             <p>Now studying at USC, I continue to find cross disciplinary intersections between art, design, music, and other forms of multimedia.</p>
           </div>
           <div class="about-text-column">
-            <p>I’m currently building projects in fragrance, dev tools, edtech, and design services. Feel free to reach out to chat or collaborate with me!</p>
+            <p>I’m currently building for film localization, dev tools, edtech, and design services. Feel free to reach out to chat or collaborate with me!</p>
           </div>
         </div>
       </div>
@@ -1237,52 +1269,30 @@
       .then(response => response.text())
       .then(html => {
         document.getElementById('header-container').innerHTML = html;
-        // Initialize header after loading
+        const aboutLink = document.querySelector('#mainNav a[data-section="About"]');
+        if (aboutLink) {
+          document.querySelectorAll('#mainNav a').forEach((a) => {
+            a.classList.toggle('current', a === aboutLink);
+          });
+        }
         if (window.initializeHeader) {
           window.initializeHeader();
         }
-        // Additional fallback to ensure About is set as current
-        setTimeout(() => {
-          const aboutLink = document.querySelector('#mainNav a[data-section="About"]');
-          if (aboutLink) {
-            document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('current'));
-            aboutLink.classList.add('current');
-            console.log('Fallback: Set About as current');
-          }
-          
-          // Add custom navigation handling for about page
-          const homeBtn = document.getElementById('homeBtn');
-          const nav = document.getElementById('mainNav');
-          
-          if (homeBtn) {
-            homeBtn.addEventListener('click', (e) => {
-              e.preventDefault();
-              window.location.href = '/index.html';
-            });
-          }
-          
-          if (nav) {
-            nav.addEventListener('click', (e) => {
-              const a = e.target.closest('a');
-              if (!a) return;
-              
-              const href = a.getAttribute('href');
-              
-              // Handle About link click - scroll to top instead of navigating
-              if (href === '/about.html') {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-              }
-              // Let other links (like Work) navigate normally
-            });
-          }
-        }, 100);
       })
       .catch(error => console.error('Error loading header:', error));
 
     // Scroll animations and dynamic effects
     document.addEventListener('DOMContentLoaded', function() {
+      function wrapTextInSpans() {
+        const textElements = document.querySelectorAll('.company-name, .position-title, .position-date, .company-name-multi');
+        textElements.forEach(element => {
+          if (element.textContent.trim()) {
+            element.innerHTML = `<span class="word-underline">${element.textContent.trim()}</span>`;
+          }
+        });
+      }
+      wrapTextInSpans();
+
       // Intersection Observer for scroll animations
       const observerOptions = {
         threshold: 0.1,
@@ -1294,11 +1304,10 @@
           if (entry.isIntersecting) {
             entry.target.classList.add('animate-in');
             
-            // For experience rows, add staggered animation
             if (entry.target.classList.contains('experience-row')) {
               const rows = document.querySelectorAll('.experience-row');
               const index = Array.from(rows).indexOf(entry.target);
-              entry.target.style.transitionDelay = `${index * 0.03}s`;
+              entry.target.style.setProperty('--exp-row-delay', `${index * 30}ms`);
             }
           }
         });
@@ -1346,21 +1355,7 @@
       window.addEventListener('scroll', requestScrollUpdate);
 
       const experienceRows = document.querySelectorAll('.experience-row');
-      
-      // Wrap each text element in a span for underline animation
-      function wrapTextInSpans() {
-        const textElements = document.querySelectorAll('.company-name, .position-title, .position-date, .company-name-multi');
-        
-        textElements.forEach(element => {
-          if (element.textContent.trim()) {
-            element.innerHTML = `<span class="word-underline">${element.textContent.trim()}</span>`;
-          }
-        });
-      }
-      
-      // Initialize text wrapping
-      wrapTextInSpans();
-      
+
       // Get the fixed hover container and image
       const hoverContainer = document.getElementById('hover-image-container');
       const hoverImage = document.getElementById('hover-image');

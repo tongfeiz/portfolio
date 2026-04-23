@@ -101,10 +101,44 @@ document.addEventListener('DOMContentLoaded', () => {
   // Only initialize if we're on index.html, about.html, or calendar.html
   const currentPath = window.location.pathname;
   const currentFile = currentPath.split('/').pop();
-  
-  if (currentFile === 'index.html' || currentFile === 'about.html' || currentFile === 'calendar.html' || currentFile === '') {
-    window.loadingSystem = new LoadingSystem();
-  }
+  const isMainPage =
+    currentFile === 'index.html' ||
+    currentFile === 'about.html' ||
+    currentFile === 'calendar.html' ||
+    currentFile === '';
+
+  if (!isMainPage) return;
+
+  // Skip the duck when arriving via an in-site page transition —
+  // the transition system (page-transition.js) handles its own animation.
+  if (window.__skipLoadingOverlay === true) return;
+
+  // Detect whether this page load is a reload vs. first entry in the session.
+  let isReload = false;
+  try {
+    const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if (nav) {
+      isReload = nav.type === 'reload';
+    } else if (performance.navigation) {
+      // Legacy API
+      isReload = performance.navigation.type === 1;
+    }
+  } catch (e) { /* ignore */ }
+
+  const VISITED_KEY = 'loading:visited';
+  let hasVisited = false;
+  try {
+    hasVisited = sessionStorage.getItem(VISITED_KEY) === '1';
+  } catch (e) { /* ignore */ }
+
+  // Play the duck only on first entry into the site (fresh session) or a reload.
+  const shouldPlay = isReload || !hasVisited;
+
+  try { sessionStorage.setItem(VISITED_KEY, '1'); } catch (e) { /* ignore */ }
+
+  if (!shouldPlay) return;
+
+  window.loadingSystem = new LoadingSystem();
 });
 
 // Export for manual use if needed

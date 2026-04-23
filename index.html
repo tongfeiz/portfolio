@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/png" href="1_photos/logos/icontools/faviconnew.png"> 
   <title>Tongfei Zhu - Work </title>
+  <script src="page-transition.js"></script>
     <style>
     :root {
       --page-width: 1200px;
@@ -115,42 +116,11 @@
       outline: none;
     }
 
-    /* Current page shows left-to-right underline (Line 1) */
-    nav a.current::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 5px;
-      height: 2px;
-      background: var(--text-light);
-      width: 100%;
-      transition: width 0.3s ease;
-    }
-
-    /* No hover effects for brand/home button */
-
-    /* Hover effects for navigation links */
-    nav a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 5px;
-      height: 2px;
-      background: var(--text-light);
-      width: 0;
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    /* Special animation for currently active nav items */
+    /* Current page: full underline, static on hover (no underline animation) */
     nav a.current {
       position: relative;
     }
 
-    /* Line 1 (left-to-right) - starts fully expanded, shrinks on hover */
     nav a.current::after {
       content: '';
       position: absolute;
@@ -159,39 +129,29 @@
       height: 2px;
       background: var(--text-light);
       width: 100%;
-      transition: width 0.3s ease;
+      transform: none;
+      transition: none;
     }
 
-    /* On hover: Line 1 shrinks back to start */
-    nav a.current:hover::after {
-      width: 0;
-    }
+    /* No hover effects for brand/home button */
 
-    /* Line 2 (right-to-left) - hidden by default, appears after delay on hover */
-    nav a.current::before {
+    /* Hover effects for navigation links (slides in from left, slides out to the right) */
+    nav a:not(.current)::after {
       content: '';
       position: absolute;
-      right: 0;
+      left: 0;
       bottom: 5px;
       height: 2px;
       background: var(--text-light);
-      width: 0;
-      transition: width 0.3s ease 0.3s; /* 0.3s delay after Line 1 shrinks */
-    }
-
-    nav a.current:hover::before {
       width: 100%;
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform 0.3s ease;
     }
 
-    /* Ensure clean state when not hovering */
-    nav a.current:not(:hover)::before {
-      width: 0;
-      transition: width 0.3s ease;
-    }
-
-    nav a.current:not(:hover)::after {
-      width: 100%;
-      transition: width 0.3s ease 0.3s; /* Delay to let Line 2 shrink first */
+    nav a:not(.current):hover::after {
+      transform: scaleX(1);
+      transform-origin: left center;
     }
 
     /* World Clock Styles */
