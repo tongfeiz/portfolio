@@ -35,6 +35,8 @@
   var SLOT_PAD_X = 10;  // extra horizontal room to avoid text being clipped at edges
   /** Must match `.brand { gap: … }` in header / index (Tongfei block → + Design). */
   var BRAND_HOME_PLUS_GAP = 8;
+  /** Middle slot (.clock / .page-title) is hidden in CSS at max-width: 1100px — skip its mask animation. */
+  var MIDDLE_SLOT_BREAKPOINT_PX = 1100;
 
   var NAV_FLAG = 'pt:navigating';
   // Treat all same-origin .html pages as transitionable (including projects),
@@ -115,6 +117,15 @@
     return r.width > 0 && r.height > 0;
   }
 
+  /** True when the center header slot is shown (matches header.html / index clock + page-title rules). */
+  function isMiddleSlotShownInLayout() {
+    try {
+      return window.innerWidth > MIDDLE_SLOT_BREAKPOINT_PX;
+    } catch (e) {
+      return true;
+    }
+  }
+
   /* ---------- Destination header state ---------- */
   function buildClockElement() {
     var now = new Date();
@@ -189,7 +200,7 @@
     if (file === 'revink.html') return 'REVINK';
     if (file === 'music-production.html') return 'Music Production';
     if (file === 'tm-studios.html') return 'TM Studios';
-    if (file === 'tlocal.html') return 'TLOCAL';
+    if (file === 'tlocal.html') return 'tlocal';
     if (file === 'the-lies-end-in-summer.html') return 'The Lies End In Summer';
     return null;
   }
@@ -553,7 +564,9 @@
 
     var newMiddle = state.middle;
 
-    if (parentMiddle || newMiddle) {
+    // On tablet/mobile the middle slot is display:none — no live node to measure and the
+    // user should not see a sliding overlay. Only run when the layout actually shows it.
+    if (isMiddleSlotShownInLayout() && (parentMiddle || newMiddle)) {
       if (newMiddle) applyHeaderSlotStylesFromRef(newMiddle, newMiddle, headerEl);
       var mOldSize = parentMiddle
         ? parentMiddle.getBoundingClientRect()
