@@ -92,7 +92,13 @@
     }
   }, { passive: true });
 
+  var pauseUntil = 0;
+
   function tick() {
+    if (performance.now() < pauseUntil) {
+      requestAnimationFrame(tick);
+      return;
+    }
     currentScrollY += (targetScrollY - currentScrollY) * lerpFactor;
     if (Math.abs(targetScrollY - currentScrollY) < snapThreshold) {
       currentScrollY = targetScrollY;
@@ -106,4 +112,23 @@
   window.addEventListener('load', function () {
     syncFromWindow();
   });
+
+  /** Jump to a scroll Y and hard-sync the lerp so it doesn't yank back. */
+  window.setSmoothScrollPosition = function (y, holdMs) {
+    var m = maxScroll();
+    y = Math.max(0, Math.min(y, m));
+    pauseUntil = performance.now() + (holdMs || 250);
+    setScrollY(y);
+    targetScrollY = y;
+    currentScrollY = y;
+  };
+
+  /** Programmatic smooth target for in-page navigation. */
+  window.setSmoothScrollTargetY = function (y) {
+    var m = maxScroll();
+    y = Math.max(0, Math.min(y, m));
+    pauseUntil = 0;
+    currentScrollY = getScrollY();
+    targetScrollY = y;
+  };
 })();

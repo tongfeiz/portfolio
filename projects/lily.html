@@ -8,6 +8,402 @@
   <link rel="stylesheet" href="../projectstyle.css">
   <title>Lily - Project Detail</title>
   <style>
+    .page.lily-page {
+      --case-study-sidebar-sticky-top: 150px;
+      --case-study-rule-pad: 80px;
+      --case-study-main-width-pct: 94%;
+      --case-study-sidebar-font-size: 14px;
+      --case-study-sidebar-line-height: 1.32;
+      --case-study-mono-size: var(--case-study-sidebar-font-size);
+      --case-study-mono-lh: 1.2;
+      --case-study-mono-tracking: 0.06em;
+      --case-study-section-nav-lh: 1.1;
+      --case-study-section-title-ink-offset: -0.06em;
+      --case-study-section-body-ink-offset: -0.02em;
+      --case-study-scroll-offset: 150px;
+    }
+
+    .case-study-intro {
+      overflow: visible;
+    }
+
+    .case-study-intro__layout,
+    .case-study-body {
+      display: grid;
+      grid-template-columns: minmax(0, 2.35fr) minmax(0, 0.82fr);
+      gap: clamp(28px, 4vw, 56px);
+      align-items: start;
+      box-sizing: border-box;
+      padding: 0 10vw;
+    }
+
+    .case-study-intro__layout {
+      padding-top: 50px;
+    }
+
+    .case-study-intro__main,
+    .case-study-main {
+      min-width: 0;
+      max-width: var(--case-study-main-width-pct, 94%);
+      width: 100%;
+      justify-self: start;
+      box-sizing: border-box;
+    }
+
+    .case-study-intro__main {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 28px;
+    }
+
+    .case-study-intro__media,
+    .case-study-intro__header {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .case-study-intro__media picture,
+    .case-study-main .wide-image-container picture,
+    .case-study-main .hero-image-container picture {
+      display: block;
+      width: 100%;
+    }
+
+    .case-study-intro__media img,
+    .case-study-intro__media video,
+    .case-study-main .wide-image-container img,
+    .case-study-main .wide-image-container video,
+    .case-study-main .hero-image-container img,
+    .case-study-main .hero-image-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .case-study-intro__side {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      min-width: 0;
+    }
+
+    @media (min-width: 901px) {
+      .page.lily-page .case-study-intro__side,
+      .page.lily-page .case-study-side {
+        position: sticky;
+        top: var(--case-study-sidebar-sticky-top);
+        align-self: start;
+      }
+    }
+
+    .case-study-intro__header {
+      position: static;
+      margin: 0;
+      padding: 0;
+      display: block;
+      min-width: 0;
+    }
+
+    .case-study-intro__header .project-title {
+      margin: 0;
+      text-align: left;
+      flex: none;
+    }
+
+    .case-study-taglist {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .case-study-taglist li {
+      margin: 0;
+      padding: 0;
+    }
+
+    .case-study-tag,
+    .case-study-section-descriptor,
+    .case-study-list li,
+    .case-study-back-to-top a,
+    .case-study-feature__number {
+      font-family: "SF Mono", "SFMono-Regular", ui-monospace, Menlo, "Liberation Mono", Consolas, monospace;
+      font-weight: 200;
+      font-size: var(--case-study-mono-size, 11px);
+      letter-spacing: var(--case-study-mono-tracking, 0.06em);
+      text-transform: uppercase;
+      color: #6e6e6e;
+      line-height: var(--case-study-mono-lh, 1.2);
+    }
+
+    .case-study-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 7px 13px;
+      border: 1px solid rgba(110, 110, 110, 0.55);
+      border-radius: 6px;
+      background-color: var(--text-light, #f7f7f7);
+    }
+
+    .page.lily-page .case-study-intro .project-description {
+      display: block;
+      margin: 18px 0 0;
+      text-align: left;
+      max-width: none;
+    }
+
+    .page.lily-page .case-study-details {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin: 0;
+    }
+
+    .page.lily-page .case-study-details .detail-title {
+      font-family: "SF Mono", "SFMono-Regular", ui-monospace, Menlo, "Liberation Mono", Consolas, monospace;
+      font-weight: 200;
+      font-size: var(--case-study-sidebar-font-size, 11px);
+      letter-spacing: var(--case-study-mono-tracking, 0.06em);
+      text-transform: uppercase;
+      color: #6e6e6e;
+      line-height: var(--case-study-sidebar-line-height, 1.32);
+    }
+
+    .page.lily-page .case-study-details .detail-content,
+    .page.lily-page .case-study-details .detail-content p {
+      font-size: var(--case-study-sidebar-font-size, 11px);
+      line-height: var(--case-study-sidebar-line-height, 1.32);
+      color: var(--text-dark, #1d1d1d);
+    }
+
+    .case-study-rule {
+      border: 0;
+      border-top: 1px solid rgba(29, 29, 29, 0.16);
+      margin: var(--case-study-rule-pad, 80px) 10vw;
+      padding: 0;
+      height: 0;
+    }
+
+    .case-study-section-nav {
+      margin: 0;
+      padding: 0;
+    }
+
+    .case-study-section-nav__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .case-study-section-nav a {
+      font-family: "SF Mono", "SFMono-Regular", ui-monospace, Menlo, "Liberation Mono", Consolas, monospace;
+      font-weight: 200;
+      font-size: var(--case-study-sidebar-font-size, 11px);
+      letter-spacing: var(--case-study-mono-tracking, 0.06em);
+      text-transform: uppercase;
+      color: #6e6e6e;
+      line-height: var(--case-study-section-nav-lh, 1.1);
+      text-decoration: none;
+      display: block;
+      transition: color 0.25s ease;
+    }
+
+    .case-study-section-nav a:hover,
+    .case-study-section-nav a:focus-visible,
+    .case-study-section-nav a[aria-current="true"] {
+      color: var(--text-dark, #1d1d1d);
+    }
+
+    .page.lily-page .case-study-main .text-section {
+      background: transparent;
+      width: auto;
+      position: static;
+      left: auto;
+      right: auto;
+      margin: 80px 0 0;
+      padding: 0;
+      scroll-margin-top: var(--case-study-scroll-offset, 150px);
+    }
+
+    .page.lily-page .case-study-main .text-section:first-child {
+      margin-top: 0;
+    }
+
+    .page.lily-page .text-section-content {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .page.lily-page .text-section-title,
+    .page.lily-page .text-section-text,
+    .page.lily-page .case-study-section-descriptor {
+      box-sizing: border-box;
+      display: block;
+      padding-left: 0;
+      text-align: left;
+      width: 100%;
+      margin: 0;
+    }
+
+    .page.lily-page .text-section-title {
+      margin-left: var(--case-study-section-title-ink-offset, -0.06em);
+    }
+
+    .page.lily-page .text-section-text {
+      font-size: 18px;
+      line-height: 1.5;
+      margin-left: var(--case-study-section-body-ink-offset, -0.02em);
+    }
+
+    .case-study-list {
+      list-style: none;
+      margin: 0;
+      margin-left: var(--case-study-section-body-ink-offset, -0.02em);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .case-study-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45em;
+      line-height: var(--case-study-section-nav-lh, 1.1);
+    }
+
+    .case-study-list li::before {
+      content: "→";
+      flex-shrink: 0;
+    }
+
+    .case-study-list strong {
+      font-weight: 600;
+      color: var(--text-dark, #1d1d1d);
+    }
+
+    .case-study-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+      margin-top: 20px;
+      align-items: stretch;
+    }
+
+    .case-study-feature {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    .case-study-feature__title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.18;
+      font-weight: 400;
+      color: var(--text-dark, #1d1d1d);
+    }
+
+    .case-study-feature__text {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--text-dark, #1d1d1d);
+    }
+
+    .page.lily-page .case-study-main .wide-image-container,
+    .page.lily-page .case-study-main .hero-image-container {
+      width: 100%;
+      max-width: 100%;
+      position: static;
+      left: auto;
+      right: auto;
+      margin: 48px 0 0;
+      padding: 0;
+      transform: none;
+    }
+
+    .case-study-back-to-top {
+      margin: 48px 0 0;
+      padding: 0 0 64px;
+      text-align: left;
+    }
+
+    .case-study-back-to-top a {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      transition: color 0.25s ease;
+    }
+
+    .case-study-back-to-top a:hover,
+    .case-study-back-to-top a:focus-visible {
+      color: var(--text-dark, #1d1d1d);
+    }
+
+    @media (max-width: 900px) {
+      .case-study-intro__layout,
+      .case-study-body {
+        grid-template-columns: 1fr;
+        row-gap: 32px;
+      }
+
+      .case-study-intro__layout {
+        padding-top: 32px;
+      }
+
+      .case-study-intro__main,
+      .case-study-main {
+        max-width: 100%;
+      }
+
+      .page.lily-page .case-study-intro__side,
+      .page.lily-page .case-study-side {
+        position: static;
+        top: auto;
+      }
+
+      .page.lily-page .case-study-main {
+        padding-top: 40px;
+      }
+
+      .page.lily-page .case-study-side {
+        order: -1;
+      }
+
+      .case-study-feature-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .case-study-intro__layout {
+        padding-top: 24px;
+      }
+
+      .case-study-rule {
+        margin: 36px 10vw;
+      }
+    }
 
   </style>
 </head>
@@ -15,130 +411,203 @@
   <!-- Include header -->
   <div id="header-container"></div>
 
-  <main class="page" id="pageBody">
-    <!-- Hero Image -->
-    <div class="hero-image-container">
-      <img src="../projects/photos_lily/lilyhero.png" alt="Lily project hero image" class="hero-image">
-    </div>
-
-    <!-------------------------------- Project Container ------------------------------------->
-    <div class="project-container">
-      
-      <!---------------------------- Project Header --------------------------------->
-      <div class="project-header">
-        <h1 class="project-title">Lily</h1>
-        <p class="project-description">AI-powered IEP tracker to assist special educators and empower students with personalized learning support.</p>
+  <main class="page lily-page" id="pageBody">
+    <section class="case-study-intro" aria-label="Project overview">
+      <div class="case-study-intro__layout">
+        <div class="case-study-intro__main">
+          <div class="case-study-intro__media">
+            <picture>
+              <source type="image/webp" srcset="../projects/photos_lily/lilyhero.webp">
+              <img src="../projects/photos_lily/lilyhero.png" alt="Lily project hero image">
+            </picture>
+          </div>
+          <div class="case-study-intro__header" role="group" aria-labelledby="lily-title">
+            <h1 class="project-title" id="lily-title">Lily</h1>
+            <ul class="case-study-taglist" aria-label="Project scope">
+              <li><span class="case-study-tag">Product</span></li>
+              <li><span class="case-study-tag">AI</span></li>
+              <li><span class="case-study-tag">Education</span></li>
+              <li><span class="case-study-tag">UI/UX</span></li>
+            </ul>
+            <p class="project-description">AI-powered IEP tracker to assist special educators and empower students with personalized learning support.</p>
+          </div>
+        </div>
+        <div class="case-study-intro__side">
+          <div class="project-details case-study-details">
+            <div class="detail-column">
+              <div class="detail-title">Role</div>
+              <div class="detail-content">
+                <p>Designer</p>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="detail-title">Team</div>
+              <div class="detail-content">
+                <p>Matthew Suri (PM)</p>
+                <p>Harry Ahn (Dev)</p>
+                <p>Pranav Lingareddy (Dev)</p>
+                <p>Tongfei Zhu (Designer)</p>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="detail-title">Scope</div>
+              <div class="detail-content">
+                <p>Feb 2025 - Aug 2025</p>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="detail-title">Tools</div>
+              <div class="detail-content">
+                <p>Figma</p>
+                <p>Notion</p>
+                <p>Adobe Photoshop</p>
+                <p>Adobe After Effects</p>
+                <p>Cursor</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <hr class="case-study-rule" />
+    </section>
 
-      <!---------------------------- Project Details --------------------------------->
-      <div class="project-details">
-        <div class="detail-column">
-          <div class="detail-title">Role</div>
-          <div class="detail-content">
-            <p>Designer</p>
+    <div class="case-study-body">
+      <div class="case-study-main">
+        <div class="text-section" id="lily-section-problem">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Problem</p>
+            <h2 class="text-section-title">IEP Progress Tracking Is Fragmented</h2>
+            <p class="text-section-text">Across the U.S., <strong>over 7 million students</strong> rely on <strong>Individualized Education Plans (IEPs)</strong> to guide their learning and development. Each student’s plan includes multiple goals, objectives, and support areas, managed by a team of educators, therapists, and administrators.</p>
+            <p class="text-section-text">But the process of tracking and reporting progress is outdated. Teachers juggle dozens of students, each with complex documentation needs. Data is scattered across notebooks, sticky notes, Google Docs, and memory. Reporting becomes a scavenger hunt that takes hours every week.</p>
+            <p class="text-section-text">This leads to <strong>missing data, compliance risks, and inconsistent support</strong>, ultimately preventing students from getting the help they deserve.</p>
           </div>
         </div>
 
-        <div class="detail-column">
-          <div class="detail-title">Team</div>
-          <div class="detail-content">
-            <p>Matthew Suri (PM)</p>
-            <p>Harry Ahn (Dev)</p>
-            <p>Pranav Lingareddy (Dev)</p>
-            <p>Tongfei Zhu (Designer)</p>
+        <div class="wide-image-container">
+          <picture>
+            <source type="image/webp" srcset="../projects/photos_lily/visualizeproblem.webp">
+            <img src="../projects/photos_lily/visualizeproblem.png" alt="Visualization of Lily's IEP tracking problem space" class="hero-image">
+          </picture>
+        </div>
+
+        <div class="text-section" id="lily-section-solution">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Solution</p>
+            <h2 class="text-section-title">A Conversational Progress Companion</h2>
+            <p class="text-section-text">Lily is an AI-powered IEP progress companion that <strong>streamlines tracking, reporting, and goal-setting</strong> for special education teams. Developed alongside educators, therapists, and administrators, Lily transforms the most time-consuming parts of IEP management into a seamless, conversational workflow.</p>
+            <ul class="case-study-list" aria-label="Lily product pillars">
+              <li>Track progress from speech, documents, and daily observations</li>
+              <li>Turn raw notes into structured, measurable student records</li>
+              <li>Generate clear reports for meetings, compliance, and next steps</li>
+            </ul>
           </div>
         </div>
 
-        <div class="detail-column">
-          <div class="detail-title">Scope</div>
-          <div class="detail-content">
-            <p>Feb 2025 - Ongoing</p>
+        <div class="hero-image-container">
+          <video aria-label="Lily product demo video" class="hero-image" autoplay loop muted playsinline>
+            <source src="../projects/photos_lily/demovid.m4v" type="video/mp4">
+            <source src="../projects/photos_lily/demovid.mov" type="video/quicktime">
+          </video>
+        </div>
+
+        <div class="text-section" id="lily-section-features">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Features</p>
+            <h2 class="text-section-title">Designed Around the Educator Workflow</h2>
+            <p class="text-section-text">The product experience focuses on reducing documentation overhead while keeping student progress, team context, and reporting needs connected in one place.</p>
+            <ul class="case-study-list" aria-label="Lily feature areas">
+              <li><strong>AI Document Parsing:</strong> Automatically reads and structures IEPs into actionable profiles.</li>
+              <li><strong>Voice-to-Data Tracking:</strong> Converts speech into measurable progress entries.</li>
+              <li><strong>Smart Reporting:</strong> Instantly creates professional, shareable progress reports.</li>
+              <li><strong>Goal Recommendations:</strong> Suggests next objectives based on data-driven insights.</li>
+              <li><strong>Collaborative Dashboard:</strong> Central workspace for teachers, therapists, and administrators.</li>
+              <li><strong>Secure Cloud System:</strong> FERPA-compliant and built for district-level safety.</li>
+            </ul>
           </div>
         </div>
 
-        <div class="detail-column">
-          <div class="detail-title">Tools</div>
-          <div class="detail-content">
-            <p>Figma</p>
-            <p>Notion</p>
-            <p>Adobe Photoshop</p>
-            <p>Adobe After Effects</p>
-            <p>Cursor</p>
+        <div class="hero-image-container">
+          <picture>
+            <source type="image/webp" srcset="../projects/photos_lily/demonight.webp">
+            <img src="../projects/photos_lily/demonight.jpg" alt="Lily dashboard shown in dark mode" class="hero-image">
+          </picture>
+        </div>
+
+        <div class="text-section" id="lily-section-takeaways">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Takeaways</p>
+            <h2 class="text-section-title">Building With Lavalab</h2>
+            <p class="text-section-text">I was only part of this incredible experience because I joined USC's premier startup incubator, Lavalab. I'm so grateful I stepped out of my comfort zone and applied to this club. I met countless talented builders and designers that inspire me to keep learning and growing.</p>
+            <p class="text-section-text">Thank you to my team: <a href="https://instagram.com/pranavlingareddy" target="_blank" rel="noopener">@pranavlingareddy</a>, <a href="https://instagram.com/harryahn11" target="_blank" rel="noopener">@harryahn11</a>, and <a href="https://instagram.com/mattsuris" target="_blank" rel="noopener">@mattsuris</a> for believing in me and all your hard work. You guys made my semester hella enjoyable.</p>
+            <p class="text-section-text">Thank you Lavalab mentors, especially <a href="https://instagram.com/uxhoang" target="_blank" rel="noopener">@uxhoang</a> for teaching me Figma and giving creative input, <a href="https://instagram.com/realbymo" target="_blank" rel="noopener">@realbymo</a> for supporting us and making merch, and Angelina for always being by my side and making crochet flowers through <a href="https://instagram.com/angiecroch" target="_blank" rel="noopener">@angiecroch</a>.</p>
+            <p class="text-section-text">Check out the landing page for lily at <a href="https://tongfeiz.github.io/lilylandingpage/" target="_blank" rel="noopener">tongfeiz.github.io/lilylandingpage</a>. Stay tuned for more updates!</p>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!--------------------------- (problem) Text Section --------------------------------->
-    <div class="text-section">
-      <div class="text-section-content">
-        <h2 class="text-section-title">Problem</h2>
-        <p class="text-section-text">Across the U.S., <strong>over 7 million students</strong> rely on <strong>Individualized Education Plans (IEPs)</strong> to guide their learning and development. Each student’s plan includes multiple goals, objectives, and support areas, managed by a team of educators, therapists, and administrators. <br><br>
-
-          But the process of tracking and reporting progress is outdated. Teachers juggle dozens of students, each with complex documentation needs. Data is scattered across notebooks, sticky notes, Google Docs, and memory. Reporting becomes a scavenger hunt that takes hours every week. <br><br>
-          
-          This leads to <strong>missing data, compliance risks, and inconsistent support</strong>, ultimately preventing students from getting the help they deserve.</p>
-      </div>
-    </div>
-
-
-    <!-- problem Image -->
-    <div class="wide-image-container">
-      <img src="../projects/photos_lily/visualizeproblem.png" alt="lily vizualize problem" class="hero-image">
-    </div>
-
-    <!--------------------------- (solution) Text Section --------------------------------->
-    <div class="text-section">
-      <div class="text-section-content">
-        <h2 class="text-section-title">Solution</h2>
-        <p class="text-section-text">Lily is an AI-powered IEP progress companion that <strong>streamlines tracking, reporting, and goal-setting</strong> for special education teams.
-          Developed alongside educators, therapists, and administrators, Lily transforms the most time-consuming parts of IEP management into a seamless, conversational workflow.</p>
-      </div>
-    </div>
-
-    <!-------- demo video -------->
-    <div class="hero-image-container">
-      <video src="../projects/photos_lily/demovid.mov" alt="Lily project hero image" class="hero-image" autoplay loop muted playsinline>
-    </div>
-
-
-    <!--------------------------- (features) Text Section --------------------------------->
-    <div class="text-section">
-      <div class="text-section-content">
-        <h2 class="text-section-title">Features</h2>
-        <br>
-        <p class="text-section-text">
-          <strong>AI Document Parsing:</strong> Automatically reads and structures IEPs into actionable profiles.<br><br>
-          <strong>Voice-to-Data Tracking:</strong> Converts speech into measurable progress entries.<br><br>
-          <strong>Smart Reporting:</strong> Instantly creates professional, shareable progress reports.<br><br>
-          <strong>Goal Recommendations:</strong> Suggests next objectives based on data-driven insights.<br><br>
-          <strong>Collaborative Dashboard:</strong> Central workspace for teachers, therapists, and administrators.<br><br>
-          <strong>Secure Cloud System:</strong> FERPA-compliant and built for district-level safety.
+        <p class="case-study-back-to-top">
+          <a href="#pageBody">↑ Back to top</a>
         </p>
       </div>
-    </div>
-    
-    <!--------image------->
-    <div class="hero-image-container">
-      <img src="../projects/photos_lily/demonight.jpg" class="hero-image">
-    </div>
-    
 
-    <!--------------------------- reflection --------------------------------->
-    <div class="text-section">
-      <div class="text-section-content">
-        <p class="text-section-text">
-          Thank you to my team: <a href="https://instagram.com/pranavlingareddy" target="_blank" rel="noopener">@pranavlingareddy</a>, <a href="https://instagram.com/harryahn11" target="_blank" rel="noopener">@harryahn11</a>, and <a href="https://instagram.com/mattsuris" target="_blank" rel="noopener">@mattsuris</a> for believing in me and all your hard work. You guys made my semester hella enjoyable. Thank you Lavalab mentors, especially <a href="https://instagram.com/uxhoang" target="_blank" rel="noopener">@uxhoang</a> for teaching me Figma + hella creative inputs and <a href="https://instagram.com/realbymo" target="_blank" rel="noopener">@realbymo</a> for supporting us and making sick merch (shoutout unipparel), and of course thank you Angelina for always being by my side and crochet flowers (shoutout <a href="https://instagram.com/angiecroch" target="_blank" rel="noopener">@angiecroch</a>). <br><br>
-
-We’re gonna continue to develop Lily, currently on <a href="https://mylily.up.railway.app" target="_blank" rel="noopener">mylily.up.railway.app</a> check it out! Anyways stay tuned for more design work… sorry for the big break BUT got a few big projects coming out soon 💪 
-        </p>
-      </div>
+      <aside class="case-study-side" aria-label="On this page">
+        <nav class="case-study-section-nav" aria-label="Section navigation">
+          <ul class="case-study-section-nav__list">
+            <li><a href="#lily-section-problem">Problem</a></li>
+            <li><a href="#lily-section-solution">Solution</a></li>
+            <li><a href="#lily-section-features">Features</a></li>
+            <li><a href="#lily-section-takeaways">Takeaways</a></li>
+          </ul>
+        </nav>
+      </aside>
     </div>
 
 
   </main>
 
   <script>
+    (function () {
+      var mq = window.matchMedia('(max-width: 900px)');
+      function debounce(fn, ms) {
+        var t;
+        return function () {
+          clearTimeout(t);
+          t = setTimeout(fn, ms);
+        };
+      }
+      function syncCaseStudyGridToWork() {
+        var layouts = document.querySelectorAll('.case-study-intro__layout, .case-study-body');
+        var work = document.querySelector('#mainNav a[data-section="Work"]');
+        if (!layouts.length) return;
+        if (mq.matches || !work) {
+          layouts.forEach(function (layout) {
+            layout.style.gridTemplateColumns = '';
+          });
+          return;
+        }
+        var layout = layouts[0];
+        var rect = layout.getBoundingClientRect();
+        var st = window.getComputedStyle(layout);
+        var padL = parseFloat(st.paddingLeft) || 0;
+        var gap = parseFloat(st.gap) || parseFloat(st.columnGap) || 0;
+        var gridContentLeft = rect.left + padL;
+        var workLeft = work.getBoundingClientRect().left;
+        var col1 = Math.round(workLeft - gridContentLeft - gap);
+        if (col1 < 100) col1 = 100;
+        var columns = 'minmax(0,' + col1 + 'px) minmax(0,1fr)';
+        layouts.forEach(function (el) {
+          el.style.gridTemplateColumns = columns;
+        });
+      }
+      window.syncCaseStudyGridToWork = syncCaseStudyGridToWork;
+      window.addEventListener('resize', debounce(syncCaseStudyGridToWork, 60));
+      mq.addEventListener('change', syncCaseStudyGridToWork);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+          requestAnimationFrame(syncCaseStudyGridToWork);
+        });
+      }
+    })();
+
     // Load header content
     fetch('../header.html')
       .then(response => response.text())
@@ -157,10 +626,131 @@ We’re gonna continue to develop Lily, currently on <a href="https://mylily.up.
         if (window.initializeHeader) {
           window.initializeHeader();
         }
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            if (window.syncCaseStudyGridToWork) window.syncCaseStudyGridToWork();
+          });
+        });
       })
       .catch(error => console.error('Error loading header:', error));
   </script>
   <script src="../smooth-scroll.js"></script>
+  <script>
+    (function () {
+      var nav = document.querySelector('.case-study-section-nav');
+      if (!nav) return;
+
+      var page = document.querySelector('.lily-page');
+      var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+      var items = links.map(function (link) {
+        var id = link.getAttribute('href').slice(1);
+        return {
+          id: id,
+          link: link,
+          section: document.getElementById(id)
+        };
+      }).filter(function (it) {
+        return it.section && it.section.classList.contains('text-section');
+      });
+
+      function currentOffset() {
+        var raw = page ? window.getComputedStyle(page).getPropertyValue('--case-study-scroll-offset') : '';
+        var offset = parseFloat(raw);
+        return Number.isFinite(offset) ? offset : 150;
+      }
+
+      function scrollY() {
+        return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      }
+
+      function maxScrollY() {
+        var doc = document.documentElement;
+        var body = document.body;
+        var height = Math.max(doc.scrollHeight, body.scrollHeight, doc.offsetHeight, body.offsetHeight);
+        return Math.max(0, height - window.innerHeight);
+      }
+
+      function targetY(section) {
+        var y = section.getBoundingClientRect().top + scrollY() - currentOffset();
+        return Math.max(0, Math.min(Math.round(y), maxScrollY()));
+      }
+
+      items.forEach(function (it) {
+        it.link.addEventListener('click', function (e) {
+          e.preventDefault();
+          setActive(it.id);
+          lastActive = it.id;
+
+          if (typeof window.setSmoothScrollTargetY === 'function') {
+            window.setSmoothScrollTargetY(targetY(it.section));
+          } else {
+            window.scrollTo(0, targetY(it.section));
+          }
+
+          if (history.pushState) history.pushState(null, '', '#' + it.id);
+        });
+      });
+
+      function setActive(activeId) {
+        items.forEach(function (it) {
+          if (it.id === activeId) {
+            it.link.setAttribute('aria-current', 'true');
+          } else {
+            it.link.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      var lastActive = null;
+      function pickActive() {
+        if (!items.length) return;
+
+        if (scrollY() >= maxScrollY() - 2) {
+          if (lastActive !== items[items.length - 1].id) {
+            lastActive = items[items.length - 1].id;
+            setActive(lastActive);
+          }
+          requestAnimationFrame(pickActive);
+          return;
+        }
+
+        var line = currentOffset() + 1;
+        var activeId = items[0] && items[0].id;
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].section.getBoundingClientRect().top <= line) {
+            activeId = items[i].id;
+          } else {
+            break;
+          }
+        }
+
+        if (activeId && activeId !== lastActive) {
+          lastActive = activeId;
+          setActive(activeId);
+        }
+        requestAnimationFrame(pickActive);
+      }
+
+      requestAnimationFrame(pickActive);
+    })();
+  </script>
+  <script>
+    (function () {
+      var link = document.querySelector('.case-study-back-to-top a');
+      if (!link) return;
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (typeof window.setSmoothScrollTargetY === 'function') {
+          window.setSmoothScrollTargetY(0);
+        } else {
+          window.scrollTo(0, 0);
+        }
+        if (history.pushState) {
+          history.pushState(null, '', window.location.pathname + window.location.search);
+        }
+      });
+    })();
+  </script>
   <script src="../cursor.js"></script>
 </body>
 </html>
