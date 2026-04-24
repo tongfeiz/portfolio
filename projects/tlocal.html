@@ -7,81 +7,75 @@
   <link rel="icon" type="image/png" href="../1_photos/logos/icontools/faviconnew.png">
   <link rel="stylesheet" href="../projectstyle.css">
   <title>tlocal - Project Detail</title>
-  <style>
-    .tlocal-single .text-section-text + .text-section-text {
-      margin-top: 1.35em;
-    }
-    .tlocal-single h3 {
-      font-size: 26px;
-      font-weight: 600;
-      line-height: 1.2;
-      letter-spacing: -0.03em;
-      color: var(--text-dark);
-      margin: 2em 0 0.65em 0;
-      text-align: center;
-    }
-  </style>
 </head>
 <body>
   <!-- Include header -->
   <div id="header-container"></div>
 
-  <main class="page" id="pageBody">
-    <div class="hero-image-container">
-      <video autoplay loop muted playsinline>
-        <source src="../1_photos/tlocalhero.webm" type="video/webm">
-        <source src="../1_photos/tlocalhero.mp4" type="video/mp4">
-      </video>
-    </div>
-
-    <div class="project-container">
-      <div class="project-header">
-        <h1 class="project-title">tlocal</h1>
-        <p class="project-description">A collaborative workspace to extract, review, and localize on-screen text—built for full-length films and long-form programmes, not one-off clips.</p>
+  <main class="page case-study-page" id="pageBody">
+    <section class="case-study-intro" aria-label="Project overview">
+      <div class="case-study-intro__layout">
+        <div class="case-study-intro__main">
+          <div class="case-study-intro__media">
+            <video autoplay loop muted playsinline>
+              <source src="../1_photos/tlocalhero.webm" type="video/webm">
+              <source src="../1_photos/tlocalhero.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="case-study-intro__header" role="group" aria-labelledby="case-study-title">
+            <h1 class="project-title" id="case-study-title">tlocal</h1>
+            <ul class="case-study-taglist" aria-label="Project scope">
+              <li><span class="case-study-tag">Web</span></li>
+            </ul>
+            <p class="project-description">A collaborative workspace to extract, review, and localize on-screen text—built for full-length films and long-form programmes, not one-off clips.</p>
+          </div>
+        </div>
+        <div class="case-study-intro__side">
+          <div class="project-details case-study-details">
+            <div class="detail-column">
+              <div class="detail-title">Role</div>
+              <div class="detail-content">
+                <p>Co-Founder and Design Engineer</p>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="detail-title">Team</div>
+              <div class="detail-content">
+                <p>Tongfei Zhu</p>
+                <p>Aditya Mishra</p>
+                <p>Luke Miller</p>
+                <p>Raptor English</p>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="detail-title">Scope</div>
+              <div class="detail-content">
+                <p>March 28 – Ongoing</p>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="detail-title">Tools</div>
+              <div class="detail-content">
+                <p>Figma</p>
+                <p>Cursor</p>
+                <p>TwelveLabs (Marengo, Pegasus)</p>
+                <p>AWS Bedrock</p>
+                <p>Baseten</p>
+                <p>LTX.io</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <hr class="case-study-rule" />
+    </section>
 
-      <div class="project-details">
-        <div class="detail-column">
-          <div class="detail-title">Role</div>
-          <div class="detail-content">
-            <p>Co-Founder and Design Engineer</p>
-          </div>
-        </div>
-
-        <div class="detail-column">
-          <div class="detail-title">Team</div>
-          <div class="detail-content">
-            <p>Tongfei Zhu</p>
-            <p>Aditya Mishra</p>
-            <p>Luke Miller</p>
-            <p>Raptor English</p>
-          </div>
-        </div>
-
-        <div class="detail-column">
-          <div class="detail-title">Scope</div>
-          <div class="detail-content">
-            <p>March 28 – Ongoing</p>
-          </div>
-        </div>
-
-        <div class="detail-column">
-          <div class="detail-title">Tools</div>
-          <div class="detail-content">
-            <p>Figma</p>
-            <p>Cursor</p>
-            <p>TwelveLabs (Marengo, Pegasus)</p>
-            <p>AWS Bedrock</p>
-            <p>Baseten</p>
-            <p>LTX.io</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="text-section">
-      <div class="text-section-content tlocal-single">
-        <p class="text-section-text">tlocal started at a media-and-entertainment hackathon hosted by TwelveLabs: a 24-hour build that shipped a <strong>production-ready</strong> pipeline—not a slide deck. The team took first place in a room of engineers, executives, and practitioners with deep experience in entertainment and video intelligence.</p>
+    <div class="case-study-body">
+      <div class="case-study-main">
+        <div class="text-section" id="case-study-section-overview-1">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Overview</p>
+            <p class="text-section-text">tlocal started at a media-and-entertainment hackathon hosted by TwelveLabs: a 24-hour build that shipped a <strong>production-ready</strong> pipeline—not a slide deck. The team took first place in a room of engineers, executives, and practitioners with deep experience in entertainment and video intelligence.</p>
         <p class="text-section-text">The product replaces blank localization QC spreadsheets with <strong>full inventories in minutes</strong>, using TwelveLabs’ Marengo and Pegasus models to understand what appears on screen and when. Direction came from the room itself: stories from operators and studio-side leaders, teammate context from major M&amp;E organizations, and a clear picture of where video intelligence can remove real friction.</p>
         <p class="text-section-text">Development continues beyond the event. <a href="https://tlocal.online/" target="_blank" rel="noopener">tlocal is live</a>—built from 0→1 at the hackathon, now moving from 1→100 with the same focus on shipping.</p>
 
@@ -102,7 +96,21 @@
 
         <h3>Thanks</h3>
         <p class="text-section-text">Thank you to the hackathon judges and studio partners—including representatives from Warner Bros. Discovery, Fox Corporation, Lionsgate, Sony Pictures Entertainment, and SVTA—and to the sponsors who made production-scale experimentation possible: <strong>Amazon Web Services</strong> (Bedrock), <strong>Baseten</strong> for model serving, and <strong>LTX.io</strong> for video generation. Special thanks to everyone at <strong>TwelveLabs</strong> who organized the event and supported the build.</p>
+          </div>
+        </div>
+
+        <p class="case-study-back-to-top">
+          <a href="#pageBody">↑ Back to top</a>
+        </p>
       </div>
+
+      <aside class="case-study-side" aria-label="On this page">
+        <nav class="case-study-section-nav" aria-label="Section navigation">
+          <ul class="case-study-section-nav__list">
+            <li><a href="#case-study-section-overview-1">Overview</a></li>
+          </ul>
+        </nav>
+      </aside>
     </div>
   </main>
 
@@ -113,16 +121,18 @@
         const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">tlocal</div>');
         document.getElementById('header-container').innerHTML = modifiedData;
         const sectionLabel = document.getElementById('sectionLabel');
-        if (sectionLabel) {
-          sectionLabel.style.display = 'none';
-        }
-        if (window.initializeHeader) {
-          window.initializeHeader();
-        }
+        if (sectionLabel) sectionLabel.style.display = 'none';
+        if (window.initializeHeader) window.initializeHeader();
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            if (window.syncCaseStudyGridToWork) window.syncCaseStudyGridToWork();
+          });
+        });
       })
       .catch(error => console.error('Error loading header:', error));
   </script>
   <script src="../smooth-scroll.js"></script>
+  <script src="../case-study-page.js"></script>
   <script src="../cursor.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@
     "build:webp:scaling": "node scripts/generate-photos-scaling-webp.js"
   },
   "devDependencies": {
+    "cheerio": "^1.2.0",
     "sharp": "^0.33.0"
   }
 }

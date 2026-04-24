@@ -7,74 +7,110 @@
   <link rel="icon" type="image/png" href="../1_photos/logos/icontools/faviconnew.png">
   <link rel="stylesheet" href="../projectstyle.css">
   <title>Video Editing - Project Detail</title>
-  <style>
-
-  </style>
 </head>
 <body>
   <!-- Include header -->
   <div id="header-container"></div>
 
-  <main class="page" id="pageBody">
+  <main class="page case-study-page" id="pageBody">
+    <section class="case-study-intro" aria-label="Project overview">
+      <div class="case-study-intro__layout">
+        <div class="case-study-intro__main">
+          <div class="case-study-intro__media">
+            <video autoplay loop muted playsinline>
+              <source src="../projects/photos_vlog/v1.m4v" type="video/mp4">
+              <source src="../projects/photos_vlog/v1.mov" type="video/quicktime">
+            </video>
+          </div>
+          <div class="case-study-intro__header" role="group" aria-labelledby="case-study-title">
+            <h1 class="project-title" id="case-study-title">Video Editing</h1>
+            <ul class="case-study-taglist" aria-label="Project scope">
+              <li><span class="case-study-tag">Visual</span></li>
+            </ul>
+            <p class="project-description">A log of personal videos and editing experiments.</p>
+          </div>
+        </div>
+        <div class="case-study-intro__side">
+          <div class="project-details case-study-details">
 
-
-    <!-------------------------------- Project Container ------------------------------------->
-    <div class="project-container">
-      
-    <!--------------------------- Two Horizontal Images Section --------------------------------->
-    <div class="two-horizontal-images-section">
-      <div class="two-horizontal-images-content">
-        <a href="https://www.youtube.com/watch?v=XEkxxnjgrrI" target="_blank" rel="noopener">
-          <video src="../projects/photos_vlog/v1.mov" autoplay loop muted playsinline></video>
-        </a>
-        <a href="https://www.youtube.com/watch?v=ZyqYWGUtGsY" target="_blank" rel="noopener">
-          <video src="../projects/photos_vlog/v2.mov" autoplay loop muted playsinline></video>
-        </a>
-        <a href="https://www.youtube.com/watch?v=lxcDyqC-Ea8" target="_blank" rel="noopener">
-          <video src="../projects/photos_vlog/v3.mov" autoplay loop muted playsinline></video>
-        </a>
-        <a href="https://www.youtube.com/watch?v=VpGB9iOWRWU" target="_blank" rel="noopener">
-          <video src="../projects/photos_vlog/v4.mov" autoplay loop muted playsinline></video>
-        </a>
-
-    </div>
-
-    <!--------------------------- Text Section --------------------------------->
-      <div class="text-section">
-        <div class="text-section-content">
-          <p class="text-section-text">I've always had an interest in vlogging and video editing. Here are some of my personal favorites!</p>
+          </div>
+        </div>
       </div>
-    </div>
+      <hr class="case-study-rule" />
+    </section>
 
-        
+    <div class="case-study-body">
+      <div class="case-study-main">
+        <div class="text-section" id="case-study-section-overview-1">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Overview</p>
+            <p class="text-section-text">I've always had an interest in vlogging and video editing. Here are some of my personal favorites!</p>
+          </div>
+        </div>
+
+        <div class="two-horizontal-images-section">
+          <div class="two-horizontal-images-content">
+            <a href="https://www.youtube.com/watch?v=XEkxxnjgrrI" target="_blank" rel="noopener">
+              <video autoplay loop muted playsinline>
+                <source src="../projects/photos_vlog/v1.m4v" type="video/mp4">
+                <source src="../projects/photos_vlog/v1.mov" type="video/quicktime">
+              </video>
+            </a>
+            <a href="https://www.youtube.com/watch?v=ZyqYWGUtGsY" target="_blank" rel="noopener">
+              <video autoplay loop muted playsinline>
+                <source src="../projects/photos_vlog/v2.m4v" type="video/mp4">
+                <source src="../projects/photos_vlog/v2.mov" type="video/quicktime">
+              </video>
+            </a>
+            <a href="https://www.youtube.com/watch?v=lxcDyqC-Ea8" target="_blank" rel="noopener">
+              <video autoplay loop muted playsinline>
+                <source src="../projects/photos_vlog/v3.m4v" type="video/mp4">
+                <source src="../projects/photos_vlog/v3.mov" type="video/quicktime">
+              </video>
+            </a>
+            <a href="https://www.youtube.com/watch?v=VpGB9iOWRWU" target="_blank" rel="noopener">
+              <video autoplay loop muted playsinline>
+                <source src="../projects/photos_vlog/v4.m4v" type="video/mp4">
+                <source src="../projects/photos_vlog/v4.mov" type="video/quicktime">
+              </video>
+            </a>
+          </div>
+        </div>
+
+        <p class="case-study-back-to-top">
+          <a href="#pageBody">↑ Back to top</a>
+        </p>
       </div>
-    </div>
 
+      <aside class="case-study-side" aria-label="On this page">
+        <nav class="case-study-section-nav" aria-label="Section navigation">
+          <ul class="case-study-section-nav__list">
+            <li><a href="#case-study-section-overview-1">Overview</a></li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
   </main>
 
   <script>
-    // Load header content
     fetch('../header.html')
       .then(response => response.text())
       .then(data => {
-        // Replace the default title before inserting into DOM
         const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">Video Editing</div>');
         document.getElementById('header-container').innerHTML = modifiedData;
-        
-        // Hide the section label (+ Design) for individual pages
         const sectionLabel = document.getElementById('sectionLabel');
-        if (sectionLabel) {
-          sectionLabel.style.display = 'none';
-        }
-        
-        // Initialize header functionality after loading
-        if (window.initializeHeader) {
-          window.initializeHeader();
-        }
+        if (sectionLabel) sectionLabel.style.display = 'none';
+        if (window.initializeHeader) window.initializeHeader();
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            if (window.syncCaseStudyGridToWork) window.syncCaseStudyGridToWork();
+          });
+        });
       })
       .catch(error => console.error('Error loading header:', error));
   </script>
   <script src="../smooth-scroll.js"></script>
+  <script src="../case-study-page.js"></script>
   <script src="../cursor.js"></script>
 </body>
 </html>
