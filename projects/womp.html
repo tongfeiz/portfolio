@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="../page-transition.js"></script>
+  <link rel="icon" type="image/png" href="../1_photos/logos/icontools/faviconnew.png">
+  <link rel="stylesheet" href="../projectstyle.css">
+  <title>womp · Project Detail</title>
+  <style>
+    .page.case-study-page .case-study-list.case-study-list--stacked li {
+      align-items: flex-start;
+    }
+
+    .page.case-study-page .case-study-list.case-study-list--stacked .case-study-list__stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+    }
+
+    .page.case-study-page .case-study-list.case-study-list--stacked .case-study-list__title {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .page.case-study-page .case-study-list.case-study-list--stacked .case-study-list__desc {
+      display: block;
+      font-family: "SF Mono", "SFMono-Regular", ui-monospace, Menlo, "Liberation Mono", Consolas, monospace;
+      font-weight: 200;
+      font-size: var(--case-study-mono-size, 11px);
+      letter-spacing: var(--case-study-mono-tracking, 0.06em);
+      text-transform: uppercase;
+      color: var(--text-dark, #1d1d1d);
+      line-height: var(--case-study-mono-lh, 1.2);
+    }
+
+    @media (max-width: 480px) {
+      .page.case-study-page .case-study-list.case-study-list--stacked .case-study-list__title {
+        white-space: normal;
+      }
+    }
+
+    .page.case-study-page .case-study-main .womp-logo-grid {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .page.case-study-page .case-study-main .womp-logo-grid picture img {
+      object-fit: contain;
+      background: var(--text-light, #f7f7f7);
+    }
+
+    @media (max-width: 900px) {
+      .page.case-study-page .case-study-main .womp-logo-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page.case-study-page .case-study-main .womp-logo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <div id="header-container"></div>
+
+  <main class="page case-study-page" id="pageBody">
+    <section class="case-study-intro" aria-label="Project overview">
+      <div class="case-study-intro__layout">
+        <div class="case-study-intro__main">
+          <div class="case-study-intro__media">
+            <video autoplay loop muted playsinline>
+              <source src="../1_photos/vidwomp.webm" type="video/webm">
+              <source src="../1_photos/vidwomp.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="case-study-intro__header" role="group" aria-labelledby="womp-title">
+            <h1 class="project-title" id="womp-title">womp</h1>
+            <ul class="case-study-taglist" aria-label="Project scope">
+              <li><span class="case-study-tag">Hardware</span></li>
+              <li><span class="case-study-tag">Product</span></li>
+              <li><span class="case-study-tag">Branding</span></li>
+              <li><span class="case-study-tag">Web</span></li>
+              <li><span class="case-study-tag">Visual / Motion</span></li>
+            </ul>
+            <p class="project-description">Mattress level haptics to get you out of bed, not another snooze you can tap away.</p>
+          </div>
+        </div>
+        <div class="case-study-intro__side">
+          <div class="project-details case-study-details">
+            <div class="detail-column">
+              <div class="detail-title">Role</div>
+              <div class="detail-content">
+                <p>Design Engineer</p>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="detail-title">Team</div>
+              <div class="detail-content">
+                <p>Skye Gaertner (cofounder)</p>
+                <p>Maya Parthasarathy (cofounder &amp; product designer)</p>
+                <p>Tongfei Zhu (design engineer)</p>
+                <p>Mavis Zhang (graphic designer)</p>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="detail-title">Scope</div>
+              <div class="detail-content">
+                <p>Oct 2025 to Dec 2025</p>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="detail-title">Tools</div>
+              <div class="detail-content">
+                <p>Figma</p>
+                <p>Cursor</p>
+                <p>Adobe Photoshop</p>
+                <p>Adobe After Effects</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="case-study-rule" />
+    </section>
+
+    <div class="case-study-body">
+      <div class="case-study-main">
+        <div class="text-section" id="womp-section-problem">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Problem</p>
+            <h2 class="text-section-title">Waking Up Is Hard</h2>
+            <p class="text-section-text">Most alarms don’t fail because we don’t care. They fail because nothing is built to make us follow through. Mornings are the first place intention meets reality, and the first thing we trade away when we’re already behind.</p>
+          </div>
+        </div>
+
+        <div class="text-section" id="womp-section-ideation">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Ideation</p>
+            <h2 class="text-section-title">An Alarm You Can’t Ignore</h2>
+            <p class="text-section-text">We started from one question: <strong>How do we know someone is physically out of bed?</strong> Phones, wearables, and bedside gadgets kept failing the same way. If you can reach it half asleep, you’ll silence it.</p>
+            <p class="text-section-text">Mattress level haptics give strong vibration without a noisy screen. We aimed for comfort, low friction, and durability, then locked the form factor to behavior you can’t cheat.</p>
+            <ul class="case-study-list case-study-list--stacked" aria-label="womp hardware concepts">
+              <li>
+                <span class="case-study-list__stack">
+                  <strong class="case-study-list__title">Sensing band</strong>
+                  <span class="case-study-list__desc">Pressure sensors on a wraparound band detect weight on the bed so the system knows if you’re still down.</span>
+                </span>
+              </li>
+              <li>
+                <span class="case-study-list__stack">
+                  <strong class="case-study-list__title">Docked screen</strong>
+                  <span class="case-study-list__desc">Detachable screen docks to set the alarm, then stays quiet until five minutes before wake up.</span>
+                </span>
+              </li>
+              <li>
+                <span class="case-study-list__stack">
+                  <strong class="case-study-list__title">Wake up experience</strong>
+                  <span class="case-study-list__desc">Haptics and timing replace tap to dismiss with a cue tied to getting up.</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid-section" aria-label="womp logo explorations">
+          <div class="grid-content womp-logo-grid">
+            <picture><img src="photos_womp/womplogo1.png" alt="womp logo exploration 1" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo2.png" alt="womp logo exploration 2" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo3.png" alt="womp logo exploration 3" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo4.png" alt="womp logo exploration 4" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo5.png" alt="womp logo exploration 5" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo6.png" alt="womp logo exploration 6" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo7.png" alt="womp logo exploration 7" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo8.png" alt="womp logo exploration 8" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo9.png" alt="womp logo exploration 9" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo10.png" alt="womp logo exploration 10" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo11.png" alt="womp logo exploration 11" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo12.png" alt="womp logo exploration 12" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo13.png" alt="womp logo exploration 13" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo14.png" alt="womp logo exploration 14" loading="lazy" decoding="async"></picture>
+            <picture><img src="photos_womp/womplogo15.png" alt="womp logo exploration 15" loading="lazy" decoding="async"></picture>
+          </div>
+        </div>
+
+        <div class="text-section" id="womp-section-branding-website">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Branding and website</p>
+            <h2 class="text-section-title">The Fun Stuff</h2>
+            <p class="text-section-text"><strong>Skye</strong> and <strong>Maya</strong> brought me in to ship the story, brand, and site while the hardware moved fast. Under <strong>TM Design Studios</strong>, I led the marketing site (layout, motion, and front end) and built the identity with my teammate <strong>Mavis Zhang</strong>. The landing page can be found at <a href="https://womp.systems" target="_blank" rel="noopener">womp.systems</a></p>
+          </div>
+        </div>
+
+        <div class="hero-image-container" aria-label="womp landing page screen recording">
+          <video class="hero-image" autoplay loop muted playsinline>
+            <source src="photos_womp/landingpagevid.webm" type="video/webm">
+            <source src="photos_womp/landingpagevid.mov" type="video/quicktime">
+          </video>
+        </div>
+
+        <p class="case-study-back-to-top">
+          <a href="#pageBody">↑ Back to top</a>
+        </p>
+      </div>
+
+      <aside class="case-study-side" aria-label="On this page">
+        <nav class="case-study-section-nav" aria-label="Section navigation">
+          <ul class="case-study-section-nav__list">
+            <li><a href="#womp-section-problem">Problem</a></li>
+            <li><a href="#womp-section-ideation">Ideation</a></li>
+            <li><a href="#womp-section-branding-website">Branding and website</a></li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    fetch('../header.html')
+      .then(response => response.text())
+      .then(data => {
+        const modifiedData = data.replace('id="pageTitle">Work</div>', 'id="pageTitle">womp</div>');
+        document.getElementById('header-container').innerHTML = modifiedData;
+        const sectionLabel = document.getElementById('sectionLabel');
+        if (sectionLabel) sectionLabel.style.display = 'none';
+        if (window.initializeHeader) window.initializeHeader();
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            if (window.syncCaseStudyGridToWork) window.syncCaseStudyGridToWork();
+          });
+        });
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  <script src="../smooth-scroll.js"></script>
+  <script src="../case-study-page.js"></script>
+  <script src="../cursor.js"></script>
+</body>
+</html>
