@@ -7,6 +7,131 @@
   <link rel="icon" type="image/png" href="../1_photos/logos/icontools/faviconnew.png">
   <link rel="stylesheet" href="../projectstyle.css">
   <title>tlocal - Project Detail</title>
+  <style>
+    /* tlocal features grid (same alternating 2-col pattern as Scaling Reviews impact) */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+      margin-top: 20px;
+      align-items: stretch;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .impact-grid__copy,
+    .impact-grid__image {
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .impact-grid__copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .impact-grid__copy .impact-grid__number,
+    .impact-grid__copy .impact-grid__title,
+    .impact-grid__copy .impact-grid__text {
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    .impact-grid__number {
+      font-family: "SF Mono", "SFMono-Regular", ui-monospace, Menlo, "Liberation Mono", Consolas, monospace;
+      font-weight: 200;
+      font-size: var(--case-study-mono-size, 11px);
+      letter-spacing: var(--case-study-mono-tracking, 0.06em);
+      text-transform: uppercase;
+      color: #6e6e6e;
+      line-height: var(--case-study-mono-lh, 1.2);
+      margin: 0;
+    }
+
+    /* Override projectstyle h3 in .text-section-content (large top margin) */
+    .page.case-study-page .case-study-main .text-section-content .impact-grid__copy h3.impact-grid__title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.18;
+      font-weight: 400;
+      letter-spacing: normal;
+      color: var(--text-dark, #1d1d1d);
+    }
+
+    .impact-grid__text {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--text-dark, #1d1d1d);
+    }
+
+    .case-study-main .impact-grid__image picture {
+      display: block;
+      width: 100%;
+    }
+
+    .case-study-main .impact-grid__image img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .impact-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    .tlocal-subsection-title {
+      margin-top: 28px;
+      margin-bottom: 0;
+      font-size: 22px;
+      line-height: 1.22;
+      font-weight: 400;
+      color: var(--text-dark, #1d1d1d);
+    }
+
+    /* Ordered workflow list: numbered prefix instead of →; title / description stack */
+    .case-study-list.case-study-list--tlocal-flow {
+      counter-reset: tlocal-flow;
+      gap: 30px;
+      margin-top: 28px;
+    }
+
+    .case-study-list.case-study-list--tlocal-flow li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 1.45em;
+      align-items: start;
+    }
+
+    .case-study-list.case-study-list--tlocal-flow li::before {
+      content: counter(tlocal-flow, decimal-leading-zero);
+      counter-increment: tlocal-flow;
+    }
+
+    .case-study-list.case-study-list--tlocal-flow .tlocal-flow-list__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .case-study-list.case-study-list--tlocal-flow .tlocal-flow-list__copy > strong {
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <!-- Include header -->
@@ -25,7 +150,12 @@
           <div class="case-study-intro__header" role="group" aria-labelledby="case-study-title">
             <h1 class="project-title" id="case-study-title">tlocal</h1>
             <ul class="case-study-taglist" aria-label="Project scope">
-              <li><span class="case-study-tag">Web</span></li>
+              <li><span class="case-study-tag">Product</span></li>
+              <li><span class="case-study-tag">UI/UX</span></li>
+              <li><span class="case-study-tag">AI</span></li>
+              <li><span class="case-study-tag">Video Analyzation</span></li>
+              <li><span class="case-study-tag">Localization</span></li>
+    
             </ul>
             <p class="project-description">A collaborative workspace to extract, review, and localize on-screen text—built for full-length films and long-form programmes, not one-off clips.</p>
           </div>
@@ -72,30 +202,144 @@
 
     <div class="case-study-body">
       <div class="case-study-main">
-        <div class="text-section" id="case-study-section-overview-1">
+        <div class="text-section" id="tlocal-section-problem">
           <div class="text-section-content">
-            <p class="case-study-section-descriptor">Overview</p>
-            <p class="text-section-text">tlocal started at a media-and-entertainment hackathon hosted by TwelveLabs: a 24-hour build that shipped a <strong>production-ready</strong> pipeline—not a slide deck. The team took first place in a room of engineers, executives, and practitioners with deep experience in entertainment and video intelligence.</p>
-        <p class="text-section-text">The product replaces blank localization QC spreadsheets with <strong>full inventories in minutes</strong>, using TwelveLabs’ Marengo and Pegasus models to understand what appears on screen and when. Direction came from the room itself: stories from operators and studio-side leaders, teammate context from major M&amp;E organizations, and a clear picture of where video intelligence can remove real friction.</p>
-        <p class="text-section-text">Development continues beyond the event. <a href="https://tlocal.online/" target="_blank" rel="noopener">tlocal is live</a>—built from 0→1 at the hackathon, now moving from 1→100 with the same focus on shipping.</p>
+            <p class="case-study-section-descriptor">Problem</p>
+            <h2 class="text-section-title">Text Localization is Fragmented</h2>
+            <p class="text-section-text">Localization for film and long-form video still leans on <strong>QC spreadsheets</strong>, manual logging, and handoffs between teams. On-screen text is easy to miss or strip of context when it lives in a list, especially across full runtimes.</p>
+            <p class="text-section-text">There’s a team behind every language. Jokes, puns, and idioms often don’t land the same elsewhere, and without the right context and review, copy can read as flat, confusing, or in the worst case offensive.</p>
+            <p class="text-section-text">That fragmentation slows review, makes it hard to prioritize what needs a human pass, and disconnects translators from the frame and timecode where copy actually appears.</p>
+          </div>
+        </div>
 
-        <h3>Product walkthrough</h3>
-        <p class="text-section-text">The workspace is organized around long runtimes, locale ownership, and reviewable artifacts—not disconnected strings.</p>
+        <div class="text-section" id="tlocal-section-solution">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Solution</p>
+            <h2 class="text-section-title">One Centralized Workspace</h2>
+            <p class="text-section-text">tlocal replaces blank localization QC spreadsheets with <strong>full inventories in minutes</strong>, using TwelveLabs’ Marengo and Pegasus models to understand what appears on screen and when. Direction came from the room itself: stories from operators and studio-side leaders, teammate context from major M&amp;E organizations, and a clear picture of where video intelligence can remove real friction.</p>
 
-        <h3>Extract across the timeline</h3>
-        <p class="text-section-text">Turn signs, subtitles, credits, and graphics into <strong>reviewable tickets</strong>—each tied to timecode and scoped to full films and long programmes, not isolated clips.</p>
+            <h3 class="tlocal-subsection-title">How teams use tlocal</h3>
+            <ol class="case-study-list case-study-list--tlocal-flow" aria-label="tlocal workflow steps">
+              <li>
+                <span class="tlocal-flow-list__copy">
+                  <strong>Upload your video</strong>
+                  <span>Bring the programme into tlocal as the single place work begins.</span>
+                </span>
+              </li>
+              <li>
+                <span class="tlocal-flow-list__copy">
+                  <strong>AI detects on-screen text</strong>
+                  <span>The system finds every string automatically—replacing what teams used to log manually, frame by frame.</span>
+                </span>
+              </li>
+              <li>
+                <span class="tlocal-flow-list__copy">
+                  <strong>Confidence on every detection</strong>
+                  <span>Each item includes a score so you know what needs attention first.</span>
+                </span>
+              </li>
+              <li>
+                <span class="tlocal-flow-list__copy">
+                  <strong>Assign what happens next</strong>
+                  <span>Translate directly, adapt creatively, or flag for cultural review.</span>
+                </span>
+              </li>
+              <li>
+                <span class="tlocal-flow-list__copy">
+                  <strong>Distribute across language teams</strong>
+                  <span>Once confirmed, tasks fan out to the right locales—no duplicate handoffs.</span>
+                </span>
+              </li>
+              <li>
+                <span class="tlocal-flow-list__copy">
+                  <strong>Work in the same system</strong>
+                  <span>Every team reviews suggestions, refines translations, and collaborates in full frame-and-timecode context.</span>
+                </span>
+              </li>
+              <li>
+                <span class="tlocal-flow-list__copy">
+                  <strong>See it on the picture</strong>
+                  <span>AI mockups place translated copy on the screen so you can judge length and fit instantly—or upload your own designs.</span>
+                </span>
+              </li>
+              <li>
+                <span class="tlocal-flow-list__copy">
+                  <strong>Track, then close with QA</strong>
+                  <span>Admins monitor progress in real time; when everything’s ready, send it for final QA.</span>
+                </span>
+              </li>
+            </ol>
+          </div>
+        </div>
 
-        <h3>Route work to language teams</h3>
-        <p class="text-section-text">Give every locale a clear next step: translate in context, adapt for tone and length, or route work for cultural review when the material needs a specialist pass.</p>
+        <div class="text-section" id="tlocal-section-features">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Features</p>
+            <h2 class="text-section-title">One intuitive workspace</h2>
+            <p class="text-section-text">We designed and developed tlocal alongside our teammate Luke, an engineer who works directly with the localization team at Disney Animations.</p>
+            <div class="impact-grid" aria-label="tlocal product features">
+              <div class="impact-grid__copy">
+                <p class="impact-grid__number">1</p>
+                <h3 class="impact-grid__title">Extract across the timeline</h3>
+                <p class="impact-grid__text">Turn signs, subtitles, credits, and graphics into reviewable tickets—each tied to timecode and scoped to full films and long programmes, not isolated clips.</p>
+              </div>
+              <div class="impact-grid__image">
+                <picture>
+                  <img src="../projects/photos_tlocal/feature1.webp" alt="tlocal interface showing on-screen text extracted across the timeline" loading="lazy" decoding="async" />
+                </picture>
+              </div>
 
-        <h3>Faster translation mockups</h3>
-        <p class="text-section-text">AI composites translated copy onto each screen in seconds so reviewers judge <strong>real fit</strong>, not flat strings, and tighten language suggestions with the frame in view. Admins get live progress and status updates as work moves across locales.</p>
+              <div class="impact-grid__image">
+                <picture>
+                  <img src="../projects/photos_tlocal/feature2.webp" alt="tlocal interface for routing work to language teams" loading="lazy" decoding="async" />
+                </picture>
+              </div>
+              <div class="impact-grid__copy">
+                <p class="impact-grid__number">2</p>
+                <h3 class="impact-grid__title">Route work to language teams</h3>
+                <p class="impact-grid__text">Give every locale a clear next step: translate in context, adapt for tone and length, or route work for cultural review when the material needs a specialist pass.</p>
+              </div>
 
-        <h3>One intuitive workspace</h3>
-        <p class="text-section-text">From upload to translator queue, tlocal keeps on-screen text tied to <strong>timecode and context</strong>—so nothing gets lost across a long runtime.</p>
+              <div class="impact-grid__copy">
+                <p class="impact-grid__number">3</p>
+                <h3 class="impact-grid__title">Faster translation mockups</h3>
+                <p class="impact-grid__text">AI composites translated copy onto each screen in seconds so reviewers judge real fit, not flat strings, and tighten language suggestions with the frame in view. Admins get live progress and status updates as work moves across locales.</p>
+              </div>
+              <div class="impact-grid__image">
+                <picture>
+                  <img src="../projects/photos_tlocal/feature3.webp" alt="tlocal interface showing translation mockups on frame" loading="lazy" decoding="async" />
+                </picture>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h3>Thanks</h3>
-        <p class="text-section-text">Thank you to the hackathon judges and studio partners—including representatives from Warner Bros. Discovery, Fox Corporation, Lionsgate, Sony Pictures Entertainment, and SVTA—and to the sponsors who made production-scale experimentation possible: <strong>Amazon Web Services</strong> (Bedrock), <strong>Baseten</strong> for model serving, and <strong>LTX.io</strong> for video generation. Special thanks to everyone at <strong>TwelveLabs</strong> who organized the event and supported the build.</p>
+        <div class="text-section" id="tlocal-section-takeaways">
+          <div class="text-section-content">
+            <p class="case-study-section-descriptor">Takeaways</p>
+            <h2 class="text-section-title">12Labs Hackathon</h2>
+            <p class="text-section-text">Thank you to the hackathon judges and studio partners—including representatives from Warner Bros. Discovery, Fox Corporation, Lionsgate, Sony Pictures Entertainment, and SVTA—and to the sponsors who made production-scale experimentation possible: <strong>Amazon Web Services</strong> (Bedrock), <strong>Baseten</strong> for model serving, and <strong>LTX.io</strong> for video generation. Special thanks to everyone at <strong>TwelveLabs</strong> who organized the event and supported the build.</p>
+          </div>
+        </div>
+
+        <div class="two-horizontal-images-section" aria-label="tlocal product gallery">
+          <div class="two-horizontal-images-content">
+            <picture>
+              <source type="image/webp" srcset="../projects/photos_tlocal/wide1tlocal.webp" />
+              <img src="../projects/photos_tlocal/wide1tlocal.png" alt="tlocal workspace and UI still 1" loading="lazy" decoding="async" />
+            </picture>
+            <picture>
+              <source type="image/webp" srcset="../projects/photos_tlocal/wide2tlocal.webp" />
+              <img src="../projects/photos_tlocal/wide2tlocal.png" alt="tlocal workspace and UI still 2" loading="lazy" decoding="async" />
+            </picture>
+            <picture>
+              <source type="image/webp" srcset="../projects/photos_tlocal/wide3tlocal.webp" />
+              <img src="../projects/photos_tlocal/wide3tlocal.png" alt="tlocal workspace and UI still 3" loading="lazy" decoding="async" />
+            </picture>
+            <picture>
+              <source type="image/webp" srcset="../projects/photos_tlocal/wide4tlocal.webp" />
+              <img src="../projects/photos_tlocal/wide4tlocal.png" alt="tlocal workspace and UI still 4" loading="lazy" decoding="async" />
+            </picture>
           </div>
         </div>
 
@@ -107,7 +351,10 @@
       <aside class="case-study-side" aria-label="On this page">
         <nav class="case-study-section-nav" aria-label="Section navigation">
           <ul class="case-study-section-nav__list">
-            <li><a href="#case-study-section-overview-1">Overview</a></li>
+            <li><a href="#tlocal-section-problem">Problem</a></li>
+            <li><a href="#tlocal-section-solution">Solution</a></li>
+            <li><a href="#tlocal-section-features">Features</a></li>
+            <li><a href="#tlocal-section-takeaways">Takeaways</a></li>
           </ul>
         </nav>
       </aside>

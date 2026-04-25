@@ -25,7 +25,8 @@
     .impact-grid__copy {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
+      align-items: stretch;
       gap: 12px;
     }
 
@@ -40,11 +41,13 @@
       margin: 0;
     }
 
-    .impact-grid__title {
+    /* Override projectstyle h3 in .text-section-content (large top margin) */
+    .page.case-study-page .case-study-main .text-section-content .impact-grid__copy h3.impact-grid__title {
       margin: 0;
       font-size: 24px;
       line-height: 1.18;
       font-weight: 400;
+      letter-spacing: normal;
       color: var(--text-dark, #1d1d1d);
     }
 
