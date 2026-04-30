@@ -7,6 +7,8 @@
  *   touchMultiplier: 2    = touch scroll speed (higher = faster response to swipe)
  *   keyStepRatio   : 0.08 = arrow/page key step as fraction of viewport height
  *   snapThreshold  : 0.05 = when |target - current| < this, snap to target (stops rAF)
+ *
+ *   Calendar: .calendar-container gets horizontal inertial lerp (same lerp model as vertical)
  * ─────────────────────────────────────────────────────────────────────────────
  */
 (function () {
@@ -20,6 +22,14 @@
   var touchMultiplier = 2;
   var keyStepRatio = 0.08;
   var snapThreshold = 0.05;
+
+  // Horizontal: calendar page strip
+  var cal = document.querySelector('.calendar-container');
+  var targetScrollX = 0;
+  var currentScrollX = 0;
+  var lerpFactorX = 0.06;
+  var snapThresholdX = 0.5;
+  var scrollCalCausedByUs = false;
 
   function getScrollY() {
     return window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -44,9 +54,64 @@
     currentScrollY = y;
   }
 
+  function maxScrollX() {
+    if (!cal) return 0;
+    return Math.max(0, cal.scrollWidth - cal.clientWidth);
+  }
+
+  function syncFromCal() {
+    if (!cal) return;
+    var x = cal.scrollLeft;
+    targetScrollX = x;
+    currentScrollX = x;
+  }
+
+  function clampCalScroll() {
+    if (!cal) return;
+    var m = maxScrollX();
+    targetScrollX = Math.max(0, Math.min(targetScrollX, m));
+    currentScrollX = Math.max(0, Math.min(currentScrollX, m));
+    scrollCalCausedByUs = true;
+    cal.scrollLeft = currentScrollX;
+  }
+
   syncFromWindow();
 
+  if (cal) {
+    syncFromCal();
+    cal.addEventListener('scroll', function () {
+      if (scrollCalCausedByUs) {
+        scrollCalCausedByUs = false;
+        return;
+      }
+      if (Math.abs(cal.scrollLeft - currentScrollX) > 2) {
+        syncFromCal();
+      }
+    }, { passive: true });
+    var calTouchX = 0;
+    cal.addEventListener('touchstart', function (e) {
+      calTouchX = e.touches[0].clientX;
+    }, { passive: true });
+    cal.addEventListener('touchmove', function (e) {
+      var m = maxScrollX();
+      if (m <= 0) return;
+      e.preventDefault();
+      var x = e.touches[0].clientX;
+      var dx = calTouchX - x;
+      calTouchX = x;
+      targetScrollX = Math.max(0, Math.min(targetScrollX + dx * touchMultiplier, m));
+    }, { passive: false });
+  }
+
   window.addEventListener('wheel', function (e) {
+    if (cal) {
+      e.preventDefault();
+      var m = maxScrollX();
+      if (m <= 0) return;
+      var delta = e.deltaY + e.deltaX;
+      targetScrollX = Math.max(0, Math.min(targetScrollX + delta, m));
+      return;
+    }
     var max = maxScroll();
     if (max <= 0) return;
     e.preventDefault();
@@ -58,6 +123,7 @@
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
   window.addEventListener('touchmove', function (e) {
+    if (cal) return;
     var max = maxScroll();
     if (max <= 0) return;
     e.preventDefault();
@@ -95,6 +161,14 @@
   var pauseUntil = 0;
 
   function tick() {
+    if (cal) {
+      currentScrollX += (targetScrollX - currentScrollX) * lerpFactorX;
+      if (Math.abs(targetScrollX - currentScrollX) < snapThresholdX) {
+        currentScrollX = targetScrollX;
+      }
+      scrollCalCausedByUs = true;
+      cal.scrollLeft = currentScrollX;
+    }
     if (performance.now() < pauseUntil) {
       requestAnimationFrame(tick);
       return;
@@ -111,6 +185,15 @@
 
   window.addEventListener('load', function () {
     syncFromWindow();
+    if (cal) {
+      syncFromCal();
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    if (cal) {
+      clampCalScroll();
+    }
   });
 
   /** Jump to a scroll Y and hard-sync the lerp so it doesn't yank back. */

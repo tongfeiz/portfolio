@@ -616,18 +616,21 @@
     style.textContent =
       /* Outgoing: body content fades out. Header is untouched. */
       'body.pt-exiting > main,' +
-      'body.pt-exiting > .caption {' +
+      'body.pt-exiting > .caption,' +
+      'body.pt-exiting > .detail-panel {' +
       '  transition: opacity ' + FADE_OUT_MS + 'ms ' + FADE_EASE + ';' +
       '  opacity: 0;' +
       '}' +
       'body.pt-exiting { pointer-events: none; }' +
       /* Incoming: body content starts hidden, fades in. */
-      'html.pt-arriving body > main,' +
-      'html.pt-arriving body > .caption {' +
+      'html.pt-arriving body:not(.calendar-page) > main,' +
+      'html.pt-arriving body > .caption,' +
+      'html.pt-arriving body > .detail-panel {' +
       '  opacity: 0;' +
       '}' +
-      'html.pt-arriving.pt-show body > main,' +
-      'html.pt-arriving.pt-show body > .caption {' +
+      'html.pt-arriving.pt-show body:not(.calendar-page) > main,' +
+      'html.pt-arriving.pt-show body > .caption,' +
+      'html.pt-arriving.pt-show body > .detail-panel {' +
       '  transition: opacity ' + FADE_IN_MS + 'ms ' + FADE_EASE + ';' +
       '  opacity: 1;' +
       '}';
