@@ -103,7 +103,10 @@
     }, { passive: false });
   }
 
-  window.addEventListener('wheel', function (e) {
+  function handleWheel(e) {
+    if (e.__smoothScrollHandled) return;
+    e.__smoothScrollHandled = true;
+
     if (cal) {
       e.preventDefault();
       var m = maxScrollX();
@@ -116,7 +119,11 @@
     if (max <= 0) return;
     e.preventDefault();
     targetScrollY = Math.max(0, Math.min(targetScrollY + e.deltaY, max));
-  }, { passive: false });
+  }
+
+  var wheelOptions = { passive: false, capture: true };
+  window.addEventListener('wheel', handleWheel, wheelOptions);
+  document.addEventListener('wheel', handleWheel, wheelOptions);
 
   var touchStartY = 0;
   window.addEventListener('touchstart', function (e) {
