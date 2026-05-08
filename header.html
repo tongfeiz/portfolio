@@ -215,6 +215,10 @@
     .brand .home { font-size: 3.6vw; }
     .brand .plus { font-size: 3.6vw; }
     nav { font-size: 3.6vw; }
+    #mainNav a[data-section="Calendar"],
+    #mainNav a[data-section="About"] + .nav-sep {
+      display: none;
+    }
   }
 
   a:focus {
@@ -325,6 +329,8 @@
       title = 'The Lies End In Summer';
     } else if (currentFile === 'projects/spire.html' || currentFile === 'spire.html') {
       title = 'SPIRE';
+    } else if (currentFile === 'projects/womp.html' || currentFile === 'womp.html') {
+      title = 'womp';
     } else if (currentFile === 'projects/revink-spring-2024.html' || currentFile === 'revink-spring-2024.html') {
       title = 'REVINK Spring 2024';
     } else if (currentFile === 'projects/motion-graphic-animation.html' || currentFile === 'motion-graphic-animation.html') {

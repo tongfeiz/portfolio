@@ -166,6 +166,10 @@
       .header-inner { padding: 0 10vw; }
       .brand .home { font-size: 3.6vw; }
       nav { font-size: 3.6vw; }
+      #mainNav a[data-section="Calendar"],
+      #mainNav a[data-section="About"] + .nav-sep {
+        display: none;
+      }
     }
 
     a:focus { outline: 2px solid #ddd; }

@@ -196,6 +196,7 @@
     if (file === 'goodfornothing.html') return 'GOODFORNOTHING';
     if (file === 'demigod.html') return 'DEMIGOD';
     if (file === 'spire.html') return 'SPIRE';
+    if (file === 'womp.html') return 'womp';
     if (file === 'spire-promotional-graphics.html') return 'SPIRE Promotional Graphics';
     if (file === 'revink.html') return 'REVINK';
     if (file === 'music-production.html') return 'Music Production';

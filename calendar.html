@@ -46,6 +46,7 @@
       overflow-y: hidden;
       position: relative;
       overscroll-behavior: contain;
+      touch-action: pan-x;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
@@ -406,6 +407,10 @@
       .brand .home { font-size: 3.6vw; }
       .brand .plus { font-size: 3.6vw; }
       nav { font-size: 3.6vw; }
+      #mainNav a[data-section="Calendar"],
+      #mainNav a[data-section="About"] + .nav-sep {
+        display: none;
+      }
     }
 
     a:focus { outline: none; }
@@ -428,7 +433,7 @@
         </div>
       </div>
 
-      <div class="page-title" id="pageTitle">My 2025</div>
+      <div class="page-title" id="pageTitle">My 2026</div>
 
       <nav id="mainNav" aria-label="Main navigation">
         <a href="/index.html" data-section="Work">Work</a>
@@ -443,7 +448,95 @@
   <main class="page">
     <div class="calendar-container">
       <div class="calendar-track">
-        <section class="month-section" data-month="DEC">
+        <section class="month-section" data-month="MAY" data-year="2026">
+          <div class="month-heading-reveal">
+            <h2 class="month-heading">MAY // 26</h2>
+          </div>
+          <div class="photo-grid">
+            <div class="photo-item" data-title="Invite" data-caption="last time mingling with some graduating good friends at innovative design’s semesterly invite 😢">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/may2.png" alt="Innovative Design Invite evening"></span>
+            </div>
+            <div class="photo-item" data-title="Music" data-caption="reignited my passion for guitar and jamming in a backyard jam sesh">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/may1.png" alt="Backyard guitar jam"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="month-section" data-month="APR" data-year="2026">
+          <div class="month-heading-reveal">
+            <h2 class="month-heading">APR // 26</h2>
+          </div>
+          <div class="photo-grid">
+            <div class="photo-item" data-title="New Bench PR" data-caption="new bench pr 265lbs!!!!">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/apr3.png" alt="Bench press 265 lb PR"></span>
+            </div>
+            <div class="photo-item" data-title="Rawdawg Run Club" data-caption="Took over the streets in beverly hills with the rawdawg run club">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/apr2.png" alt="Rawdawg Run Club Beverly Hills"></span>
+            </div>
+            <div class="photo-item" data-title="More exploring" data-caption="Visited UC Riverside for the first time">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/apr1.png" alt="Visit to UC Riverside"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="month-section" data-month="MAR" data-year="2026">
+          <div class="month-heading-reveal">
+            <h2 class="month-heading">MAR // 26</h2>
+          </div>
+          <div class="photo-grid">
+            <div class="photo-item" data-title="TLocal" data-caption="Got 1st place at the TwelveLabs hackathon, built TLocal, a on screen text localization workspace for films and long form content creators">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/mar4.png" alt="TLocal TwelveLabs hackathon win"></span>
+            </div>
+            <div class="photo-item" data-title="Oslo, Norway" data-caption="spontaneously took a $20 flight to oslo, norway for a day">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/mar3.png" alt="Day trip to Oslo"></span>
+            </div>
+            <div class="photo-item" data-title="London" data-caption="Explored london with some of my closest friends">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/mar2.png" alt="London with friends"></span>
+            </div>
+            <div class="photo-item" data-title="Modelling..." data-caption="Tried my hand at modelling at USC innovative design’s creative photoshoot...">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/mar1.png" alt="USC Innovative Design creative photoshoot"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="month-section" data-month="FEB" data-year="2026">
+          <div class="month-heading-reveal">
+            <h2 class="month-heading">FEB // 26</h2>
+          </div>
+          <div class="photo-grid">
+            <div class="photo-item" data-title="Privatus" data-caption="Directed branding for privatus, a all in one cybersecurity software">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/feb4.png" alt="Privatus cybersecurity branding"></span>
+            </div>
+            <div class="photo-item" data-title="SIFT" data-caption="Participated in a hackathon and built Sift with cofounder Hudson Kaneko, a scheduling and planning tool for people with ADHD">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/feb3.png" alt="Sift ADHD planning hackathon"></span>
+            </div>
+            <div class="photo-item" data-title="First Landscape Project" data-caption="First time designing interior visuals and planning in Luna Apartment’s courtyard in Koreatown">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/feb2.png" alt="Luna Apartments Koreatown courtyard design"></span>
+            </div>
+            <div class="photo-item" data-title="Lava Mentor P2" data-caption="running it back again as a lavalab mentor with my new team!">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/feb1.png" alt="Lavalab mentor cohort"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="month-section" data-month="JAN" data-year="2026">
+          <div class="month-heading-reveal">
+            <h2 class="month-heading">JAN // 26</h2>
+          </div>
+          <div class="photo-grid">
+            <div class="photo-item" data-title="SWOO" data-caption="Helped with logo and branding on SWOO, a social platform to help connect new and transfer university students">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/jan3.png" alt="SWOO branding and logo"></span>
+            </div>
+            <div class="photo-item" data-title="5DOLLARKID" data-caption="After working on it for 2 years, my album 5dollarkid is finally done and released on spotify!">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/jan2.png" alt="5dollarkid album on Spotify"></span>
+            </div>
+            <div class="photo-item" data-title="Joining Chosan" data-caption="Started work at Chosan as a graphic designer and marketing intern, also getting introduced to landscape and interior design">
+              <span class="photo-reveal"><img src="1_photos/calendarphotos/jan1.png" alt="Graphic design internship at Chosan"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="month-section" data-month="DEC" data-year="2025">
           <div class="month-heading-reveal">
             <h2 class="month-heading">DEC // 25</h2>
           </div>
@@ -466,7 +559,7 @@
           </div>
         </section>
 
-        <section class="month-section" data-month="NOV">
+        <section class="month-section" data-month="NOV" data-year="2025">
           <div class="month-heading-reveal">
             <h2 class="month-heading">NOV // 25</h2>
           </div>
@@ -495,7 +588,7 @@
           </div>
         </section>
 
-        <section class="month-section" data-month="OCT">
+        <section class="month-section" data-month="OCT" data-year="2025">
           <div class="month-heading-reveal">
             <h2 class="month-heading">OCT // 25</h2>
           </div>
@@ -512,7 +605,7 @@
           </div>
         </section>
 
-        <section class="month-section" data-month="SEP">
+        <section class="month-section" data-month="SEP" data-year="2025">
           <div class="month-heading-reveal">
             <h2 class="month-heading">SEP // 25</h2>
           </div>
@@ -644,6 +737,56 @@
           requestAnimationFrame(startEntrance);
         });
       });
+    })();
+
+    (function initCalendarPageTitleFromScroll() {
+      const container = document.querySelector('.calendar-container');
+      const pageTitle = document.getElementById('pageTitle');
+      if (!container || !pageTitle) return;
+
+      function syncTitleToLeftmostVisibleYear() {
+        const cr = container.getBoundingClientRect();
+        const hPad = 12;
+        const leftProbe = cr.left + hPad;
+        const rightProbe = cr.right - hPad;
+        let bestSection = null;
+        let bestLeft = Infinity;
+
+        document.querySelectorAll('.month-section').forEach((section) => {
+          const sr = section.getBoundingClientRect();
+          if (sr.bottom <= cr.top || sr.top >= cr.bottom) return;
+          if (sr.right <= leftProbe || sr.left >= rightProbe) return;
+          if (sr.left < bestLeft) {
+            bestLeft = sr.left;
+            bestSection = section;
+          }
+        });
+
+        const y = bestSection && bestSection.dataset.year;
+        const label =
+          y === '2025' ? 'My 2025'
+          : y === '2026' ? 'My 2026'
+          : '';
+
+        if (label && pageTitle.textContent !== label) pageTitle.textContent = label;
+      }
+
+      let ticking = false;
+      function scheduleSync() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          syncTitleToLeftmostVisibleYear();
+        });
+      }
+
+      container.addEventListener('scroll', scheduleSync, { passive: true });
+      window.addEventListener('resize', scheduleSync);
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(scheduleSync).observe(container);
+      }
+      scheduleSync();
     })();
 
     const detailTitle = document.getElementById('detailTitle');

@@ -9,10 +9,18 @@
  *   snapThreshold  : 0.05 = when |target - current| < this, snap to target (stops rAF)
  *
  *   Calendar: .calendar-container gets horizontal inertial lerp (same lerp model as vertical)
+ *
+ *   Below max-width 680px (matches project mobile breakpoints), native scroll is used: no lerp,
+ *   no wheel/touch capture — better behavior with OS momentum scrolling.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 (function () {
   document.documentElement.style.scrollBehavior = 'auto';
+
+  var mobileScrollQuery = window.matchMedia('(max-width: 680px)');
+  function isMobileScrollView() {
+    return mobileScrollQuery.matches;
+  }
 
   var targetScrollY = 0;
   var currentScrollY = 0;
@@ -89,12 +97,29 @@
       }
     }, { passive: true });
     var calTouchX = 0;
+    var calTouchY = 0;
     cal.addEventListener('touchstart', function (e) {
       calTouchX = e.touches[0].clientX;
+      calTouchY = e.touches[0].clientY;
     }, { passive: true });
     cal.addEventListener('touchmove', function (e) {
       var m = maxScrollX();
       if (m <= 0) return;
+      if (isMobileScrollView()) {
+        /* Same mapping as laptop wheel on .calendar-container: deltaY (vertical swipe) drives horizontal scroll. */
+        e.preventDefault();
+        var x = e.touches[0].clientX;
+        var y = e.touches[0].clientY;
+        var dx = calTouchX - x;
+        var dy = calTouchY - y;
+        calTouchX = x;
+        calTouchY = y;
+        var delta = (dx + dy) * touchMultiplier;
+        var next = Math.max(0, Math.min(cal.scrollLeft + delta, m));
+        cal.scrollLeft = next;
+        targetScrollX = currentScrollX = next;
+        return;
+      }
       e.preventDefault();
       var x = e.touches[0].clientX;
       var dx = calTouchX - x;
@@ -104,6 +129,7 @@
   }
 
   function handleWheel(e) {
+    if (isMobileScrollView()) return;
     if (e.__smoothScrollHandled) return;
     e.__smoothScrollHandled = true;
 
@@ -130,6 +156,7 @@
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
   window.addEventListener('touchmove', function (e) {
+    if (isMobileScrollView()) return;
     if (cal) return;
     var max = maxScroll();
     if (max <= 0) return;
@@ -140,6 +167,7 @@
   }, { passive: false });
 
   window.addEventListener('keydown', function (e) {
+    if (isMobileScrollView()) return;
     var max = maxScroll();
     if (max <= 0) return;
     var step = window.innerHeight * keyStepRatio;
@@ -166,8 +194,13 @@
   }, { passive: true });
 
   var pauseUntil = 0;
+  var scrollRafId = 0;
 
   function tick() {
+    if (isMobileScrollView()) {
+      scrollRafId = 0;
+      return;
+    }
     if (cal) {
       currentScrollX += (targetScrollX - currentScrollX) * lerpFactorX;
       if (Math.abs(targetScrollX - currentScrollX) < snapThresholdX) {
@@ -177,7 +210,7 @@
       cal.scrollLeft = currentScrollX;
     }
     if (performance.now() < pauseUntil) {
-      requestAnimationFrame(tick);
+      scrollRafId = requestAnimationFrame(tick);
       return;
     }
     currentScrollY += (targetScrollY - currentScrollY) * lerpFactor;
@@ -186,9 +219,39 @@
     }
     scrollCausedByUs = true;
     setScrollY(currentScrollY);
-    requestAnimationFrame(tick);
+    scrollRafId = requestAnimationFrame(tick);
   }
-  requestAnimationFrame(tick);
+
+  function startScrollTick() {
+    if (isMobileScrollView() || scrollRafId) return;
+    scrollRafId = requestAnimationFrame(tick);
+  }
+
+  function stopScrollTick() {
+    if (scrollRafId) {
+      cancelAnimationFrame(scrollRafId);
+      scrollRafId = 0;
+    }
+  }
+
+  function onLerpViewportChange() {
+    if (isMobileScrollView()) {
+      stopScrollTick();
+      syncFromWindow();
+      if (cal) syncFromCal();
+    } else {
+      syncFromWindow();
+      if (cal) syncFromCal();
+      startScrollTick();
+    }
+  }
+
+  startScrollTick();
+  if (mobileScrollQuery.addEventListener) {
+    mobileScrollQuery.addEventListener('change', onLerpViewportChange);
+  } else {
+    mobileScrollQuery.addListener(onLerpViewportChange);
+  }
 
   window.addEventListener('load', function () {
     syncFromWindow();
