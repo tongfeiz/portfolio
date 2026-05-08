@@ -637,6 +637,59 @@
     (document.head || document.documentElement).appendChild(style);
   }
 
+  /* ---------- bfcache cleanup ----------
+   * On GitHub Pages (and most browsers over HTTPS) the previous page is often
+   * held in the back/forward cache. When the user hits Back we get the page
+   * back as it was when they left — including body.pt-exiting (main opacity 0)
+   * and header .pt-slot-overlay. That looks blank with a wrong header title.
+   *
+   * We must NOT clear that state on pagehide: doing so runs while the outgoing
+   * page can still be visible for a frame, which removes pt-exiting and flashes
+   * the home screen (or project) before the next document paints.
+   *
+   * Instead, clean up only when the page is shown again from bfcache
+   * (pageshow + event.persisted), plus narrow fallbacks (resume / stale pt-exiting).
+   */
+  function clearTransitionState() {
+    if (document.body) {
+      document.body.classList.remove('pt-exiting');
+    }
+    document.documentElement.classList.remove('pt-arriving', 'pt-show');
+    var headerEl = document.querySelector('header');
+    if (headerEl) {
+      var overlays = headerEl.querySelectorAll('.pt-slot-overlay');
+      for (var i = 0; i < overlays.length; i++) {
+        if (overlays[i].parentNode) overlays[i].parentNode.removeChild(overlays[i]);
+      }
+      // Restore visibility on any header slot we hid in runSlotAnimation.
+      var hidden = headerEl.querySelectorAll('.plus, .clock, .page-title');
+      for (var j = 0; j < hidden.length; j++) {
+        if (hidden[j].style && hidden[j].style.visibility === 'hidden') {
+          hidden[j].style.visibility = '';
+        }
+      }
+    }
+  }
+
+  function handleBfcacheRestore(e) {
+    if (!e || !e.persisted) return;
+    try { sessionStorage.removeItem(NAV_FLAG); } catch (err) { /* ignore */ }
+    clearTransitionState();
+    // Some engines restore layout before our class removal is painted; one extra
+    // frame clears any stuck exiting/overlay state (production bfcache only).
+    requestAnimationFrame(function () {
+      clearTransitionState();
+    });
+  }
+
+  /** If exiting state survived (e.g. unusual restore path), drop it without touching a legitimate incoming fade. */
+  function recoverStaleTransitionUi(e) {
+    if (e && e.persisted) return;
+    if (document.body && document.body.classList.contains('pt-exiting')) {
+      clearTransitionState();
+    }
+  }
+
   /* ---------- Incoming: arrived via a transition ---------- */
   function handleIncoming() {
     var arriving = false;
@@ -735,4 +788,14 @@
   } else {
     bindClicks();
   }
+
+  // BFCache: clean when shown again (never on pagehide — that caused a pre-navigation flash).
+  window.addEventListener('pageshow', handleBfcacheRestore);
+  window.addEventListener('pageshow', recoverStaleTransitionUi);
+  window.addEventListener('resume', function () {
+    var headerEl = document.querySelector('header');
+    var hasOverlays = headerEl && headerEl.querySelector('.pt-slot-overlay');
+    var exiting = document.body && document.body.classList.contains('pt-exiting');
+    if (exiting || hasOverlays) clearTransitionState();
+  });
 })();
