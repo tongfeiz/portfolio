@@ -10,7 +10,7 @@
  * - The body content (everything below the header) fades OUT on the outgoing
  *   page and fades IN on the incoming page.
  * - The header's page-specific bits — the subtitle next to "Tongfei"
- *   ("+ Design") and the middle slot (clock on Work, "My 2025" on Calendar,
+ *   ("+ Design") and the middle slot (clock on Work, "My 2026" on Calendar,
  *   empty on About) — do a vertical mask-reveal: the outgoing content slides
  *   UP and out, the incoming content slides UP from below into place. Each
  *   slot moves as a whole unit (e.g. the clock's "LA … // HK …" travels
@@ -223,10 +223,9 @@
       };
     }
     if (file === 'calendar.html') {
-      // Single source for calendar label until 2026 content exists; then switch here + header.
       return {
         subtitleText: '',
-        middle: buildPageTitleElement('My 2025'),
+        middle: buildPageTitleElement('My 2026'),
         activeNav: 'Calendar'
       };
     }
@@ -397,7 +396,7 @@
 
     // % translateY is based on the layer's *own* height. Abspos flex layers can
     // get a 0% base in some cases, so the incoming row never moves (e.g. about
-    // → calendar: no visible old middle, only the new "My 2025"). Use px = mask.
+    // → calendar: no visible old middle, only the new "My 2026"). Use px = mask.
     var slideH = Math.max(1, Math.round(Number(opts.height) || 0));
 
     var overlay = document.createElement('div');
@@ -413,7 +412,7 @@
 
     // Layer layout only. Animation is driven by the Web Animations API below
     // so the browser cannot coalesce start/end frames (which was causing
-    // "My 2025" to pop in on About → Calendar when this was the only slot
+    // Calendar middle title pops in on About → Calendar when this was the only slot
     // animating).
     var layerBase =
       'position:absolute;' +
